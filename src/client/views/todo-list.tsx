@@ -91,4 +91,4 @@ export default class TodoListView extends React.Component<IProps & IDispProps, v
 //   }
 // }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(TodoListPage;)
+// export default connect(mapStateToProps, mapDispatchToProps)(TodoListView;)
