@@ -78,14 +78,6 @@ class AppServer {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    if ( config.authController != null ) {
-        config.authController.initialize();
-    }
-
-    if ( config.database != null ) {
-        config.database.initialize();
-    }
-
     // Setup auth
     let auth = glob.sync(config.root + '/auth/*.js');
     auth.forEach(function (routes) {
