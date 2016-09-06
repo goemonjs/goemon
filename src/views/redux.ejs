@@ -1,0 +1,8 @@
+<%- include('./_guest-header', { title:'Redux' }) %>
+  <h1>Hello React-Redux! (EJS Rendering)</h1>
+  <div id="app"><%- markup %></div>
+  <script>
+    window.__PRELOADED_STATE__ = <%- initialState %>;
+  </script>
+  <script type="text/javascript" charset="utf-8" src="/js/redux-sample.js?ver=<%- jsDate %>"></script>
+<%- include('./_footer') %>

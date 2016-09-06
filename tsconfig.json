@@ -1,0 +1,25 @@
+﻿{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": false,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "removeComments": true,
+    "jsx": "react",
+    "outDir": "built/",
+    "rootDir": "./",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": false,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "bin",
+    "built",
+    "dist",    
+    "node_modules",
+    "bower_components",
+    "gulpfile.js",
+    "webpack.config.js"
+  ]
+}

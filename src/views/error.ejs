@@ -1,0 +1,7 @@
+<%- include('./_guest-header', {title:'Error'}) %>
+<body>
+  <h1><%=message %></h1>
+  <h1><%=error.status %></h1>
+  <pre><%= error.stack %></pre>
+</body>
+<%- include('./_footer') %>
