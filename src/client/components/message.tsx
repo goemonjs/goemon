@@ -2,15 +2,16 @@ import * as React from 'react';
 
 interface IProps extends React.Props<{}> {
   message:string;
+  style:any;
 }
 
 export default class TodoListComposer extends React.Component<IProps, void> {
   render() {
-    var { message} = this.props;
+    var { message, style } = this.props;
     return (
-      <div>
-        <h2>{message}</h2>
-      </div>
+      <span style={style}>
+        {message}
+      </span>
     );
   }
 }

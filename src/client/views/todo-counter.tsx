@@ -25,7 +25,8 @@ export default class TodoListView extends React.Component<IProps, void> {
     var count = todos.length.toString();
     return (
       <div>
-        <Message message={count}/>
+        <hr />
+        <h2>Todo count : <Message message={count} style={{color:'blue'}} /></h2>
       </div>
     );
   }
