@@ -1,6 +1,6 @@
-﻿# Boilerplate for express+react+TypeScript development
-A Boilerplate for express+react+redux+TypeScript development with Node.js.
-You can use Visual Studio Code for debug the code.
+﻿# Boilerplate for Express+React+Redux+TypeScript development
+A Boilerplate for  Express+React+Redux+TypeScript development with Node.js.
+This boilerplate supports Visual Studio Code and Chrome for debugging.
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 
