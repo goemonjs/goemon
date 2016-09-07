@@ -2,6 +2,8 @@
 A Boilerplate for express+react+redux+TypeScript development with Node.js.
 You can use Visual Studio Code for debug the code.
 
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+
 ## Quickstart
 You need to install Node.js v6.x.x
 
