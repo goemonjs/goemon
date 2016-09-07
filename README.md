@@ -31,3 +31,6 @@ npm run clean
 
 ### Question
 @kazkondo on Twitter
+
+### License
+MIT
