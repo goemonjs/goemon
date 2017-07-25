@@ -4,12 +4,12 @@ import { Link } from 'react-router';
 export interface IMainState {
   text:string;
   items?:any;
-};
+}
 
 export interface IMainProps {
   items?:any;
   children?:any;
-};
+}
 
 export default class SimpleApp extends React.Component<IMainProps, IMainState> {
 

@@ -12,11 +12,11 @@
     "no-bitwise": true,
     "no-consecutive-blank-lines": true,
     "no-console": [true,
-        "debug",
-        "info",
-        "time",
-        "timeEnd",
-        "trace"
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
     ],
     "no-construct": true,
     "no-constructor-vars": false,
@@ -33,26 +33,26 @@
     "no-unreachable": true,
     "no-use-before-declare": true,
     "one-line": [true,
-        "check-open-brace",
-        "check-whitespace"
+      "check-open-brace",
+      "check-whitespace"
     ],
     "quotemark": [true, "single", "jsx-double"],
     "radix": false,
     "semicolon": [true, "always"],
     "typedef-whitespace": [true,
-        {
-            "index-signature": "nospace",
-            "parameter": "nospace",
-            "property-declaration": "nospace",
-            "variable-declaration": "nospace"
-        }
+      {
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      }
     ],
     "variable-name": false,
     "whitespace": [true,
-        "check-branch",
-        "check-decl",
-        "check-operator",
-        "check-separator"
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator"
     ]
   }
 }

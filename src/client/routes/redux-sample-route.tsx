@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Router, Route, IndexRoute, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import TodoApp from '../apps/todo-app';
 import TodoList from '../views/todo-list';
@@ -14,9 +16,23 @@ export const routes = (
 );
 
 export const createClientApp = (store, history) => {
-  return (<Provider store={store}><Router history={history}>{routes}</Router></Provider>);
+  return (
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <Provider store={store}>
+        <Router history={history}>
+          {routes}
+        </Router>
+      </Provider>
+    </MuiThemeProvider>
+  );
 };
 
 export const createServerApp = (store, props) => {
-  return (<Provider store={store}><RouterContext {...props}/></Provider>);
+  return (
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <Provider store={store}>
+        <RouterContext {...props}/>
+      </Provider>
+    </MuiThemeProvider>
+  );
 };

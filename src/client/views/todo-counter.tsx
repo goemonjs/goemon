@@ -10,15 +10,7 @@ interface IProps {
   message:string;
 }
 
-@connect(
-  (store:IStore) => ({
-    todos: store.todoState.todos,
-    message: store.todoState.message,
-  }),
-  dispatch => ({
-  })
-)
-export default class TodoListView extends React.Component<IProps, void> {
+class TodoListView extends React.Component<IProps, any> {
 
   render() {
     var { todos, message } = this.props;
@@ -31,3 +23,12 @@ export default class TodoListView extends React.Component<IProps, void> {
     );
   }
 }
+
+export default connect(
+  (store:IStore) => ({
+    todos: store.todoState.todos,
+    message: store.todoState.message,
+  }),
+  dispatch => ({
+  })
+)(TodoListView);

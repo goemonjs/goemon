@@ -20,24 +20,7 @@ interface IDispProps {
   loadTodos:(filter, isFetching) => void;
 }
 
-@connect(
-  (store:IStore) => ({
-    todos: store.todoState.todos,
-    message: store.todoState.message,
-    isFetching: store.todoState.isFetching
-  }),
-  dispatch => ({
-    addTodo: (text): void => dispatch(TodoActions.addTodo(text)),
-    toggleTodo: (id): void => dispatch(TodoActions.toggleTodo(id)),
-    loadTodos: (filter, isFetching): void => {
-      if ( !isFetching ) {
-        dispatch(TodoActions.updateFetchStatus(true));
-        dispatch(TodoActions.loadTodos());
-      }
-    }
-  })
-)
-export default class TodoListView extends React.Component<IProps & IDispProps, void> {
+class TodoListView extends React.Component<IProps & IDispProps, any> {
 
   render() {
     var { todos, message, addTodo, toggleTodo, loadTodos, isFetching } = this.props;
@@ -47,7 +30,7 @@ export default class TodoListView extends React.Component<IProps & IDispProps, v
         <TodoList todos={todos} message={message} toggleTodo={toggleTodo}/>
         <TodoForm addTodo={addTodo} />
         <hr />
-        <p><button onClick={() => loadTodos('',isFetching)} >{ isFetching ? <span>Feching...</span> : <span>Fetch</span> }
+        <p><button onClick={() => loadTodos('', isFetching)} >{ isFetching ? <span>Feching...</span> : <span>Fetch</span> }
         </button> from <a href="/api/todos">/api/todo</a>
         </p>
       </div>
@@ -69,26 +52,25 @@ export default class TodoListView extends React.Component<IProps & IDispProps, v
   }
 }
 
-// Sample for redux normal way to connect instead of @connect directive
+const mapStateToProps = (store:IStore) => {
+  return {
+    todos: store.todoState.todos,
+    message: store.todoState.message,
+    isFetching: store.todoState.isFetching
+  };
+};
 
-// function mapStateToProps(store:IStore) {
-//   return {
-//     todos: store.todoState.todos,
-//     message: store.todoState.message,
-//     isFetching: store.todoState.isFetching
-//   }
-// }
+const mapDispatchToProps = (dispatch):IDispProps => {
+  return {
+    addTodo: (text:string): void => dispatch(TodoActions.addTodo(text)),
+    toggleTodo: (id:number): void => dispatch(TodoActions.toggleTodo(id)),
+    loadTodos: (filter, isFetching): void => {
+        if ( !isFetching ) {
+            dispatch(TodoActions.updateFetchStatus(true));
+            dispatch(TodoActions.loadTodos());
+        }
+    }
+  };
+};
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     addTodo: (text): void => dispatch(addTodo(text)),
-//     loadTodos: (filter, isFetching): void => {
-//         if ( !isFetching ) {
-//             dispatch(updateFetchStatus(true));
-//             dispatch(loadTodos());
-//         }
-//     }
-//   }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(TodoListView;)
+export default connect(mapStateToProps, mapDispatchToProps)(TodoListView);

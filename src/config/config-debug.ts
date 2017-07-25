@@ -9,7 +9,7 @@ export default class DebugConfig {
     public Session?:any
   ) {
     this.root = rootPath;
-    this.port = process.env.PORT || 3000;
+    this.port = process.env.PORT || '3000';
     this.Session = {
         Secret: 'Aihd82920rjhdjqao299euudh3!@Zq',
         Resave: false,
@@ -23,4 +23,4 @@ export default class DebugConfig {
         console.log(err);
     });
   }
-};
+}
