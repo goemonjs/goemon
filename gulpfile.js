@@ -150,7 +150,7 @@ gulp.task('jslint', ()=> {
 gulp.task("tslint", () => {
     return gulp.src(['./src/**/*.ts','./src/**/*.tsx'])
     .pipe( tslint({ configuration: "tslint.json" }))
-    .pipe(tslint.report("verbose"))
+    .pipe(tslint.report())
 });
 
 // Clean up builted files

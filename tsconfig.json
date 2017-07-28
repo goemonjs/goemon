@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
+    "lib": ["dom", "es2015.promise", "es5"],
     "declaration": false,
     "noImplicitAny": false,
     "sourceMap": true,
@@ -9,14 +10,20 @@
     "jsx": "react",
     "outDir": "built/",
     "rootDir": "./",
+    "baseUrl": "./src",
     "allowJs": true,
     "allowSyntheticDefaultImports": false,
     "experimentalDecorators": true
   },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
   "exclude": [
+    "src/client",
     "bin",
     "built",
-    "dist",    
+    "dist",
     "node_modules",
     "bower_components",
     "gulpfile.js",

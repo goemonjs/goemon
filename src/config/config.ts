@@ -23,4 +23,4 @@ export default class Config {
         console.log(err);
     });
   }
-};
+}
