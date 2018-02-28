@@ -88,7 +88,7 @@
     "gulp-sass": "^2.3.1",
     "gulp-shell": "^0.6.3",
     "gulp-tslint": "^8.1.1",
-    "gulp-typescript": "^3.1.6",
+    "gulp-typescript": "^4.0.1",
     "gulp-uglify": "^2.1.0",
     "gulp-wait": "0.0.2",
     "gulp-webpack": "^1.5.0",
@@ -103,7 +103,7 @@
     "supertest": "^2.0.0",
     "ts-loader": "^2.0.2",
     "tslint": "^5.5.0",
-    "typescript": "~2.3.4",
+    "typescript": "~2.7.2",
     "webpack-stream": "^3.2.0"
   }
 }
