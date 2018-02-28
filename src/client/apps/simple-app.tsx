@@ -18,8 +18,8 @@ export default class SimpleApp extends React.Component<IMainProps, IMainState> {
     items : []
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     // this binds
     this.onChange = this.onChange.bind(this);
