@@ -114,16 +114,6 @@ gulp.task('webpack', function() {
     .pipe(browserSync.stream());
 });
 
-// Run test
-gulp.task('test', () => {
-  gulp.src(targetPath + '/test/**/*.js', { read: false })
-    .pipe(mocha({ reporter: "spec" }))
-    .on("error", (err) => {
-      console.log(err.toString());
-      this.emit('end');
-    });
-});
-
 // Watch for rebuild
 gulp.task('watch', function(){
   gulp.watch('./src/public/css/*.scss', ['css', 'browser-reload']);

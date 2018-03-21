@@ -16,16 +16,14 @@
     "experimentalDecorators": true
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
+    "**/*.ts",
+    "**/*.tsx"
   ],
   "exclude": [
     "src/client",
     "bin",
     "built",
-    "dist",
     "node_modules",
-    "bower_components",
     "gulpfile.js",
     "webpack.config.js"
   ]

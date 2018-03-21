@@ -28,7 +28,7 @@
             "program": "${workspaceRoot}/built/src/app.js",
             "stopOnEntry": false,
             "args": [],
-            "cwd": "${workspaceRoot}",            
+            "cwd": "${workspaceRoot}",
             "runtimeExecutable": null,
             "runtimeArgs": [
                 "--nolazy"
@@ -51,6 +51,17 @@
             "outDir": null,
             "localRoot": "${workspaceRoot}",
             "remoteRoot": null
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Test with Debug",
+            "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "console": "internalConsole",
+            "sourceMaps": true
         }
     ]
 }
