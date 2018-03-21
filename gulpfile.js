@@ -1,7 +1,6 @@
 ﻿var del = require('del'),
     gulp = require('gulp'),
     livereload = require('gulp-livereload'),
-    mocha = require('gulp-mocha'),
     nodemon = require('gulp-nodemon'),
     plumber = require('gulp-plumber'),
     runSequence = require('run-sequence'),
