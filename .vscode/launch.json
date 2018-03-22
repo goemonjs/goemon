@@ -17,9 +17,11 @@
             "env": {
                 "NODE_ENV": "development"
             },
-            "externalConsole": false,
+            "console": "internalConsole",
             "sourceMaps": true,
-            "outDir": "${workspaceRoot}/built/src/"
+            "outFiles": [
+              "${workspaceRoot}/built/**/*"
+            ]
         },
         {
             "name": "Debug",
@@ -36,9 +38,11 @@
             "env": {
                 "NODE_ENV": "development"
             },
-            "externalConsole": false,
+            "console":"internalConsole",
             "sourceMaps": true,
-            "outDir": "${workspaceRoot}/built/src/"
+            "outFiles": [
+              "${workspaceRoot}/built/src/**/*"
+            ]
         },
         {
             "name": "Attach",
@@ -48,7 +52,9 @@
             "address": "localhost",
             "restart": false,
             "sourceMaps": false,
-            "outDir": null,
+            "outFiles": [
+              "${workspaceRoot}/built/src/**/*"
+            ],
             "localRoot": "${workspaceRoot}",
             "remoteRoot": null
         },
@@ -61,7 +67,10 @@
             "args": [],
             "cwd": "${workspaceRoot}",
             "console": "internalConsole",
-            "sourceMaps": true
+            "sourceMaps": true,
+            "outFiles": [
+              "${workspaceRoot}/built/test/**/*"
+            ]
         }
     ]
 }
