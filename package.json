@@ -14,7 +14,7 @@
     "name": "Lunascape Corporation"
   },
   "engines": {
-    "node": "6.1.0"
+    "node": "8.9.1"
   },
   "dependencies": {
     "connect-flash": "^0.1.1",
