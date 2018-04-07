@@ -8,11 +8,11 @@ export const UPDATE_FETCH_STATUS = 'UPDATE_FETCH_STATUS';
 export const LOAD_TODOS = 'GET_TODOS';
 
 export interface IPayloadAddTodo {
-  text:string;
-  todo:Todo;
+  text: string;
+  todo: Todo;
 }
 
-export const addTodo = createAction<string, IPayloadAddTodo>(ADD_TODO, (text:string) => {
+export const addTodo = createAction<string, IPayloadAddTodo>(ADD_TODO, (text: string) => {
   return {
     text: text,
     todo: new Todo(text, false)

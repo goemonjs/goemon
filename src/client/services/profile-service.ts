@@ -2,7 +2,7 @@ import * as fetch from 'isomorphic-fetch';
 
 export default class ProfileService {
 
-  public static url:string;
+  public static url: string;
   public static getProfile() {
     return new Promise((resolve, reject) => {
       console.log(ProfileService.url);

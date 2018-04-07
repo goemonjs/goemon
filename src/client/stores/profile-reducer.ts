@@ -9,7 +9,7 @@ export type IStateProfile = {
   isFetching?: boolean
 };
 
-const initialState:IStateProfile = {
+const initialState: IStateProfile = {
   profile: {
     userid : '',
     username : ''
@@ -17,27 +17,27 @@ const initialState:IStateProfile = {
   isFetching: false
 };
 
-const reducers: { [key: string]: (state, action:Action<any>) => IStateProfile } = {
+const reducers: { [key: string]: (state, action: Action<any>) => IStateProfile } = {
 
-  [LOAD_PROFILE]: (state:IStateProfile, action) => {
+  [LOAD_PROFILE]: (state: IStateProfile, action) => {
     if ( action.error ) {
       return {
-        message:action.payload.message,
-        isFetching:false
+        message: action.payload.message,
+        isFetching: false
       };
     }
     return {
-      profile:action.payload,
-      isFetching:false
+      profile: action.payload,
+      isFetching: false
     };
   },
 
-  [UPDATE_FETCH_STATUS]: (state:IStateProfile, action:Action<boolean>) => ({
+  [UPDATE_FETCH_STATUS]: (state: IStateProfile, action: Action<boolean>) => ({
     isFetching : action.payload
   }),
 };
 
-export function profileReducer(state:IStateProfile = initialState, action:Action<any>):IStateProfile {
+export function profileReducer(state: IStateProfile = initialState, action: Action<any>): IStateProfile {
   if ( reducers[action.type] != null ) {
     return assign({}, state, reducers[action.type](state, action));
   }

@@ -10,10 +10,10 @@ export const rootReducer = combineReducers({
 });
 
 export type IStore = {
-  todoState:IStateTodo,
-  profileState:IStateProfile
+  todoState: IStateTodo,
+  profileState: IStateProfile
 };
 
-export const configureStore = (initialState:IStore) => {
+export const configureStore = (initialState: IStore) => {
   return createStore(rootReducer, initialState, applyMiddleware(promiseMiddleware));
 };

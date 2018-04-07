@@ -17,14 +17,14 @@ import Config from './config/config';
 
 class AppServer {
 
-  public app:any; //express app
-  public config:Config;
+  public app: any; //express app
+  public config: Config;
 
   constructor() {
   }
 
   // start express application
-  initalize(app:any, config:Config) {
+  public initalize(app: any, config: Config) {
     this.app = app;
     this.config = config;
 
@@ -57,7 +57,7 @@ class AppServer {
     }));
 
     // public folder path
-    var cacheTime = 10000;     // 10s
+    const cacheTime = 10000;     // 10s
     app.use(express.static(path.join(config.root, '.', 'public'), {
       maxAge: cacheTime,
       lastModified: true,
@@ -99,8 +99,8 @@ class AppServer {
     // require(config.root + '/routes/auth.js')(app);
 
     // catch 404 and forward to error handler
-    app.use((req:any, res:any, next:any) => {
-      let err:any = new Error('Not Found');
+    app.use((req: any, res: any, next: any) => {
+      let err: any = new Error('Not Found');
       err.status = 404;
       next(err);
     });
@@ -110,7 +110,7 @@ class AppServer {
     // development error handler
     // will print stacktrace
     if (app.get('env') === 'development') {
-    app.use((err:any, req:any, res:any, next:any) => {
+    app.use((err: any, req: any, res: any, next: any) => {
         res.status(err.status || 500);
         res.render('error', {
         message: err.message,
@@ -121,7 +121,7 @@ class AppServer {
 
     // production error handler
     // no stacktraces leaked to user
-    app.use((err:any, req:any, res:any, next:any) => {
+    app.use((err: any, req: any, res: any, next: any) => {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,

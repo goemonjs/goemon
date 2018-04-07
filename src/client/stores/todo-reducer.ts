@@ -11,42 +11,42 @@ import {
 import Todo from '../models/todo';
 
 export type IStateTodo = {
-  message?:string,
+  message?: string,
   todos?: Todo[],
   isFetching?: boolean
 };
 
-const initialState:IStateTodo = {
-  message:'',
+const initialState: IStateTodo = {
+  message: '',
   todos: [],
   isFetching: false
 };
 
-const reducers: { [key: string]: (state, action:Action<any>) => IStateTodo } = {
+const reducers: { [key: string]: (state, action: Action<any>) => IStateTodo } = {
 
-  [ADD_TODO]: (state:IStateTodo, action:Action<IPayloadAddTodo>) => ({
-    message:action.payload.text,
-    todos:state.todos.concat(action.payload.todo)
+  [ADD_TODO]: (state: IStateTodo, action: Action<IPayloadAddTodo>) => ({
+    message: action.payload.text,
+    todos: state.todos.concat(action.payload.todo)
   }),
 
-  [UPDATE_FETCH_STATUS]: (state:IStateTodo, action:Action<boolean>) => ({
+  [UPDATE_FETCH_STATUS]: (state: IStateTodo, action: Action<boolean>) => ({
     isFetching : action.payload
   }),
 
-  [LOAD_TODOS]: (state:IStateTodo, action) => {
+  [LOAD_TODOS]: (state: IStateTodo, action) => {
     if ( action.error ) {
       return {
-        message:action.payload.message,
-        isFetching:false
+        message: action.payload.message,
+        isFetching: false
       };
     }
     return {
-      todos:action.payload,
-      isFetching:false
+      todos: action.payload,
+      isFetching: false
     };
   },
 
-  [TOGGLE_TODOS]: (state:IStateTodo, action:Action<number>) => {
+  [TOGGLE_TODOS]: (state: IStateTodo, action: Action<number>) => {
     let todos = state.todos.concat();
     let id = action.payload;
     todos.map(todo => {
@@ -56,12 +56,12 @@ const reducers: { [key: string]: (state, action:Action<any>) => IStateTodo } = {
       }
     });
     return {
-      todos:todos
+      todos: todos
     };
   }
 };
 
-export function todoReducer(state:IStateTodo = initialState, action:Action<any>):IStateTodo {
+export function todoReducer(state: IStateTodo = initialState, action: Action<any>): IStateTodo {
   if ( reducers[action.type] != null ) {
     return assign({}, state, reducers[action.type](state, action));
   }

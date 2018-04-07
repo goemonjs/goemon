@@ -5,7 +5,7 @@ let session = require('express-session');
 let glob = require('glob');
 let path = require('path');
 
-module.exports = (app:express.Express) => {
+module.exports = (app: express.Express) => {
   // Initialize passport
   app.use(passport.initialize());
   app.use(passport.session());
@@ -21,10 +21,10 @@ module.exports = (app:express.Express) => {
 };
 
 function enableSessionSelialization() {
-  passport.serializeUser( (user:any, callback:any) => {
+  passport.serializeUser( (user: any, callback: any) => {
     callback(null, user);
   });
-  passport.deserializeUser( (obj:any, callback:any) => {
+  passport.deserializeUser( (obj: any, callback: any) => {
     callback(null, obj);
   });
 }

@@ -1,8 +1,8 @@
 import UserService from '../../../services/user-service';
 import PassportUtility from '../passport-utility';
 
-var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;
+const passport = require('passport');
+const BasicStrategy = require('passport-http').BasicStrategy;
 
 module.exports = (app) => {
   enableBasicStrategy();

@@ -4,9 +4,9 @@ let path = require('path'),
 
 export default class Config {
   constructor(
-    public root?:string,
-    public port?:string,
-    public Session?:any
+    public root?: string,
+    public port?: string,
+    public Session?: any
   ) {
     this.root = rootPath;
     this.port = process.env.PORT;
@@ -19,7 +19,7 @@ export default class Config {
         }
     };
 
-    process.on('uncaughtException', (err:any) => {
+    process.on('uncaughtException', (err) => {
         console.log(err);
     });
   }

@@ -1,8 +1,8 @@
 import UserService from '../../../services/user-service';
 import PassportUtility from '../passport-utility';
 
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 module.exports = (app) => {
   enableLocalStrategy();

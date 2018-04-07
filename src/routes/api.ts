@@ -1,11 +1,11 @@
-import * as express from 'express';
+import { Express, Router } from 'express';
 let passport = require('passport');
 
-let router = express.Router();
-var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
+const router = Router();
+const graphqlHTTP = require('express-graphql');
+const { buildSchema } = require('graphql');
 
-module.exports = function (app:express.Express) {
+module.exports = function (app: Express) {
   app.use('/api', router);
 
   app.use('/api/hello', graphqlHTTP({
@@ -24,8 +24,8 @@ module.exports = function (app:express.Express) {
         return result;
       },
       rollDice: function ({numDice, numSides}) {
-        var output = [];
-        for (var i = 0; i < numDice; i++) {
+        let output = [];
+        for (let i = 0; i < numDice; i++) {
           output.push(1 + Math.floor(Math.random() * (numSides || 6)));
         }
         return output;
@@ -42,7 +42,7 @@ module.exports = function (app:express.Express) {
   }));
 };
 
-router.get('/items', function (req:express.Request, res:express.Response, next:express.NextFunction) {
+router.get('/items', function (req, res, next) {
   res.json([
     {id: 1, text: 'first'},
     {id: 2, text: 'second'},
@@ -50,15 +50,15 @@ router.get('/items', function (req:express.Request, res:express.Response, next:e
   ]);
 });
 
-router.get('/todos', function (req:express.Request, res:express.Response, next:express.NextFunction) {
+router.get('/todos', function (req, res, next) {
   // Be careful of security when use this headres !!
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.json([
-    { id: 1, text: 'first feched todo', completed:false },
-    { id: 2, text: 'second feched todo', completed:true },
-    { id: 3, text: 'third feched todo', completed:false }
+    { id: 1, text: 'first feched todo', completed: false },
+    { id: 2, text: 'second feched todo', completed: true },
+    { id: 3, text: 'third feched todo', completed: false }
   ]);
 });
 

@@ -2,7 +2,7 @@ import * as fetch from 'isomorphic-fetch';
 
 export default class TodoListService {
 
-  public static url:string;
+  public static url: string;
   public static getTodos() {
     return new Promise((resolve, reject) => {
       console.log(TodoListService.url);
