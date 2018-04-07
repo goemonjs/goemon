@@ -76,7 +76,7 @@ gulp.task('rebuild', ['clean'], function() {
 gulp.task('copy-assets', function () {
   gulp.src(
     ['src/public/**/', '!src/public/**/*.scss', 'src/views/**/' ],
-    { base: './' }
+    { base: './src' }
   ).pipe(gulp.dest(targetPath));
 });
 
@@ -92,24 +92,24 @@ gulp.task('css', function () {
     .pipe(plumber())
     .pipe(sass())
     .pipe(cssmin())
-    .pipe(gulp.dest('./built/src/public/css'))
+    .pipe(gulp.dest('./built/public/css'))
     .pipe(livereload());
   } else {
     gulp.src('./src/public/css/*.scss')
     .pipe(plumber())
     .pipe(sass())
-    .pipe(gulp.dest('./built/src/public/css'))
+    .pipe(gulp.dest('./built/public/css'))
     .pipe(livereload());
   }
 });
 
 // Pack javascript
 gulp.task('webpack', function() {
-  return gulp.src('built/src/app/view/**')
+  return gulp.src('built/app/view/**')
     .pipe(webpack(Object.assign({}, webpackConfig[0], {
     watch: false,
     })))
-    .pipe(gulp.dest('built/src/public/js'))
+    .pipe(gulp.dest('built/public/js'))
     .pipe(browserSync.stream());
 });
 
