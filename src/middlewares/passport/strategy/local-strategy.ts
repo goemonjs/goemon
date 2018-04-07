@@ -1,4 +1,4 @@
-import UserController from '../../../controllers/user-controller';
+import UserService from '../../../services/user-service';
 import PassportUtility from '../passport-utility';
 
 var passport = require('passport');
@@ -14,9 +14,9 @@ function enableLocalStrategy() {
       passwordField: 'password',
       passReqToCallback: true
     }, function (req, userid, password, done) {
-        UserController.authenticate(userid, PassportUtility.getHash(password), (result) => {
+      UserService.authenticate(userid, PassportUtility.getHash(password), (result) => {
           if ( result ) {
-            UserController.findById(userid, (user) => {
+            UserService.findById(userid, (user) => {
               return done(null, user);
             });
           } else {

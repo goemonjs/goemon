@@ -1,12 +1,12 @@
 import * as fetch from 'isomorphic-fetch';
 
-export default class TodoListController {
+export default class TodoListService {
 
   public static url:string;
   public static getTodos() {
     return new Promise((resolve, reject) => {
-      console.log(TodoListController.url);
-      fetch(TodoListController.url)
+      console.log(TodoListService.url);
+      fetch(TodoListService.url)
       .then(apiResult => apiResult.json())
       .then(json => resolve(json))    // Success
       .catch(error => reject(error)); // Fail

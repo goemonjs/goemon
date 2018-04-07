@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions';
 import Todo from '../models/todo';
-import TodoListController from '../controllers/todo-list-controller';
+import TodoListService from '../services/todo-list-service';
 
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODOS = 'TOGGLE_TODOS';
@@ -20,7 +20,7 @@ export const addTodo = createAction<string, IPayloadAddTodo>(ADD_TODO, (text:str
 });
 export const toggleTodo = createAction<number>(TOGGLE_TODOS);
 export const updateFetchStatus = createAction<boolean>(UPDATE_FETCH_STATUS);
-export const loadTodos = createAction(LOAD_TODOS, TodoListController.getTodos);
+export const loadTodos = createAction(LOAD_TODOS, TodoListService.getTodos);
 
 // Sample
 

@@ -1,6 +1,6 @@
-import PassportUtility from '../auth/passport/passport-utility';
+import PassportUtility from '../middlewares/passport/passport-utility';
 
-class UserController {
+class UserService {
 
   public isUserExist(userid:string, callback:any) {
     callback(true);
@@ -27,4 +27,4 @@ class UserController {
   }
 }
 
-export default new UserController();
+export default new UserService();

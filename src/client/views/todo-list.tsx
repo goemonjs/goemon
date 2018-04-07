@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Todo from '../models/todo';
 import * as TodoActions from '../actions/todo-actions';
-import TodoListController from '../controllers/todo-list-controller';
+import TodoListService from '../services/todo-list-service';
 import TodoForm from '../components/todo/todo-form';
 import TodoList from '../components/todo/todo-list';
 import { IStore } from '../stores/configure-store';
@@ -47,7 +47,7 @@ class TodoListView extends React.Component<IProps & IDispProps, any> {
   componentWillMount() {
     if ( typeof(document) != 'undefined' ) {
       let protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://');
-      TodoListController.url = protocol + location.host + '/api/todos';
+      TodoListService.url = protocol + location.host + '/api/todos';
     }
   }
 }

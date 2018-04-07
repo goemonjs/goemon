@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as fs from 'fs';
-import PassportUtility from '../auth/passport/passport-utility';
+import PassportUtility from '../middlewares/passport/passport-utility';
 let passport = require('passport');
 
 let router = express.Router();

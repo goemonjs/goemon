@@ -2,14 +2,14 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "lib": ["dom", "es2015.promise", "es5"],
+    "lib": ["dom", "es2015.promise", "es5", "esnext"],
     "declaration": false,
     "noImplicitAny": false,
     "sourceMap": true,
     "removeComments": true,
     "jsx": "react",
     "outDir": "built/",
-    "rootDir": "./",
+    "rootDir": "./src",
     "baseUrl": "./src",
     "allowJs": true,
     "allowSyntheticDefaultImports": false,
@@ -20,10 +20,10 @@
     "**/*.tsx"
   ],
   "exclude": [
-    "src/client",
-    "bin",
-    "built",
-    "node_modules",
+    "./src/client",
+    "./bin",
+    "./built",
+    "./node_modules",
     "gulpfile.js",
     "webpack.config.js"
   ]

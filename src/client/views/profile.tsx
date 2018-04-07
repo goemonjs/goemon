@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import * as ProfileActions from '../actions/profile-actions';
 import { IStore } from '../stores/configure-store';
-import ProfileController from '../controllers/profile-controller';
+import ProfileService from '../services/profile-service';
 
 interface IProps {
   profile: any;
@@ -40,7 +40,7 @@ class TodoListView extends React.Component<IProps & IDispProps, any> {
   componentWillMount() {
     if ( typeof(document) != 'undefined' ) {
       let protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://');
-      ProfileController.url = protocol + location.host + '/api/me';
+      ProfileService.url = protocol + location.host + '/api/me';
     }
   }
 }

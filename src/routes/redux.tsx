@@ -7,7 +7,7 @@ import { renderToString } from 'react-dom/server';
 import assign = require('object-assign');
 import { configureStore, IStore } from '../client/stores/configure-store';
 import { routes, createServerApp } from '../client/routes/redux-sample-route';
-import TodoListController from '../client/controllers/todo-list-controller';
+import TodoListService from '../client/services/todo-list-service';
 import * as fs from 'fs';
 
 let router = express.Router();
@@ -48,8 +48,8 @@ function renderHandler(req, res, next) {
       let protocol = (('https:' == req.protocol) ? 'https://' : 'http://');
       let url = protocol + host + '/api/todos';
 
-      TodoListController.url = url;
-      TodoListController.getTodos().then((todos:any) => {
+      TodoListService.url = url;
+      TodoListService.getTodos().then((todos:any) => {
 
         const initialState:IStore = {
           todoState : {

@@ -1,8 +1,5 @@
 node_modules/
 bower_components/
 .sass-cache
-dist/
 built/
-obj/
-
-package-lock.json
+.DS_Store

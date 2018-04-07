@@ -1,12 +1,12 @@
 import * as fetch from 'isomorphic-fetch';
 
-export default class ProfileController {
+export default class ProfileService {
 
   public static url:string;
   public static getProfile() {
     return new Promise((resolve, reject) => {
-      console.log(ProfileController.url);
-      fetch(ProfileController.url, {
+      console.log(ProfileService.url);
+      fetch(ProfileService.url, {
         credentials: 'include', //pass cookies, for authentication
         //method: 'post',
         // headers: {
