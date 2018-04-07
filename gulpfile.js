@@ -51,9 +51,9 @@ gulp.task('nodemon', (callback) => {
     delay: "2500",
     ext: 'js html css ejs ico txt pdf json',
     ignore: [
-      'built/src/client/*',
-      'built/src/public/*',
-      'built/test/*',
+      'built/client/*',
+      'built/public/*',
+      'built/__test__/*',
       '*.ts',
       '*.tsx',
       '*.json',
@@ -118,20 +118,18 @@ gulp.task('css', () => {
     .pipe(plumber())
     .pipe(sass())
     .pipe(cssmin())
-    .pipe(gulp.dest('./built/src/public/css'))
-    .pipe(livereload());
+    .pipe(gulp.dest('./built/public/css'));
   } else {
     gulp.src('./src/public/css/**/*.scss')
     .pipe(plumber())
     .pipe(sass())
-    .pipe(gulp.dest('./built/src/public/css'))
-    .pipe(livereload());
+    .pipe(gulp.dest('./built/public/css'));
   }
 });
 
 // Pack javascript
 gulp.task('webpack', () => {
-  return gulp.src('built/src/app/view/**')
+  return gulp.src('built/app/view/**')
     .pipe(plumber({errorHandler:function(error) {
         notifier.notify({
             message: error.message,
@@ -142,13 +140,13 @@ gulp.task('webpack', () => {
     .pipe(webpack(Object.assign({}, webpackConfig[0], {
       watch: true
     })))
-    .pipe(gulp.dest('built/src/public/js'))
+    .pipe(gulp.dest('built/public/js'))
     .pipe(browserSync.stream());
 });
 
 // Watch for rebuild
 gulp.task('watch', () => {
-  gulp.watch('./src/public/css/*.scss', ['css', 'browser-reload'])
+  gulp.watch('./src/public/css/*.scss', ['css'])
   .on('change', function(event) {
     console.log('File ' + event.path + ' was ' + event.type);
   });
@@ -162,6 +160,11 @@ gulp.task('watch', () => {
     .on('change', function(event) {
       console.log('File ' + event.path + ' was ' + event.type);
     });
+
+  gulp.watch('./built/public/css/*.css',['browser-reload'])
+  .on('change', function(event) {
+    console.log('File ' + event.path + ' was ' + event.type);
+  });
 });
 
 // Run test
