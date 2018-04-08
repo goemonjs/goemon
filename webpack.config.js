@@ -25,6 +25,7 @@ const config = [
     },
     // Enable sourcemaps for debugging webpack's output.
     devtool: 'source-map',
+    watch: true,
     mode: 'development',
     module: {
       rules: [

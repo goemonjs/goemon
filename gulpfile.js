@@ -39,7 +39,7 @@ gulp.task('tsc', function (cb) {
 
 // Task for development.
 gulp.task('develop', ['copy-assets', 'tsc', 'css', 'lint'], function () {
-  return runSequence('watch', 'webpack', 'start');
+  return runSequence('watch', 'webpack', 'start', 'webpack:watch');
 });
 
 // Start server and nodemon
@@ -72,14 +72,12 @@ gulp.task('nodemon', (callback) => {
       callback();
     }
     console.log('nodemon started.');
-
-
   })
   .on('restart', () => {
     console.log('nodemon restarting...');
-    // サーバー再起動時
+    // when server reboot
     setTimeout( () => {
-        browserSync.reload();
+      browserSync.reload();
     }, 3000);
   });
 });
@@ -128,9 +126,9 @@ gulp.task('css', () => {
   }
 });
 
-// Pack javascript
+// Webpack
 gulp.task('webpack', () => {
-  return gulp.src('built/app/view/**')
+  return gulp.src('dummy')
     .pipe(plumber({errorHandler: (error) => {
         notifier.notify({
             message: error.message,
@@ -138,7 +136,20 @@ gulp.task('webpack', () => {
             sound: 'Glass'
         });
     }}))
-    .pipe(gulpWebpack( webpackConfig[0], webpack))
+    .pipe(gulpWebpack(Object.assign({}, webpackConfig[0], {
+      watch: false,
+      }), webpack))
+    .pipe(gulp.dest('built/public/js'))
+    .pipe(browserSync.stream());
+});
+
+// Webpack with watch:true freese the runSequence, so we need to
+// re-run this webpack with watch:true at the end of the sequence
+gulp.task('webpack:watch', () => {
+  return gulp.src('dummy')
+    .pipe(gulpWebpack(Object.assign({}, webpackConfig[0], {
+      watch: true,
+      }), webpack))
     .pipe(gulp.dest('built/public/js'))
     .pipe(browserSync.stream());
 });
