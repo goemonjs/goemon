@@ -10,16 +10,15 @@ import TodoApp from '../apps/todo-app';
 import TodoList from '../views/todo-list';
 import TodoCounter from '../views/todo-counter';
 
-export const routes = (
-  <Route path="/redux" component={TodoApp} />
-);
-
 export const createClientApp = (store) => {
   return (
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <Provider store={store}>
         <BrowserRouter>
-          {routes}
+        <Switch>
+          <Route path="/redux" component={TodoApp} />
+          <Route path="/about" component={TodoApp} />
+        </Switch>
         </BrowserRouter>
       </Provider>
     </MuiThemeProvider>
@@ -31,7 +30,9 @@ export const createServerApp = (req, context, store) => {
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <Provider store={store}>
         <StaticRouter location={req.url} context={context}>
-          {routes}
+        <Switch>
+          <Route path="/redux" component={TodoApp} />
+        </Switch>
         </StaticRouter>
       </Provider>
     </MuiThemeProvider>

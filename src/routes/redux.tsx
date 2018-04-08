@@ -7,7 +7,7 @@ import { StaticRouter } from 'react-router';
 import { matchPath } from 'react-router-dom';
 import assign = require('object-assign');
 import { configureStore, IStore } from '../client/stores/configure-store';
-import { routes, createServerApp } from '../client/routes/redux-sample-route';
+import { createServerApp } from '../client/routes/redux-sample-route';
 import TodoListService from '../client/services/todo-list-service';
 import * as fs from 'fs';
 
