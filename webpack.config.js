@@ -18,6 +18,7 @@ const config = [
       'redux-sample' : './src/client/redux-sample',
       'auth-sample' : './src/client/auth-sample'
     },
+    // watch: true,
     output: {
       filename: '[name].js',
       path: path.resolve(targetPath + '/src/public/js')
@@ -39,16 +40,7 @@ const config = [
         // modulesDirectories: ['node_modules', 'components'],
         extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx']
     },
-    plugins: ( PRODUCT == 'production' ) ? [
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-        }),
-        new UglifyJSPlugin({
-          compress: { warnings: false }
-        }),
-        new CheckerPlugin(),
-        new ExtractTextPlugin('style.css', { allChunks: true }),
-    ] : [
+    plugins: [
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }),
