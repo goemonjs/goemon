@@ -1,20 +1,31 @@
 import * as React from 'react';
-import { Router, Route, IndexRoute, RouterContext } from 'react-router';
+import { Route, Switch } from 'react-router';
+import { BrowserRouter, StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import AuthApp from '../apps/auth-app';
 import Profile from '../views/profile';
 
 export const routes = (
-  <Route path="/" component={AuthApp} >
-    <IndexRoute component={Profile} />
-  </Route>
+  <Switch>
+    <Route path="/" component={AuthApp} />
+    <Route path="/" component={Profile} />
+  </Switch>
 );
 
-export const createClientApp = (store, history) => {
-  return (<Provider store={store}><Router history={history}>{routes}</Router></Provider>);
+export const createClientApp = (store) => {
+  return (
+  <Provider store={store}>
+    <BrowserRouter>{routes}</BrowserRouter>
+  </Provider>);
 };
 
-export const createServerApp = (store, props) => {
-  return (<Provider store={store}><RouterContext {...props}/></Provider>);
+export const createServerApp = (req, context, store) => {
+  return (
+    <Provider store={store}>
+    <StaticRouter location={req.url} context={context}>
+      {routes}
+    </StaticRouter>
+    </Provider>
+  );
 };

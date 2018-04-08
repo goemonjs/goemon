@@ -1,5 +1,5 @@
 import * as ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route } from 'react-router';
 import { Provider } from 'react-redux';
 
 import { configureStore } from './stores/configure-store';
@@ -9,6 +9,6 @@ const win: any = window;
 const preloadedState = win.__PRELOADED_STATE__;
 
 const store = configureStore(preloadedState);
-const app = createClientApp(store, hashHistory);
+const app = createClientApp(store);
 
-ReactDOM.hydrate(app, document.getElementById('app'));
+ReactDOM.render(app, document.getElementById('app'));

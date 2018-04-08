@@ -7,25 +7,25 @@ import { IStore } from '../stores/configure-store';
 
 interface IProps {
   todos: Todo[];
-  message:string;
+  message: string;
 }
 
 class TodoListView extends React.Component<IProps, any> {
 
   render() {
-    var { todos, message } = this.props;
-    var count = todos.length.toString();
+    let { todos, message } = this.props;
+    let count = todos.length.toString();
     return (
       <div>
         <hr />
-        <h2>Todo count : <Message message={count} style={{color:'blue'}} /></h2>
+        <h2>Todo count : <Message message={count} style={{color: 'blue'}} /></h2>
       </div>
     );
   }
 }
 
 export default connect(
-  (store:IStore) => ({
+  (store: IStore) => ({
     todos: store.todoState.todos,
     message: store.todoState.message,
   }),

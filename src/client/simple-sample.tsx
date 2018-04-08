@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Router, browserHistory } from 'react-router';
+import { Router } from 'react-router';
 
 import SimpleApp from './apps/simple-app';
 

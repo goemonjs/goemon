@@ -10,20 +10,20 @@ import { IStore } from '../stores/configure-store';
 
 interface IProps {
   todos: Todo[];
-  message:string;
-  isFetching:boolean;
+  message: string;
+  isFetching: boolean;
 }
 
 interface IDispProps {
-  addTodo:(text:string) => void;
-  toggleTodo:(id:number) => void;
-  loadTodos:(filter, isFetching) => void;
+  addTodo: (text: string) => void;
+  toggleTodo: (id: number) => void;
+  loadTodos: (filter, isFetching) => void;
 }
 
 class TodoListView extends React.Component<IProps & IDispProps, any> {
 
   render() {
-    var { todos, message, addTodo, toggleTodo, loadTodos, isFetching } = this.props;
+    let { todos, message, addTodo, toggleTodo, loadTodos, isFetching } = this.props;
     return (
       <div>
         <hr />
@@ -39,7 +39,7 @@ class TodoListView extends React.Component<IProps & IDispProps, any> {
 
   // It is called only client rendering
   componentDidMount() {
-    var { loadTodos, isFetching } = this.props;
+    let { loadTodos, isFetching } = this.props;
     // loadTodos('', isFetching);
   }
 
@@ -52,7 +52,7 @@ class TodoListView extends React.Component<IProps & IDispProps, any> {
   }
 }
 
-const mapStateToProps = (store:IStore) => {
+const mapStateToProps = (store: IStore) => {
   return {
     todos: store.todoState.todos,
     message: store.todoState.message,
@@ -60,15 +60,15 @@ const mapStateToProps = (store:IStore) => {
   };
 };
 
-const mapDispatchToProps = (dispatch):IDispProps => {
+const mapDispatchToProps = (dispatch): IDispProps => {
   return {
-    addTodo: (text:string): void => dispatch(TodoActions.addTodo(text)),
-    toggleTodo: (id:number): void => dispatch(TodoActions.toggleTodo(id)),
+    addTodo: (text: string): void => dispatch(TodoActions.addTodo(text)),
+    toggleTodo: (id: number): void => dispatch(TodoActions.toggleTodo(id)),
     loadTodos: (filter, isFetching): void => {
-        if ( !isFetching ) {
-            dispatch(TodoActions.updateFetchStatus(true));
-            dispatch(TodoActions.loadTodos());
-        }
+      if ( !isFetching ) {
+        dispatch(TodoActions.updateFetchStatus(true));
+        dispatch(TodoActions.loadTodos());
+      }
     }
   };
 };

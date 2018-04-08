@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Router, Route, IndexRoute, RouterContext } from 'react-router';
+import { Route, Switch } from 'react-router';
+import { BrowserRouter, StaticRouter } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -9,29 +11,28 @@ import TodoList from '../views/todo-list';
 import TodoCounter from '../views/todo-counter';
 
 export const routes = (
-  <Route path="/" component={TodoApp} >
-    <IndexRoute component={TodoList} />
-    <Route path="/counter" component={TodoCounter} />
-  </Route>
+  <Route path="/redux" component={TodoApp} />
 );
 
-export const createClientApp = (store, history) => {
+export const createClientApp = (store) => {
   return (
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <Provider store={store}>
-        <Router history={history}>
+        <BrowserRouter>
           {routes}
-        </Router>
+        </BrowserRouter>
       </Provider>
     </MuiThemeProvider>
   );
 };
 
-export const createServerApp = (store, props) => {
+export const createServerApp = (req, context, store) => {
   return (
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <Provider store={store}>
-        <RouterContext {...props}/>
+        <StaticRouter location={req.url} context={context}>
+          {routes}
+        </StaticRouter>
       </Provider>
     </MuiThemeProvider>
   );

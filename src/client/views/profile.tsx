@@ -11,13 +11,13 @@ interface IProps {
 }
 
 interface IDispProps {
-  loadProfile:(isFetching) => void;
+  loadProfile: (isFetching) => void;
 }
 
 class TodoListView extends React.Component<IProps & IDispProps, any> {
 
   render() {
-    var { profile, isFetching, loadProfile } = this.props;
+    let { profile, isFetching, loadProfile } = this.props;
     return (
       <div className="container">
         <button type="button" className="btn btn-primary btn-sm" onClick={() => loadProfile(isFetching)} >Fetch</button>
@@ -46,7 +46,7 @@ class TodoListView extends React.Component<IProps & IDispProps, any> {
 }
 
 export default connect(
-  (store:IStore) => ({
+  (store: IStore) => ({
     profile: store.profileState.profile,
     isFetching: store.profileState.isFetching
   }),

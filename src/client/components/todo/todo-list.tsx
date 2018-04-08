@@ -4,13 +4,13 @@ import Todo from '../../models/todo';
 
 interface IProps extends React.Props<{}> {
   todos: Todo[];
-  message:string;
-  toggleTodo:(id:number) => void;
+  message: string;
+  toggleTodo: (id: number) => void;
 }
 
 export default class TodoListComposer extends React.Component<IProps, any> {
   render() {
-    var { todos, message, toggleTodo} = this.props;
+    let { todos, message, toggleTodo} = this.props;
     return (
       <div>
         <h2>{message}</h2>
