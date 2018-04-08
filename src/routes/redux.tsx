@@ -26,8 +26,8 @@ module.exports = function (app: Express) {
   jsDate = jsStats.mtime.getFullYear() + jsStats.mtime.getMonth() + jsStats.mtime.getDay() + jsStats.mtime.getTime();
 };
 
-router.get('*', (req, res) => {
-  let context = {};
+router.get('/', (req, res) => {
+  let context: any = {};
 
   const initialState: IStore = {
     todoState : {
@@ -48,12 +48,20 @@ router.get('*', (req, res) => {
     const markup = renderToString(app);
     const preloadedState = store.getState();
 
-    res.render('redux', {
-      title: 'EJS Server Rendering Title',
-      markup: markup,
-      initialState: JSON.stringify(preloadedState),
-      jsDate: jsDate
-    });
+    if ( context.url ) {
+      res.writeHead(302, {
+        Location: context.url
+      });
+      res.end();
+    } else {
+      res.render('redux', {
+        title: 'EJS Server Rendering Title',
+        markup: markup,
+        initialState: JSON.stringify(preloadedState),
+        jsDate: jsDate
+      });
+  }
+
 });
 
 // function renderHandler(req, res, next) {

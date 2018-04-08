@@ -27,7 +27,7 @@
             "name": "Debug",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/built/src/app.js",
+            "program": "${workspaceRoot}/built/app.js",
             "stopOnEntry": false,
             "args": [],
             "cwd": "${workspaceRoot}",
@@ -41,7 +41,7 @@
             "console":"internalConsole",
             "sourceMaps": true,
             "outFiles": [
-              "${workspaceRoot}/built/src/**/*"
+              "${workspaceRoot}/built/**/*"
             ]
         },
         {

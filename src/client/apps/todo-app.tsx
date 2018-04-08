@@ -22,7 +22,7 @@ export default class TodoApp extends React.Component<IProps, IState> {
     const { match } = this.props;
     return (
       <div>
-        <h3><span>{match.url}</span></h3>
+        <h3>MatchUrl : {match.url}</h3>
         <hr />
         <ul>
           <li><Link to={`${match.url}`}>Add</Link></li>
