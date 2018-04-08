@@ -37,11 +37,11 @@ class HelloService {
   }
 
   public hoge({value}) {
-    let result = 'Hello world!';
+    let result = 'Hoge world!' + value;
     return result;
   }
 
-  public plus(a, b) {
+  public plus({a, b}) {
     return a + b;
   }
 }

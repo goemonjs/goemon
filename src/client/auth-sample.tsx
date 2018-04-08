@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from './stores/configure-store';
 import { createClientApp } from './routes/auth-sample-route';
 
-const win:any = window;
+const win: any = window;
 const preloadedState = win.__PRELOADED_STATE__;
 
 const store = configureStore(preloadedState);

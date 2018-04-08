@@ -1,18 +1,9 @@
 import * as express from 'express';
-import HelloService from '../services/hello-service';
 let passport = require('passport');
-
 let router = express.Router();
-let graphqlHTTP = require('express-graphql');
 
 module.exports = function (app: express.Express) {
   app.use('/api', router);
-
-  app.use('/hello', graphqlHTTP({
-    schema: HelloService.hello,
-    rootValue: HelloService.rootValue,
-    graphiql: true,
-  }));
 };
 
 router.get('/items', (req, res, next) => {

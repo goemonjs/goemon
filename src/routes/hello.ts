@@ -1,11 +1,12 @@
 import * as express from 'express';
+import HelloService from '../services/hello-service';
 let passport = require('passport');
 
 let router = express.Router();
 let graphqlHTTP = require('express-graphql');
 let { buildSchema } = require('graphql');
 
-module.exports = function (app: express.Express) {
+module.exports = function (app) {
   let schema = buildSchema(`
     type Query {
       hello: String
@@ -15,10 +16,8 @@ module.exports = function (app: express.Express) {
   let root = { hello: () => 'Hello world!' };
 
   app.use('/hello', graphqlHTTP({
-    schema: schema,
-    rootValue: root,
+    schema: HelloService.schema,
+    rootValue: HelloService.rootValue,
     graphiql: true,
   }));
-
-  console.log('Hello!!');
 };
