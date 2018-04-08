@@ -4,6 +4,6 @@ import { Router, browserHistory } from 'react-router';
 
 import SimpleApp from './apps/simple-app';
 
-var win:any = window;
+let win: any = window;
 const props = win.__PRELOADED_STATE__;
 ReactDOM.render(<SimpleApp { ...props } />, document.getElementById('app')); //

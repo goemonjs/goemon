@@ -4,7 +4,7 @@ interface IProps  {
 }
 
 export default class TodoApp extends React.Component<IProps, {}> {
-  render() {
+  public render() {
     return (
       <div>
         {this.props.children}

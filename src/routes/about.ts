@@ -1,5 +1,5 @@
 import { Express, Router } from 'express';
-const pjson = require('../../../package.json');
+const pjson = require('../../package.json');
 
 let router = Router();
 

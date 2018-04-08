@@ -3,8 +3,12 @@ import * as React from 'react';
 interface IProps  {
 }
 
-export default class TodoApp extends React.Component<IProps, {}> {
-  render() {
+interface IState {
+  hasError: boolean;
+}
+
+export default class TodoApp extends React.Component<IProps, IState> {
+  public render() {
     return (
       <div>
         <hr />

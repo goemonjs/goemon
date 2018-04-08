@@ -25,7 +25,7 @@
         ]
       }
     ],
-    "member-access": [true],
+    "member-access": [false],
     "no-arg": true,
     "no-bitwise": false,
     "no-consecutive-blank-lines": true,

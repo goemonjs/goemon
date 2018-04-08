@@ -7,7 +7,8 @@
     uglify = require('gulp-uglify'),
     sass = require('gulp-sass'),
     cssmin = require('gulp-cssmin'),
-    webpack = require('webpack-stream'),
+    webpack = require('webpack'),
+    gulpWebpack = require('webpack-stream'),
     webpackConfig = require('./webpack.config.js'),
     browserSync = require('browser-sync').create(),
     notifier = require('node-notifier'),
@@ -38,7 +39,7 @@ gulp.task('tsc', function (cb) {
 
 // Task for development.
 gulp.task('develop', ['copy-assets', 'tsc', 'css', 'lint'], function () {
-  return runSequence('watch', 'start', 'webpack');
+  return runSequence('watch', 'webpack', 'start');
 });
 
 // Start server and nodemon
@@ -130,16 +131,14 @@ gulp.task('css', () => {
 // Pack javascript
 gulp.task('webpack', () => {
   return gulp.src('built/app/view/**')
-    .pipe(plumber({errorHandler:function(error) {
+    .pipe(plumber({errorHandler: (error) => {
         notifier.notify({
             message: error.message,
             title: error.plugin,
             sound: 'Glass'
         });
     }}))
-    .pipe(webpack(Object.assign({}, webpackConfig[0], {
-      watch: true
-    })))
+    .pipe(gulpWebpack( webpackConfig[0], webpack))
     .pipe(gulp.dest('built/public/js'))
     .pipe(browserSync.stream());
 });

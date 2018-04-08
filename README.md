@@ -1,12 +1,13 @@
 ﻿# Boilerplate for Express+React+Redux+TypeScript development
 A Boilerplate for  Express+React+Redux+TypeScript development with Node.js.
 This boilerplate supports Visual Studio Code and Chrome for debugging.
+this template use React16, webpack4
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## Quickstart
-You need to install Node.js v6.x.x.
+You need to install Node.js v8.x.x.
 For login sample, please use id:test@example.com password:test .
 
 #### 1.Install node_mosules

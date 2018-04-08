@@ -1,48 +1,21 @@
-import { Express, Router } from 'express';
+import * as express from 'express';
+import HelloService from '../services/hello-service';
 let passport = require('passport');
 
-const router = Router();
-const graphqlHTTP = require('express-graphql');
-const { buildSchema } = require('graphql');
+let router = express.Router();
+let graphqlHTTP = require('express-graphql');
 
-module.exports = function (app: Express) {
+module.exports = function (app: express.Express) {
   app.use('/api', router);
 
-  app.use('/api/hello', graphqlHTTP({
-    schema: buildSchema(`
-        type Query {
-          hello: String,
-          rollDice(numDice: Int!, numSides: Int): [Int],
-          hoge(value: String): String,
-          plus(a: Int, b: Int): Int
-        }
-      `
-    ),
-    rootValue: {
-      hello: function() {
-        let result = 'Hello world!';
-        return result;
-      },
-      rollDice: function ({numDice, numSides}) {
-        let output = [];
-        for (let i = 0; i < numDice; i++) {
-          output.push(1 + Math.floor(Math.random() * (numSides || 6)));
-        }
-        return output;
-      },
-      hoge: ({value}) => {
-        let result = 'Hoge world!';
-        return result + value;
-      },
-      plus: (a, b) => {
-        return a + b;
-      }
-    },
+  app.use('/hello', graphqlHTTP({
+    schema: HelloService.hello,
+    rootValue: HelloService.rootValue,
     graphiql: true,
   }));
 };
 
-router.get('/items', function (req, res, next) {
+router.get('/items', (req, res, next) => {
   res.json([
     {id: 1, text: 'first'},
     {id: 2, text: 'second'},
@@ -50,7 +23,7 @@ router.get('/items', function (req, res, next) {
   ]);
 });
 
-router.get('/todos', function (req, res, next) {
+router.get('/todos', (req, res, next) => {
   // Be careful of security when use this headres !!
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -62,7 +35,7 @@ router.get('/todos', function (req, res, next) {
   ]);
 });
 
-router.get('/me', isAuthenticated, function (req: any, res, next) {
+router.get('/me', isAuthenticated, (req: any, res, next) => {
   res.json(
     {
       id : req.user.id,
