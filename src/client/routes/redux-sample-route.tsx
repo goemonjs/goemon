@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 import { BrowserRouter, StaticRouter } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
 import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -10,6 +11,30 @@ import { green100, green500, green700 } from 'material-ui/styles/colors';
 import TodoApp from '../apps/todo-app';
 import TodoList from '../views/todo-list';
 import TodoCounter from '../views/todo-counter';
+import { NotFound } from '../components/notfound';
+
+export const routes = [
+  {
+    path: '/redux',
+    component: TodoApp,
+  }, {
+    path: '/about',
+    component: TodoApp
+  }, {
+    path: '/*',
+    component: NotFound
+  }
+];
+
+export const routeServer = [
+  { component: TodoApp,
+    routes: [
+      { path: '/redux',
+        component: TodoApp
+      }
+    ]
+  }
+];
 
 export const createClientApp = (store) => {
   const muiTheme = getMuiTheme({
@@ -28,10 +53,7 @@ export const createClientApp = (store) => {
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <Provider store={store}>
         <BrowserRouter>
-        <Switch>
-          <Route path="/redux" component={TodoApp} />
-          <Route path="/about" component={TodoApp} />
-        </Switch>
+        {renderRoutes(routes)}
         </BrowserRouter>
       </Provider>
     </MuiThemeProvider>
@@ -58,10 +80,7 @@ export const createServerApp = (req, context, store) => {
     <MuiThemeProvider muiTheme={muiTheme}>
       <Provider store={store}>
         <StaticRouter location={req.baseUrl} context={context}>
-        <Switch>
-          <Route path="/redux" component={TodoApp} />
-          <Route><h1>Not Found on SSR</h1></Route>
-        </Switch>
+          {renderRoutes(routes)}
         </StaticRouter>
       </Provider>
     </MuiThemeProvider>

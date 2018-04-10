@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router';
 import { Link, match } from 'react-router-dom';
 import TodoList from '../views/todo-list';
 import TodoCounter from '../views/todo-counter';
+import { renderRoutes } from 'react-router-config';
 
 interface IProps  {
   match: any;
@@ -31,7 +32,6 @@ export default class TodoApp extends React.Component<IProps, IState> {
         <Switch>
           <Route exact path={`${match.url}`} component={TodoList} />
           <Route exact path={`${match.url}/counter`} component={TodoCounter} />
-          <Route><h1>Not Found</h1></Route>
         </Switch>
       </div>
       );

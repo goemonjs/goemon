@@ -4,10 +4,11 @@ import * as Redux from 'redux';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
+import { matchRoutes, renderRoutes } from 'react-router-config';
 import { matchPath } from 'react-router-dom';
 import assign = require('object-assign');
 import { configureStore, IStore } from '../client/stores/configure-store';
-import { createServerApp } from '../client/routes/redux-sample-route';
+import { createServerApp, routes } from '../client/routes/redux-sample-route';
 import TodoListService from '../client/services/todo-list-service';
 import * as fs from 'fs';
 
@@ -26,68 +27,42 @@ module.exports = function (app: Express) {
   jsDate = jsStats.mtime.getFullYear() + jsStats.mtime.getMonth() + jsStats.mtime.getDay() + jsStats.mtime.getTime();
 };
 
-router.get('/', (req, res) => {
+router.get('*', (req, res) => {
   let context: any = {};
-
   const initialState: IStore = {
-    todoState : {
-      message : 'Hello initial state! from server',
-      todos: [],
-      isFetching: false
-    },
-    profileState : {
-      profile : {
-        name : 'No name'
-      }
+  todoState : {
+    message : 'Hello initial state! from server',
+    todos: [],
+    isFetching: false
+  },
+  profileState : {
+    profile : {
+      name : 'No name'
     }
-  };
-
-    // Rendering
-    const store = configureStore(initialState);
-    const app = createServerApp(req, context, store);
-    const markup = renderToString(app);
-    const preloadedState = store.getState();
-
-    if ( context.url ) {
-      res.writeHead(302, {
-        Location: context.url
-      });
-      res.end();
-    } else {
-      res.render('redux', {
-        title: 'EJS Server Rendering Title',
-        markup: markup,
-        initialState: JSON.stringify(preloadedState),
-        jsDate: jsDate
-      });
   }
+};
+  const store = configureStore(initialState);
+  const preloadedState = store.getState();
+  const branch = matchRoutes(routes, req.url);
+  const promises = branch.map(({route}) => {
+    let fetchData = route.component.fetchData;
+    return fetchData instanceof Function ? fetchData(store) : Promise.resolve(null);
+  });
+  return Promise.all(promises).then((data) => {
+    let context: any = {};
+    const content = renderToString(createServerApp(req, context, store));
 
+    if ( context.status === 404) {
+      res.status(404);
+    } else if (context.status === 302) {
+      return res.redirect(302, context.url);
+    }
+
+    res.render('redux', {
+      title: 'EJS Server Rendering Title',
+      markup: content,
+      initialState: JSON.stringify(preloadedState),
+      jsDate: jsDate
+    });
+  });
 });
-
-// function renderHandler(req, res, next) {
-//   const initialState: IStore = {
-//     todoState : {
-//       message : 'Hello initial state! from server',
-//       todos: [],
-//       isFetching: false
-//     },
-//     profileState : {
-//       profile : {
-//         name : 'No name'
-//       }
-//     }
-//   };
-
-//   // Rendering
-//   const store = configureStore(initialState);
-//   const app = createServerApp(req, context, store);
-//   const markup = renderToString(app);
-//   const preloadedState = store.getState();
-
-//   res.render('redux', {
-//     title: 'EJS Server Rendering Title',
-//     markup: markup,
-//     initialState: JSON.stringify(preloadedState),
-//     jsDate: jsDate
-//   });
-// }
