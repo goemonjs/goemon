@@ -10,6 +10,20 @@
     "test": "jest",
     "dev": "node ./node_modules/gulp/bin/gulp develop"
   },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
   "author": {
     "name": "Lunascape Corporation"
   },
