@@ -20,7 +20,7 @@ export const addTodo = createAction<string, IPayloadAddTodo>(ADD_TODO, (text: st
 });
 export const toggleTodo = createAction<number>(TOGGLE_TODOS);
 export const updateFetchStatus = createAction<boolean>(UPDATE_FETCH_STATUS);
-export const loadTodos = createAction(LOAD_TODOS, TodoListService.getTodos);
+export const loadTodos = createAction<string>(LOAD_TODOS, TodoListService.getTodos);
 
 // Sample
 

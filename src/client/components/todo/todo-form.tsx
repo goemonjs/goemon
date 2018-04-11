@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export interface IProps {
-  addTodo:(text: string) => void;
+  addTodo: (text: string) => void;
 }
 
 export interface IState {

@@ -9,6 +9,7 @@ interface IProps extends React.Props<{}> {
 }
 
 export default class TodoListComposer extends React.Component<IProps, any> {
+
   render() {
     let { todos, message, toggleTodo} = this.props;
     return (

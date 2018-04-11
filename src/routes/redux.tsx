@@ -29,24 +29,15 @@ module.exports = function (app: Express) {
 
 router.get('*', (req, res) => {
   let context: any = {};
-  const initialState: IStore = {
-  todoState : {
-    message : 'Hello initial state! from server',
-    todos: [],
-    isFetching: false
-  },
-  profileState : {
-    profile : {
-      name : 'No name'
-    }
-  }
-};
-  const store = configureStore(initialState);
+
+  const store = configureStore();
   const preloadedState = store.getState();
-  const branch = matchRoutes(routes, req.url);
+  const branch = matchRoutes(routes, req.baseUrl + req.url);
+  const protocol = req.protocol;
+  const host = req.host + ':3000';
   const promises = branch.map(({route}) => {
     let fetchData = route.component.fetchData;
-    return fetchData instanceof Function ? fetchData(store) : Promise.resolve(null);
+    return fetchData instanceof Function ? fetchData(store, protocol, host) : Promise.resolve(null);
   });
   return Promise.all(promises).then((data) => {
     let context: any = {};
@@ -61,7 +52,7 @@ router.get('*', (req, res) => {
     res.render('redux', {
       title: 'EJS Server Rendering Title',
       markup: content,
-      initialState: JSON.stringify(preloadedState),
+      initialState: JSON.stringify(store.getState()),
       jsDate: jsDate
     });
   });

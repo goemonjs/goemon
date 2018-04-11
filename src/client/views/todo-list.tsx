@@ -45,10 +45,10 @@ class TodoListView extends React.Component<IProps & IDispProps, any> {
 
   // It is called both server rendering and client rendering
   componentWillMount() {
-    if ( typeof(document) != 'undefined' ) {
-      let protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://');
-      TodoListService.url = protocol + location.host + '/api/todos';
-    }
+    // if ( typeof(document) != 'undefined' ) {
+    //   let protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://');
+    //   TodoListService.url = protocol + location.host + '/api/todos';
+    // }
   }
 }
 
@@ -66,8 +66,10 @@ const mapDispatchToProps = (dispatch): IDispProps => {
     toggleTodo: (id: number): void => dispatch(TodoActions.toggleTodo(id)),
     loadTodos: (filter, isFetching): void => {
       if ( !isFetching ) {
+        let protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://');
+        let url = protocol + location.host + '/api/todos';
         dispatch(TodoActions.updateFetchStatus(true));
-        dispatch(TodoActions.loadTodos());
+        dispatch(TodoActions.loadTodos(url));
       }
     }
   };

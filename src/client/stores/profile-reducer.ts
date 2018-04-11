@@ -1,15 +1,14 @@
 import * as Redux from 'redux';
 import { handleActions, Action } from 'redux-actions';
 import assign = require('object-assign');
+import * as Actions from '../actions/profile-actions';
 
-import { LOAD_PROFILE, UPDATE_FETCH_STATUS } from '../actions/profile-actions';
-
-export type IStateProfile = {
+export type IState = {
   profile?: any,
   isFetching?: boolean
 };
 
-const initialState: IStateProfile = {
+export const initialState: IState = {
   profile: {
     userid : '',
     username : ''
@@ -17,9 +16,9 @@ const initialState: IStateProfile = {
   isFetching: false
 };
 
-const reducers: { [key: string]: (state, action: Action<any>) => IStateProfile } = {
+const reducers: { [key: string]: (state, action: Action<any>) => IState } = {
 
-  [LOAD_PROFILE]: (state: IStateProfile, action) => {
+  [Actions.LOAD_PROFILE]: (state: IState, action) => {
     if ( action.error ) {
       return {
         message: action.payload.message,
@@ -32,12 +31,12 @@ const reducers: { [key: string]: (state, action: Action<any>) => IStateProfile }
     };
   },
 
-  [UPDATE_FETCH_STATUS]: (state: IStateProfile, action: Action<boolean>) => ({
+  [Actions.UPDATE_FETCH_STATUS]: (state: IState, action: Action<boolean>) => ({
     isFetching : action.payload
   }),
 };
 
-export function profileReducer(state: IStateProfile = initialState, action: Action<any>): IStateProfile {
+export function reducer(state: IState = initialState, action: Action<any>): IState {
   if ( reducers[action.type] != null ) {
     return assign({}, state, reducers[action.type](state, action));
   }
