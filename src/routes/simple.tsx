@@ -28,7 +28,7 @@ function renderHandler(req, res, next) {
       initialState: JSON.stringify(initialProps)
     });
   });
-};
+}
 
 function getItems(url, callback) {
   fetch(url)
@@ -39,4 +39,4 @@ function getItems(url, callback) {
     console.log(error);
     throw error;
   });
-};
+}

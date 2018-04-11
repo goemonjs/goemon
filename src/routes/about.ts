@@ -1,13 +1,13 @@
-import * as express from 'express';
-var pjson = require('../../../package.json');
+import { Express, Router } from 'express';
+const pjson = require('../../package.json');
 
-let router = express.Router();
+let router = Router();
 
-module.exports = (app:express.Express) => {
+module.exports = (app: Express) => {
   app.use('/about', router);
 };
 
-router.get('/', (req:express.Request, res:express.Response, next:express.NextFunction) => {
+router.get('/', (req, res, next) => {
   // Cache-Control header sample
   res.header('Cache-Control', 'public, max-age=60000');
 

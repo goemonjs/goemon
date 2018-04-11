@@ -1,95 +1,59 @@
-import * as express from 'express';
+import { Express, Router } from 'express';
 import * as React from 'react';
 import * as Redux from 'redux';
 import { Provider } from 'react-redux';
-import { match, RouterContext, Router, Route, IndexRoute } from 'react-router';
 import { renderToString } from 'react-dom/server';
+import { StaticRouter } from 'react-router';
+import { matchRoutes, renderRoutes } from 'react-router-config';
+import { matchPath } from 'react-router-dom';
 import assign = require('object-assign');
 import { configureStore, IStore } from '../client/stores/configure-store';
-import { routes, createServerApp } from '../client/routes/redux-sample-route';
-import TodoListController from '../client/controllers/todo-list-controller';
+import { createServerApp, routes } from '../client/routes/redux-sample-route';
+import TodoListService from '../client/services/todo-list-service';
 import * as fs from 'fs';
 
-let router = express.Router();
-let jsDate:number = 0;
-let cssDate:number = 0;
+let router = Router();
+let jsDate: number = 0;
+let cssDate: number = 0;
 
-module.exports = function (app:express.Express) {
+module.exports = function (app: Express) {
   app.use('/redux', router);
 
   let path = require('path');
   let rootPath = path.normalize(__dirname + '/..');
 
   // Calc js modify date
-  var jsStats = fs.statSync(rootPath + '/public/js/redux-sample.js');
+  let jsStats = fs.statSync(rootPath + '/public/js/redux-sample.js');
   jsDate = jsStats.mtime.getFullYear() + jsStats.mtime.getMonth() + jsStats.mtime.getDay() + jsStats.mtime.getTime();
 };
 
-router.get('/', renderHandler);
+router.get('*', (req, res) => {
+  let context: any = {};
 
-function renderHandler(req, res, next) {
-
-  // res.header('Cache-Control', 'public, max-age=10000'); // 10s
-
-  // Match route
-  match({
-    routes,
-    location: req.url
-  }, (err, redirectLocation, renderProps) => {
-    if (err) {
-      // When errory
-      next(err);
-    } else if (redirectLocation) {
-      // When redirect
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-    } else if (renderProps) {
-
-      let host =  req.headers.host;
-      let protocol = (('https:' == req.protocol) ? 'https://' : 'http://');
-      let url = protocol + host + '/api/todos';
-
-      TodoListController.url = url;
-      TodoListController.getTodos().then((todos:any) => {
-
-        const initialState:IStore = {
-          todoState : {
-            message : 'Hello initial state! from server',
-            todos: todos,
-            isFetching:false
-          },
-          profileState : {
-            profile : {
-              name : 'No name'
-            }
-          }
-        };
-
-        // Rendering
-        const store = configureStore(initialState);
-        const app = createServerApp(store, renderProps);
-        const markup = renderToString(app);
-        const preloadedState = store.getState();
-
-        res.render('redux', {
-          title: 'EJS Server Rendering Title',
-          markup: markup,
-          initialState: JSON.stringify(preloadedState),
-          jsDate:jsDate
-        });
-      })
-      .catch( error => {
-        console.log(error);
-        let err:any = new Error('System Error');
-        err.status = 500;
-        err.stack = error.stack;
-        next(err);
-      } );
-
-    } else {
-      // Not Found
-      let err:any = new Error('Not Found');
-      err.status = 404;
-      next(err);
-    }
+  const store = configureStore();
+  const preloadedState = store.getState();
+  const branch = matchRoutes(routes, req.baseUrl + req.url);
+  const protocol = req.protocol;
+  const host = req.host + ':3000';
+  const promises = branch.map(({route}) => {
+    let fetchData = route.component.fetchData;
+    return fetchData instanceof Function ? fetchData(store, protocol, host) : Promise.resolve(null);
   });
-}
+  return Promise.all(promises).then((data) => {
+    let context: any = {};
+    const content = renderToString(createServerApp(req, context, store));
+
+    if ( context.status === 404) {
+      res.status(404);
+    } else if (context.status === 302) {
+      return res.redirect(302, context.url);
+    }
+
+    res.render('redux', {
+      title: 'EJS Server Rendering Title',
+      markup: content,
+      initialState: JSON.stringify(store.getState()),
+      jsDate: jsDate
+    });
+  });
+});

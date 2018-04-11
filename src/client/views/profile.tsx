@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import * as ProfileActions from '../actions/profile-actions';
 import { IStore } from '../stores/configure-store';
-import ProfileController from '../controllers/profile-controller';
+import ProfileService from '../services/profile-service';
 
 interface IProps {
   profile: any;
@@ -11,30 +11,16 @@ interface IProps {
 }
 
 interface IDispProps {
-  loadProfile:(isFetching) => void;
+  loadProfile: (isFetching) => void;
 }
 
-@connect(
-  (store:IStore) => ({
-    profile: store.profileState.profile,
-    isFetching: store.profileState.isFetching
-  }),
-  dispatch => ({
-    loadProfile: (isFetching): void => {
-      if ( !isFetching ) {
-        dispatch(ProfileActions.updateFetchStatus(true));
-        dispatch(ProfileActions.loadProfile());
-      }
-    }
-  })
-)
-export default class TodoListView extends React.Component<IProps & IDispProps, void> {
+class TodoListView extends React.Component<IProps & IDispProps, any> {
 
   render() {
-    var { profile, isFetching, loadProfile } = this.props;
+    let { profile, isFetching, loadProfile } = this.props;
     return (
       <div className="container">
-        <button type="button" class="btn btn-primary btn-sm" onClick={() => loadProfile(isFetching)} >Fetch</button>
+        <button type="button" className="btn btn-primary btn-sm" onClick={() => loadProfile(isFetching)} >Fetch</button>
         { isFetching ? <span> Feching...</span> : <span> Done</span> }
         <p>Fetch from <a href="/api/me">/api/me</a></p>
         <hr />
@@ -54,7 +40,22 @@ export default class TodoListView extends React.Component<IProps & IDispProps, v
   componentWillMount() {
     if ( typeof(document) != 'undefined' ) {
       let protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://');
-      ProfileController.url = protocol + location.host + '/api/me';
+      ProfileService.url = protocol + location.host + '/api/me';
     }
   }
 }
+
+export default connect(
+  (store: IStore) => ({
+    profile: store.profileState.profile,
+    isFetching: store.profileState.isFetching
+  }),
+  dispatch => ({
+    loadProfile: (isFetching): void => {
+      if ( !isFetching ) {
+        dispatch(ProfileActions.updateFetchStatus(true));
+        dispatch(ProfileActions.loadProfile());
+      }
+    }
+  })
+)(TodoListView);

@@ -8,9 +8,9 @@ start((message) => {
    console.log(message);
 });
 
-var config;
+let config;
 
-export function start(callback):any {
+export function start(callback) {
   let app = express();
 
   if ( 'development' === app.get('env') ) {

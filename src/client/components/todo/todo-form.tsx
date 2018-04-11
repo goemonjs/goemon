@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export interface IProps {
-  addTodo:(text: string) => void;
+  addTodo: (text: string) => void;
 }
 
 export interface IState {
@@ -19,7 +19,7 @@ export default class TodoFormComposer extends React.Component<IProps, IState> {
     this.setState(this.state);
   }
 
-  private handleSubmit(e: React.SyntheticEvent) {
+  private handleSubmit(e) {
     e.preventDefault();
     this.props.addTodo(this.state.text);
   }

@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { Link } from 'react-router';
+import * as ReactRouter from 'react-router';
+import * as ReactRouterDom from 'react-router-dom';
 
 export interface IMainState {
-  text:string;
-  items?:any;
-};
+  text: string;
+  items?: any;
+}
 
 export interface IMainProps {
-  items?:any;
-  children?:any;
-};
+  items?: any;
+  children?: any;
+}
 
 export default class SimpleApp extends React.Component<IMainProps, IMainState> {
 
@@ -18,15 +19,15 @@ export default class SimpleApp extends React.Component<IMainProps, IMainState> {
     items : []
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     // this binds
     this.onChange = this.onChange.bind(this);
     this.onClickAdd = this.onClickAdd.bind(this);
   }
 
-  componentWillMount() {
+  public componentWillMount() {
     this.state.items = this.props.items;
     this.setState(this.state);
   }
@@ -36,16 +37,16 @@ export default class SimpleApp extends React.Component<IMainProps, IMainState> {
   }
 
   public onClickAdd(e) {
-    var number = this.state.items.length + 1;
-    var item = {
-      id:number,
-      text:this.state.text
+    let itemCount = this.state.items.length + 1;
+    let item = {
+      id: itemCount,
+      text: this.state.text
     };
     this.state.items.push(item);
     this.setState(this.state);
   }
 
-  render() {
+  public render() {
     const { items = [] } = this.state;
     return (
       <div>

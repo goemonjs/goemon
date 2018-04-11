@@ -4,12 +4,12 @@ let path = require('path'),
 
 export default class DebugConfig {
   constructor(
-    public root?:string,
-    public port?:string,
-    public Session?:any
+    public root?: string,
+    public port?: string,
+    public Session?: any
   ) {
     this.root = rootPath;
-    this.port = process.env.PORT || 3000;
+    this.port = process.env.PORT || '3000';
     this.Session = {
         Secret: 'Aihd82920rjhdjqao299euudh3!@Zq',
         Resave: false,
@@ -19,8 +19,8 @@ export default class DebugConfig {
         }
     };
 
-    process.on('uncaughtException', (err:any) => {
+    process.on('uncaughtException', (err: any) => {
         console.log(err);
     });
   }
-};
+}

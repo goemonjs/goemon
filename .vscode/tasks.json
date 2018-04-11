@@ -11,7 +11,7 @@
           "taskName": "build",
           "args": [],
           "isBuildCommand": true,
-          "isWatching": false,
+          "isBackground": false,
           "problemMatcher": [
               "$lessCompile",
               "$tsc",

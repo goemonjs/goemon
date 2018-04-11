@@ -17,18 +17,20 @@
             "env": {
                 "NODE_ENV": "development"
             },
-            "externalConsole": false,
+            "console": "internalConsole",
             "sourceMaps": true,
-            "outDir": "${workspaceRoot}/built/src/"
+            "outFiles": [
+              "${workspaceRoot}/built/**/*"
+            ]
         },
         {
             "name": "Debug",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/built/src/app.js",
+            "program": "${workspaceRoot}/built/app.js",
             "stopOnEntry": false,
             "args": [],
-            "cwd": "${workspaceRoot}",            
+            "cwd": "${workspaceRoot}",
             "runtimeExecutable": null,
             "runtimeArgs": [
                 "--nolazy"
@@ -36,9 +38,11 @@
             "env": {
                 "NODE_ENV": "development"
             },
-            "externalConsole": false,
+            "console":"internalConsole",
             "sourceMaps": true,
-            "outDir": "${workspaceRoot}/built/src/"
+            "outFiles": [
+              "${workspaceRoot}/built/**/*"
+            ]
         },
         {
             "name": "Attach",
@@ -48,9 +52,25 @@
             "address": "localhost",
             "restart": false,
             "sourceMaps": false,
-            "outDir": null,
+            "outFiles": [
+              "${workspaceRoot}/built/src/**/*"
+            ],
             "localRoot": "${workspaceRoot}",
             "remoteRoot": null
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Test with Debug",
+            "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "console": "internalConsole",
+            "sourceMaps": true,
+            "outFiles": [
+              "${workspaceRoot}/built/test/**/*"
+            ]
         }
     ]
 }
