@@ -31,6 +31,7 @@
     "node": "8.9.1"
   },
   "dependencies": {
+    "@types/object-assign": "^4.0.30",
     "apollo-boost": "^0.1.4",
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-client": "^2.2.8",

@@ -5,7 +5,7 @@ export default class Todo {
     public completed: boolean = false,
     public id?: number
   ) {
-    if ( id == null ) {
+    if ( id == undefined ) {
       this.id = Date.now();
     }
   }

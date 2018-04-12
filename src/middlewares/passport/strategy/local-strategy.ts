@@ -17,10 +17,10 @@ function enableLocalStrategy() {
       UserService.authenticate(userid, PassportUtility.getHash(password), (result) => {
           if ( result ) {
             UserService.findById(userid, (user) => {
-              return done(null, user);
+              return done(undefined, user);
             });
           } else {
-            return done(null, false, { message: 'Failed to login.' });
+            return done(undefined, false, { message: 'Failed to login.' });
           }
       });
     }

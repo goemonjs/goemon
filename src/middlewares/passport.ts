@@ -22,9 +22,9 @@ module.exports = (app: express.Express) => {
 
 function enableSessionSelialization() {
   passport.serializeUser( (user: any, callback: any) => {
-    callback(null, user);
+    callback(undefined, user);
   });
   passport.deserializeUser( (obj: any, callback: any) => {
-    callback(null, obj);
+    callback(undefined, obj);
   });
 }

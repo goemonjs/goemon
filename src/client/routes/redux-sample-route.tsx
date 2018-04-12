@@ -45,7 +45,7 @@ export const createClientApp = (store) => {
     },
   }, {
     avatar: {
-      borderColor: null,
+      borderColor: undefined,
     }
   });
 
@@ -71,7 +71,7 @@ export const createServerApp = (req, context, store) => {
     },
   }, {
     avatar: {
-      borderColor: null,
+      borderColor: undefined,
     },
     userAgent: req.headers['user-agent'],
   });

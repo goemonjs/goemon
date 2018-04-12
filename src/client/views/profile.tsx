@@ -38,7 +38,7 @@ class TodoListView extends React.Component<IProps & IDispProps, any> {
 
   // It is called both server rendering and client rendering
   componentWillMount() {
-    if ( typeof(document) != 'undefined' ) {
+    if ( typeof(document) !== 'undefined' ) {
       let protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://');
       ProfileService.url = protocol + location.host + '/api/me';
     }
