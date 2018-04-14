@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Theme, withStyles, WithStyles } from 'material-ui/styles';
 
 import * as ProfileActions from '../actions/profile-actions';
 import { IStore } from '../stores/configure-store';
@@ -14,18 +15,25 @@ interface IDispProps {
   loadProfile: (isFetching) => void;
 }
 
-class TodoListView extends React.Component<IProps & IDispProps, any> {
+const styles = (theme: Theme) => ( {
+});
+
+const styleTypes = {
+};
+
+type ClassNames = keyof typeof styleTypes;
+
+class ProfileView extends React.Component<IProps & IDispProps & WithStyles<ClassNames>, any> {
 
   render() {
     let { profile, isFetching, loadProfile } = this.props;
     return (
-      <div className="container">
+      <div>
+        <h2>UserId : { profile.userid }</h2>
+        <h2>Username : { profile.username }</h2>
         <button type="button" className="btn btn-primary btn-sm" onClick={() => loadProfile(isFetching)} >Fetch</button>
         { isFetching ? <span> Feching...</span> : <span> Done</span> }
         <p>Fetch from <a href="/api/me">/api/me</a></p>
-        <hr />
-        <h2>UserId : { profile.userid }</h2>
-        <h2>Username : { profile.username }</h2>
       </div>
     );
   }
@@ -58,4 +66,4 @@ export default connect(
       }
     }
   })
-)(TodoListView);
+)(ProfileView);

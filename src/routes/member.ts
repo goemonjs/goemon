@@ -6,7 +6,7 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 import { matchPath } from 'react-router-dom';
 import PassportUtility from '../middlewares/passport/passport-utility';
 import { configureStore, IStore } from '../client/stores/configure-store';
-import { routes, theme } from '../client/routes/member-sample-route';
+import { routes, theme } from '../client/routes/member-route';
 import { renderOnServer } from '../client/base/common/route';
 
 const passport = require('passport');

@@ -16,7 +16,7 @@ export const mailFolderListItems = (
       <ListItemIcon>
         <InboxIcon />
       </ListItemIcon>
-      <ListItemText primary="入稿" />
+      <ListItemText primary="Upload" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>

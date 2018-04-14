@@ -7,7 +7,7 @@ import { renderToString } from 'react-dom/server';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { MuiThemeProvider, createMuiTheme, createGenerateClassName } from 'material-ui/styles';
-import { Theme } from 'material-ui/styles';
+import { lightBlue, red  } from 'material-ui/colors';
 
 export function createClientApp(routes, theme, store) {
 

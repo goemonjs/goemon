@@ -25,8 +25,9 @@ export const routes = [
 export const theme = createMuiTheme({
   palette: {
     primary: lightBlue,
+    grey: red,
     type: 'light'
-  },
+  }
 });
 
  // Grab the CSS from our sheetsRegistry.
