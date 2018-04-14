@@ -16,7 +16,7 @@ const config = [
     entry: {
       'simple-sample' : './src/client/simple-sample',
       'redux-sample' : './src/client/redux-sample',
-      'auth-sample' : './src/client/auth-sample'
+      'member-sample' : './src/client/member-sample'
     },
     // watch: true,
     output: {

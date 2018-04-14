@@ -8,7 +8,7 @@ import SimpleApp from '../client/apps/simple-app';
 let router = express.Router();
 
 module.exports = function (app: express.Express) {
-  app.use('/simple', router);
+  app.use('/material', router);
 };
 
 router.get('/', renderHandler);
@@ -22,7 +22,7 @@ function renderHandler(req, res, next) {
     const initialProps = { items };
     const markup = renderToString(<SimpleApp { ...initialProps } />);
 
-    res.render('simple', {
+    res.render('material', {
       title: 'React Simple Server Rendering Sample',
       markup: markup,
       initialState: JSON.stringify(initialProps)
