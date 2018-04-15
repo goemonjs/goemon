@@ -22,8 +22,8 @@ module.exports = function (app: Express) {
   let rootPath = path.normalize(__dirname + '/..');
 
   // Calc js modify date
-  let jsStats = fs.statSync(rootPath + '/public/js/redux-sample.js');
-  jsDate = jsStats.mtime.getFullYear() + jsStats.mtime.getMonth() + jsStats.mtime.getDay() + jsStats.mtime.getTime();
+  // let jsStats = fs.statSync(rootPath + '/public/js/redux-sample.js');
+  // jsDate = jsStats.mtime.getFullYear() + jsStats.mtime.getMonth() + jsStats.mtime.getDay() + jsStats.mtime.getTime();
 };
 
 router.get('*', (req, res) => {

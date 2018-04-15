@@ -1,6 +1,6 @@
 {
   "name": "boilerplate-react-express",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Boilerplate using React and Express with server-side rendering.",
   "main": "app.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -93,6 +93,7 @@
     "@types/react-router": "^4.0.23",
     "@types/react-router-dom": "^4.2.6",
     "@types/react-tap-event-plugin": "0.0.30",
+    "@types/supertest": "^2.0.4",
     "autoprefixer": "^8.2.0",
     "awesome-typescript-loader": "^5.0.0",
     "babel-core": "^6.26.0",
@@ -136,6 +137,7 @@
     "run-sequence": "^2.2.1",
     "sinon": "^4.5.0",
     "supertest": "^3.0.0",
+    "supertest-session": "^3.1.2",
     "ts-jest": "^22.4.2",
     "ts-loader": "^4.2.0",
     "tslint": "^5.9.1",

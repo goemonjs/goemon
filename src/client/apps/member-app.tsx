@@ -9,7 +9,7 @@ import { NotFound } from '../views/components/notfound';
 import { lightBlue, red  } from 'material-ui/colors';
 
 interface IProps  {
-  // match: any;
+  // routes: any;
 }
 
 interface IState {
@@ -18,7 +18,7 @@ interface IState {
 
 export const routes = [
   {
-    path: '/member/',
+    path: '/member',
     component: MemberView,
     exact: true
   }, {

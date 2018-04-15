@@ -25,6 +25,7 @@
     "./built",
     "./node_modules",
     "gulpfile.js",
-    "webpack.config.js"
+    "webpack.config.js",
+    "__test__"
   ]
 }

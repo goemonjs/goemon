@@ -50,7 +50,7 @@ export function renderOnServer(componant, theme, req, context, store) {
     <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
       <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
         <Provider store={store}>
-          <StaticRouter location={req.baseUrl} context={context}>
+          <StaticRouter location={req.baseUrl + req.url} context={context}>
             {componant}
           </StaticRouter>
         </Provider>

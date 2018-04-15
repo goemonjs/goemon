@@ -85,12 +85,21 @@ class AppServer {
     });
 
     // Setup routes
-    let routes = glob.sync(config.root + '/routes/*.js');
-        routes.forEach(function (routes) {
-            require(routes)(app);
-        });
+    // let routes = glob.sync(__dirname + '/routes/*');
+    //   routes.forEach(function (routes) {
+    //     require(routes)(app);
+    //   });
 
-    // Comment out if you want to specify root files directly
+    require(__dirname + '/routes/about')(app);
+    require(__dirname + '/routes/api')(app);
+    require(__dirname + '/routes/hello')(app);
+    require(__dirname + '/routes/index')(app);
+    require(__dirname + '/routes/material')(app);
+    require(__dirname + '/routes/member')(app);
+    require(__dirname + '/routes/redux')(app);
+    require(__dirname + '/routes/simple')(app);
+
+    // Use this if you want to specify root files directly
     // require(config.root + '/routes/index.js')(app);
     // require(config.root + '/routes/api.js')(app);
     // require(config.root + '/routes/redux.js')(app);
@@ -110,13 +119,13 @@ class AppServer {
     // development error handler
     // will print stacktrace
     if (app.get('env') === 'development') {
-    app.use((err: any, req: any, res: any, next: any) => {
-        res.status(err.status || 500);
-        res.render('error', {
-        message: err.message,
-        error: err
-        });
-    });
+      app.use((err: any, req: any, res: any, next: any) => {
+          res.status(err.status || 500);
+          res.render('error', {
+          message: err.message,
+          error: err
+          });
+      });
     }
 
     // production error handler
@@ -130,9 +139,9 @@ class AppServer {
     });
   }
 
-  public start(callback) {
+  public async start() {
     this.app.listen(this.config.port, () => {
-      callback('Express server listening on port ' + this.config.port);
+      return ('Express server listening on port ' + this.config.port);
     });
   }
 }
