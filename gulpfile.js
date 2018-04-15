@@ -39,7 +39,7 @@ gulp.task('tsc', function (cb) {
 
 // Task for development.
 gulp.task('develop', ['copy-assets', 'tsc', 'css', 'lint'], function () {
-  return runSequence('watch', 'webpack', 'jest', 'start', 'webpack:watch');
+  return runSequence('watch', 'webpack', 'test', 'start', 'webpack:watch');
 });
 
 // Start server and nodemon
@@ -168,7 +168,7 @@ gulp.task('watch', () => {
     console.log('File(ts) ' + event.path + ' was ' + event.type);
   });
 
-  gulp.watch('./src/**/*.test.ts', ()=> { return runSequence( 'tsc', 'jest'); })
+  gulp.watch('./src/**/*.test.ts', ()=> { return runSequence( 'tsc', 'test'); })
     .on('change', function(event) {
       console.log('File(test) ' + event.path + ' was ' + event.type);
     });
