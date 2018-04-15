@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Express, Router } from 'express';
 import * as fs from 'fs';
 
@@ -6,8 +7,8 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 import { matchPath } from 'react-router-dom';
 import PassportUtility from '../middlewares/passport/passport-utility';
 import { configureStore, IStore } from '../client/stores/configure-store';
-import { routes, theme } from '../client/routes/member-route';
 import { renderOnServer } from '../client/base/common/route';
+import { MemberApp, routes, theme } from '../client/apps/member-app';
 
 const passport = require('passport');
 const router = Router();
@@ -32,20 +33,23 @@ router.get('/logout', (req: any, res) => {
 
 router.get('*', isAuthenticated, (req, res) => {
   let context: any = {};
+  const protocol = req.protocol;
+  let host = req.headers.host;
 
   const store = configureStore();
   const preloadedState = store.getState();
+
+  // getInitalProps
   const branch = matchRoutes(routes, req.baseUrl + req.url);
-  const protocol = req.protocol;
-  let host = req.headers.host;
   const promises = branch.map(({route}) => {
     let getInitialProps = route.component.getInitialProps;
     return getInitialProps instanceof Function ? getInitialProps(store, protocol, host) : Promise.resolve(undefined);
   });
   return Promise.all(promises).then((data) => {
+    // render on server side
     let context: any = {};
 
-    let contents = renderOnServer(routes, theme, req, context, store);
+    let contents = renderOnServer(<MemberApp />, theme, req, context, store);
 
     if ( context.status === 404) {
       res.status(404);

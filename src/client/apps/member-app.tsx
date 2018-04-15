@@ -1,18 +1,45 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 import { Link, match } from 'react-router-dom';
-import MemberView from '../views/member';
+import { renderRoutes } from 'react-router-config';
+import { createMuiTheme } from 'material-ui/styles';
+import MemberView from '../views/member-view';
 import Profile from '../views/profile';
+import { NotFound } from '../views/components/notfound';
+import { lightBlue, red  } from 'material-ui/colors';
 
 interface IProps  {
-  match: any;
+  // match: any;
 }
 
 interface IState {
   hasError: boolean;
 }
 
-export default class MemberApp extends React.Component<IProps, IState> {
+export const routes = [
+  {
+    path: '/member/',
+    component: MemberView,
+    exact: true
+  }, {
+    path: '/member/profile',
+    component: Profile,
+    exact: true
+  }, {
+    path: '/*',
+    component: NotFound
+  }
+];
+
+export const theme = createMuiTheme({
+  palette: {
+    primary: lightBlue,
+    grey: red,
+    type: 'light'
+  }
+});
+
+export class MemberApp extends React.Component<IProps, IState> {
   // Remove the server-side injected CSS.
   componentDidMount() {
     const jssStyles = document.getElementById('jss-server-side');
@@ -22,16 +49,9 @@ export default class MemberApp extends React.Component<IProps, IState> {
   }
 
   render () {
-    const { match } = this.props;
+    // const { match } = this.props;
     return (
-      <Switch>
-        <Route exact path={`${match.url}`} component={MemberView} />
-        <Route exact path={`${match.url}/profile`} component={Profile} />
-      </Switch>
+      renderRoutes(routes)
     );
   }
-
-  // render() {
-  //   return <MemberView />;
-  // }
 }

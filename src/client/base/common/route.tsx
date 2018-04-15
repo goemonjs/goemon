@@ -7,9 +7,18 @@ import { renderToString } from 'react-dom/server';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { MuiThemeProvider, createMuiTheme, createGenerateClassName } from 'material-ui/styles';
-import { lightBlue, red  } from 'material-ui/colors';
 
-export function createClientApp(routes, theme, store) {
+interface IProps  {
+  store: any;
+  theme: any;
+  match: any;
+}
+
+interface IState {
+  hasError: boolean;
+}
+
+export function createClientApp(componant, theme, store) {
 
   // Create a sheetsRegistry instance.
   const sheetsRegistry = new SheetsRegistry();
@@ -21,7 +30,7 @@ export function createClientApp(routes, theme, store) {
       <MuiThemeProvider theme={theme}>
         <Provider store={store}>
           <BrowserRouter>
-            {renderRoutes(routes)}
+             {componant}
           </BrowserRouter>
         </Provider>
       </MuiThemeProvider>
@@ -30,7 +39,7 @@ export function createClientApp(routes, theme, store) {
 }
 
 // Render the component to a string.
-export function renderOnServer(routes, theme, req, context, store) {
+export function renderOnServer(componant, theme, req, context, store) {
 
   // Create a sheetsRegistry instance.
   const sheetsRegistry = new SheetsRegistry();
@@ -42,7 +51,7 @@ export function renderOnServer(routes, theme, req, context, store) {
       <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
         <Provider store={store}>
           <StaticRouter location={req.baseUrl} context={context}>
-            {renderRoutes(routes)}
+            {componant}
           </StaticRouter>
         </Provider>
       </MuiThemeProvider>

@@ -33,12 +33,12 @@ export default class SimpleApp extends React.Component<IMainProps, IMainState> {
     this.onClickAdd = this.onClickAdd.bind(this);
   }
 
-  public componentWillMount() {
+  public componentDidMount() {
     this.state.items = this.props.items;
     this.setState(this.state);
   }
 
-  componentDidCatch(error, info) {
+  public componentDidCatch(error, info) {
     // Display fallback UI
     this.setState({
        hasError: true,

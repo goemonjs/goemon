@@ -10,7 +10,7 @@ import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import MenuItem from 'material-ui/Menu/MenuItem';
-import { mailFolderListItems, otherMailFolderListItems } from '../components/tileData';
+import { mailFolderListItems, otherMailFolderListItems } from './components/tileData';
 
 const drawerWidth = 240;
 

@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import TodoApp from '../apps/todo-app';
 import TodoList from '../views/todo-list';
 import TodoCounter from '../views/todo-counter';
-import { NotFound } from '../components/notfound';
+import { NotFound } from '../views/components/notfound';
 
 export const routes = [
   {
