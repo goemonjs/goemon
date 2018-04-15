@@ -14,7 +14,7 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?)$",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
     "moduleFileExtensions": [
       "js",
       "jsx",
@@ -37,6 +37,7 @@
     "apollo-boost": "^0.1.4",
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-client": "^2.2.8",
+    "apollo-fetch": "^0.7.0",
     "apollo-link-http": "^1.5.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
@@ -87,7 +88,7 @@
     "@types/history": "^4.6.2",
     "@types/jest": "^22.2.0",
     "@types/mongoose": "^5.0.9",
-    "@types/node": "^8.0.16",
+    "@types/node": "^8.10.8",
     "@types/react": "^16.0.38",
     "@types/react-dom": "^16.0.4",
     "@types/react-redux": "^5.0.15",
