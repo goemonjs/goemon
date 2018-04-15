@@ -187,6 +187,13 @@ gulp.task('test', () => {
 // Run test by typescript and watch
 gulp.task('test:tswatch', () => {
   jest.runCLI({
+    watch: true,
+    testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
+   }, [__dirname]);
+});
+
+gulp.task('test:tswatch:all', () => {
+  jest.runCLI({
     watchAll: true,
     testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
    }, [__dirname]);
