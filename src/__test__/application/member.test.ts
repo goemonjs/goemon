@@ -18,7 +18,7 @@ describe('Test sample', () => {
 
   test('/member/profile ( not authorized )', async () => {
     const response = await supertest(myApp).get('/member/profile');
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(302);
   });
 
   it('/member/profile', (done) => {
