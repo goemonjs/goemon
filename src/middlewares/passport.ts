@@ -2,7 +2,7 @@ import * as express from 'express';
 
 let passport = require('passport');
 let session = require('express-session');
-let glob = require('glob');
+import * as glob from 'glob';
 let path = require('path');
 
 module.exports = (app: express.Express) => {
@@ -14,7 +14,7 @@ module.exports = (app: express.Express) => {
 
   // Load strategies
   let strategiesPath = path.normalize(__dirname + '/passport/strategy');
-  let auth = glob.sync(strategiesPath + '/*.js');
+  let auth = glob.sync(strategiesPath + '/*.+(js|ts|jsx|tsx)');
   auth.forEach(function (routes) {
     require(routes)(app);
   });

@@ -79,27 +79,27 @@ class AppServer {
     app.use(passport.session());
 
     // Setup auth
-    // let auth = glob.sync(config.root + '/middlewares/*.js');
-    // auth.forEach(function (routes) {
-    //   require(routes)(app);
-    // });
+    let auth = glob.sync(config.root + '/middlewares/*.+(js|ts|jsx|tsx)');
+    auth.forEach(function (routes) {
+      require(routes)(app);
+    });
 
-    require(__dirname + '/middlewares/passport')(app);
+    // require(__dirname + '/middlewares/passport')(app);
 
     // Setup routes
-    // let routes = glob.sync(__dirname + '/routes/*');
-    //   routes.forEach(function (routes) {
-    //     require(routes)(app);
-    //   });
+    let routes = glob.sync(__dirname + '/routes/*.+(js|ts|jsx|tsx)');
+      routes.forEach(function (routes) {
+        require(routes)(app);
+      });
 
-    require(__dirname + '/routes/about')(app);
-    require(__dirname + '/routes/api')(app);
-    require(__dirname + '/routes/hello')(app);
-    require(__dirname + '/routes/index')(app);
-    require(__dirname + '/routes/material')(app);
-    require(__dirname + '/routes/member')(app);
-    require(__dirname + '/routes/redux')(app);
-    require(__dirname + '/routes/simple')(app);
+    // require(__dirname + '/routes/about')(app);
+    // require(__dirname + '/routes/api')(app);
+    // require(__dirname + '/routes/hello')(app);
+    // require(__dirname + '/routes/index')(app);
+    // require(__dirname + '/routes/material')(app);
+    // require(__dirname + '/routes/member')(app);
+    // require(__dirname + '/routes/redux')(app);
+    // require(__dirname + '/routes/simple')(app);
 
     // Use this if you want to specify root files directly
     // require(config.root + '/routes/index.js')(app);
