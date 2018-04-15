@@ -79,10 +79,12 @@ class AppServer {
     app.use(passport.session());
 
     // Setup auth
-    let auth = glob.sync(config.root + '/middlewares/*.js');
-    auth.forEach(function (routes) {
-      require(routes)(app);
-    });
+    // let auth = glob.sync(config.root + '/middlewares/*.js');
+    // auth.forEach(function (routes) {
+    //   require(routes)(app);
+    // });
+
+    require(__dirname + '/middlewares/passport')(app);
 
     // Setup routes
     // let routes = glob.sync(__dirname + '/routes/*');

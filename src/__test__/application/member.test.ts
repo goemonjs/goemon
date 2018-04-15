@@ -1,38 +1,41 @@
-const app = require('../../app');
-const session = require('supertest-session');
+import * as myApp from '../../app';
 import * as supertest from 'supertest';
-
-let agent = supertest.agent();
 
 describe('Test sample', () => {
 
-  let testSession = null;
-  let authenticatedSession;
+  let agent: supertest.SuperTest<supertest.Test>;
 
-  beforeEach(function (done) {
-    testSession = session(app);
+  beforeEach((done) => {
+    agent = supertest.agent(myApp);
+    agent
+      .post('/member/login')
+      .send({
+        userid: 'test@example.com',
+        password: 'test',
+      })
+      .expect(302, done);
   });
 
-  it('/member/login', function (done) {
-    testSession.post('/member/login')
-      .send({ userid: 'test@example.com', password: 'test' })
-      .expect(302)
-      .end(function (err) {
-        if (err) { return done(err); }
-        authenticatedSession = testSession;
-        return done();
-      });
+  test('/member/profile ( not authorized )', async () => {
+    const response = await supertest(myApp).get('/member/profile');
+    expect(response.status).toBe(401);
   });
 
-  it('/member/profile', function (done) {
-    authenticatedSession.get('/member/profile')
+  it('/member/profile', (done) => {
+    agent.get('/member/profile')
       .expect(200)
       .end(done);
   });
 
-  it('/member/profile2', function (done) {
-    authenticatedSession.get('/member/profile2')
-      .expect(404)
-      .end(done);
+  it('/api/me', (done) => {
+    agent.get('/api/me')
+      .expect(200)
+      .end((err, response) => {
+        expect(response.type).toBe('application/json');
+        let result = JSON.parse(response.text);
+        let expected = {id: 1, userid: 'test@example.com', username: 'Test User'};
+        expect(result).toEqual(expected);
+        done();
+      });
   });
 });
