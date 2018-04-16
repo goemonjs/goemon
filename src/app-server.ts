@@ -1,30 +1,28 @@
 import * as express from 'express';
-let domain = require('domain');
-let path = require('path');
-let favicon = require('serve-favicon');
-let logger = require('morgan');
-let cookieParser = require('cookie-parser');
-let bodyParser = require('body-parser');
-let session = require('express-session');
-let passport = require('passport');
-let expressValidator = require('express-validator');
-let glob = require('glob');
-let flash = require('connect-flash');
+import * as session from 'express-session';
 
-const CACHE_TIMEOUT = 60000;  // ms
-
-import Config from './config/config';
+import { ConfigType } from './config/config';
+const domain = require('domain');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const expressValidator = require('express-validator');
+const glob = require('glob');
+const flash = require('connect-flash');
 
 class AppServer {
 
   public app: any; //express app
-  public config: Config;
+  public config: ConfigType;
 
   constructor() {
   }
 
   // start express application
-  public initalize(app: any, config: Config) {
+  public initalize(app: any, config: ConfigType) {
     this.app = app;
     this.config = config;
 
@@ -50,10 +48,10 @@ class AppServer {
 
     // session
     app.use(session({
-          secret: config.Session.Secret,
-          resave: config.Session.Resave,
-          saveUninitialized: config.Session.SaveUninitialized,
-          cookie: { maxAge: config.Session.Cookie.MaxAge }
+      secret: config.session.secret,
+      resave: config.session.resave,
+      saveUninitialized: config.session.saveUninitialized,
+      cookie: { maxAge: config.session.cookie.maxAge }
     }));
 
     // public folder path
@@ -101,14 +99,6 @@ class AppServer {
     // require(__dirname + '/routes/redux')(app);
     // require(__dirname + '/routes/simple')(app);
 
-    // Use this if you want to specify root files directly
-    // require(config.root + '/routes/index.js')(app);
-    // require(config.root + '/routes/api.js')(app);
-    // require(config.root + '/routes/redux.js')(app);
-    // require(config.root + '/routes/simple.js')(app);
-    // require(config.root + '/routes/about.js')(app);
-    // require(config.root + '/routes/auth.js')(app);
-
     // catch 404 and forward to error handler
     app.use((req: any, res: any, next: any) => {
       let err: any = new Error('Not Found');
@@ -122,22 +112,22 @@ class AppServer {
     // will print stacktrace
     if (app.get('env') === 'development') {
       app.use((err: any, req: any, res: any, next: any) => {
-          res.status(err.status || 500);
-          res.render('error', {
-          message: err.message,
-          error: err
-          });
+        res.status(err.status || 500);
+        res.render('error', {
+        message: err.message,
+        error: err
+        });
       });
     }
 
     // production error handler
     // no stacktraces leaked to user
     app.use((err: any, req: any, res: any, next: any) => {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: {}
-        });
+      res.status(err.status || 500);
+      res.render('error', {
+        message: err.message,
+        error: {}
+      });
     });
   }
 

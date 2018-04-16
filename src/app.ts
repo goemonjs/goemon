@@ -1,16 +1,38 @@
 ﻿import * as express from 'express';
-
-import Config from './config/config';
-import DebugConfig from './config/config-debug';
+let path = require('path');
+import { ConfigType } from './config/config';
+// import DebugConfig from './config/config-debug';
 import AppServer from './app-server';
 
 let app = express();
-let config;
+let config: ConfigType;
 
 if ( 'development' === app.get('env') ) {
-  config = new DebugConfig();
+  config = {
+    root: path.normalize(__dirname),
+    port: process.env.PORT || '3000',
+    session: {
+      secret: 'Aihd82920rjhdjqao299euudh3!@Zq',
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge : 3600000 // 60 * 60 * 1000
+      }
+    }
+  };
 } else {
-  config = new Config();
+  config = {
+    root: path.normalize(__dirname),
+    port: process.env.PORT,
+    session: {
+      secret: 'Aihd82920rjhdjqao299euudh3!@Zq',
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge : 3600000 // 60 * 60 * 1000
+      }
+    }
+  };
 }
 
 AppServer.initalize(app, config);
@@ -26,5 +48,9 @@ AppServer.initalize(app, config);
 //     return app;
 //   });
 // }
+
+process.on('uncaughtException', (err: any) => {
+  console.log(err);
+});
 
 module.exports = app;

@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.42",
+    "@types/express-session": "^1.15.8",
     "@types/object-assign": "^4.0.30",
     "@types/prop-types": "^15.5.2",
     "apollo-boost": "^0.1.4",
@@ -50,6 +51,7 @@
     "express-react-views": "^0.10.5",
     "express-session": "^1.15.6",
     "express-validator": "^5.1.1",
+    "firebase": "^4.12.1",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",
     "history": "^4.7.2",
@@ -59,6 +61,7 @@
     "json-loader": "^0.5.7",
     "material-ui": "^1.0.0-beta.41",
     "memory-cache": "^0.2.0",
+    "mongodb-memory-server": "^1.7.3",
     "mongoose": "^5.0.14",
     "morgan": "^1.9.0",
     "node-fetch": "^2.1.2",
