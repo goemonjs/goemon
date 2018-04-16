@@ -1,4 +1,4 @@
-import * as myApp from '../../app';
+import * as app from '../../app';
 import * as supertest from 'supertest';
 
 describe('Test sample', () => {
@@ -6,7 +6,7 @@ describe('Test sample', () => {
   let agent: supertest.SuperTest<supertest.Test>;
 
   beforeEach((done) => {
-    agent = supertest.agent(myApp);
+    agent = supertest.agent(app.init());
     agent
       .post('/member/login')
       .send({
@@ -17,7 +17,7 @@ describe('Test sample', () => {
   });
 
   test('/member/profile ( not authorized )', async () => {
-    const response = await supertest(myApp).get('/member/profile');
+    const response = await supertest(app.init()).get('/member/profile');
     expect(response.status).toBe(302);
   });
 

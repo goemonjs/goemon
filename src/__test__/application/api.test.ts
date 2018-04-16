@@ -1,20 +1,20 @@
-﻿import * as myApp from '../../app';
+﻿import * as app from '../../app';
 import * as supertest from 'supertest';
 
 describe('Test sample', () => {
 
   test('/', async () => {
-    const response = await supertest(myApp).get('/');
+    const response = await supertest(app.init()).get('/');
     expect(response.status).toBe(200);
   });
 
   test('/redux', async () => {
-    const response = await supertest(myApp).get('/redux');
+    const response = await supertest(app.init()).get('/redux');
     expect(response.status).toBe(200);
   });
 
   test('/api/items', async () => {
-    const response = await supertest(myApp).get('/api/items');
+    const response = await supertest(app.init()).get('/api/items');
     expect(response.status).toBe(200);
     expect(response.type).toBe('application/json');
     let result = JSON.parse(response.text);
@@ -23,7 +23,7 @@ describe('Test sample', () => {
   });
 
   test('/api/me', async () => {
-    const response = await supertest(myApp).get('/api/me');
+    const response = await supertest(app.init()).get('/api/me');
     expect(response.status).toBe(401);
   });
 });

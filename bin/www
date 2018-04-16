@@ -1,43 +1,5 @@
 #!/usr/bin/env node
-var express = require('express');
-var path = require('path');
-var app_server = require('../built/app-server');
+const app = require('../built/app');
 
-start(function (message) {
-    console.log(message);
-});
-var config;
-function start(callback) {
-  var app = express();
-  if ('development' === app.get('env')) {
-    config = {
-      root: path.normalize(__dirname + '/../built'),
-      port: process.env.PORT || '3000',
-      session: {
-        secret: 'Aihd82920rjhdjqao299euudh3!@Zq',
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-          maxAge: 3600000
-        }
-      }
-    };
-  } else {
-    config = {
-      root: path.normalize(__dirname + '/../built'),
-      port: process.env.PORT,
-      session: {
-        secret: 'Aihd82920rjhdjqao299euudh3!@Zq',
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-          maxAge: 3600000
-        }
-      }
-    };
-  }
-
-  app_server.default.initalize(app, config);
-  app_server.default.start(callback);
-  return app;
-}
+app.init();
+app.start();

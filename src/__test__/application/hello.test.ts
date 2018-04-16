@@ -1,4 +1,4 @@
-import * as myApp from '../../app';
+import * as app from '../../app';
 import * as supertest from 'supertest';
 
 describe('/hello test', () => {
@@ -6,7 +6,7 @@ describe('/hello test', () => {
   let agent: supertest.SuperTest<supertest.Test>;
 
   test('/hello', (done) => {
-    const request = supertest.agent(myApp);
+    const request = supertest.agent(app.init());
     const query = {
       query: `
         query {
