@@ -14,10 +14,10 @@ function enableBasicStrategy() {
       UserService.authenticate(userid, PassportUtility.getHash(password), (result) => {
         if ( result ) {
           UserService.findById(userid, (user) => {
-            return done(null, user);
+            return done(undefined, user);
           });
         } else {
-          return done('error', null);
+          return done('error', undefined);
         }
       });
     }

@@ -3,10 +3,10 @@ import * as fetch from 'isomorphic-fetch';
 export default class ProfileService {
 
   public static url: string;
-  public static getProfile() {
+  public static getProfile(url: string) {
     return new Promise((resolve, reject) => {
       console.log(ProfileService.url);
-      fetch(ProfileService.url, {
+      fetch(url, {
         credentials: 'include', //pass cookies, for authentication
         //method: 'post',
         // headers: {

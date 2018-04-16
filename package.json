@@ -1,6 +1,6 @@
 {
   "name": "boilerplate-react-express",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Boilerplate using React and Express with server-side rendering.",
   "main": "app.js",
   "scripts": {
@@ -16,10 +16,10 @@
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
     "moduleFileExtensions": [
-      "ts",
-      "tsx",
       "js",
       "jsx",
+      "ts",
+      "tsx",
       "json",
       "node"
     ]
@@ -28,12 +28,17 @@
     "name": "Lunascape Corporation"
   },
   "engines": {
-    "node": "8.9.1"
+    "node": "8.9.4"
   },
   "dependencies": {
+    "@material-ui/icons": "^1.0.0-beta.42",
+    "@types/express-session": "^1.15.8",
+    "@types/object-assign": "^4.0.30",
+    "@types/prop-types": "^15.5.2",
     "apollo-boost": "^0.1.4",
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-client": "^2.2.8",
+    "apollo-fetch": "^0.7.0",
     "apollo-link-http": "^1.5.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
@@ -46,6 +51,7 @@
     "express-react-views": "^0.10.5",
     "express-session": "^1.15.6",
     "express-validator": "^5.1.1",
+    "firebase": "^4.12.1",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",
     "history": "^4.7.2",
@@ -53,14 +59,16 @@
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.3.1",
     "json-loader": "^0.5.7",
-    "material-ui": "^0.20.0",
+    "material-ui": "^1.0.0-beta.41",
     "memory-cache": "^0.2.0",
+    "mongodb-memory-server": "^1.7.3",
     "mongoose": "^5.0.14",
     "morgan": "^1.9.0",
     "node-fetch": "^2.1.2",
     "passport": "^0.4.0",
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0",
+    "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-google-ad": "^1.0.2",
@@ -79,17 +87,18 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
+    "@types/glob": "^5.0.35",
     "@types/history": "^4.6.2",
     "@types/jest": "^22.2.0",
-    "@types/material-ui": "^0.21.0",
     "@types/mongoose": "^5.0.9",
-    "@types/node": "^8.0.16",
+    "@types/node": "^8.10.8",
     "@types/react": "^16.0.38",
     "@types/react-dom": "^16.0.4",
     "@types/react-redux": "^5.0.15",
     "@types/react-router": "^4.0.23",
     "@types/react-router-dom": "^4.2.6",
     "@types/react-tap-event-plugin": "0.0.30",
+    "@types/supertest": "^2.0.4",
     "autoprefixer": "^8.2.0",
     "awesome-typescript-loader": "^5.0.0",
     "babel-core": "^6.26.0",
@@ -122,6 +131,7 @@
     "gulp-wait": "0.0.2",
     "gulp-webpack": "^1.5.0",
     "jest": "^22.4.3",
+    "jest-cli": "^22.4.3",
     "method-override": "^2.3.10",
     "mocha": "^5.0.5",
     "node-notifier": "^5.2.1",
@@ -133,6 +143,8 @@
     "run-sequence": "^2.2.1",
     "sinon": "^4.5.0",
     "supertest": "^3.0.0",
+    "supertest-session": "^3.1.2",
+    "through2": "^2.0.3",
     "ts-jest": "^22.4.2",
     "ts-loader": "^4.2.0",
     "tslint": "^5.9.1",

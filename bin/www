@@ -1,22 +1,5 @@
 #!/usr/bin/env node
-var express = require('express');
-var config_prod = require('../built/config/config');
-var config_debug = require('../built/config/config-debug');
-var app_server = require('../built/app-server');
+const app = require('../built/app');
 
-start(function (message) {
-    console.log(message);
-});
-var config;
-function start(callback) {
-    var app = express();
-    if ('development' === app.get('env')) {
-        config = new config_debug.default();
-    }
-    else {
-        config = new config_prod.default();
-    }
-    app_server.default.initalize(app, config);
-    app_server.default.start(callback);
-    return app;
-}
+app.init();
+app.start();

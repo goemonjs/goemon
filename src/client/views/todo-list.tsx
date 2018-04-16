@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import Todo from '../models/todo';
 import * as TodoActions from '../actions/todo-actions';
 import TodoListService from '../services/todo-list-service';
-import TodoForm from '../components/todo/todo-form';
-import TodoList from '../components/todo/todo-list';
+import TodoForm from './components/todo/todo-form';
+import TodoList from './components/todo/todo-list';
 import { IStore } from '../stores/configure-store';
 
 interface IProps {
@@ -40,16 +40,9 @@ class TodoListView extends React.Component<IProps & IDispProps, any> {
   // It is called only client rendering
   componentDidMount() {
     let { loadTodos, isFetching } = this.props;
-    // loadTodos('', isFetching);
+    loadTodos('', isFetching);
   }
 
-  // It is called both server rendering and client rendering
-  componentWillMount() {
-    // if ( typeof(document) != 'undefined' ) {
-    //   let protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://');
-    //   TodoListService.url = protocol + location.host + '/api/todos';
-    // }
-  }
 }
 
 const mapStateToProps = (store: IStore) => {

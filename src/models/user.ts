@@ -71,7 +71,7 @@
 //   public static authenticate(email: String, password: String): Promise<{user: UserDocument, error: Error}> {
 
 //     return new Promise( (resolve, reject) => {
-//       User.findOne({ email:email }).exec().then( (user) => {
+//       User.findOne({ email: email }).exec().then( (user) => {
 //         if ( user != null && ( user.password === PassportUtility.getHash(password) ) ) {
 //           resolve({
 //             user: user

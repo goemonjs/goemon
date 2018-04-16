@@ -1,12 +1,11 @@
+import * as assign from 'object-assign';
 import { Express, Router } from 'express';
 import * as React from 'react';
 import * as Redux from 'redux';
-import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router';
 import { matchRoutes, renderRoutes } from 'react-router-config';
 import { matchPath } from 'react-router-dom';
-import assign = require('object-assign');
+
 import { configureStore, IStore } from '../client/stores/configure-store';
 import { createServerApp, routes } from '../client/routes/redux-sample-route';
 import TodoListService from '../client/services/todo-list-service';
@@ -23,8 +22,8 @@ module.exports = function (app: Express) {
   let rootPath = path.normalize(__dirname + '/..');
 
   // Calc js modify date
-  let jsStats = fs.statSync(rootPath + '/public/js/redux-sample.js');
-  jsDate = jsStats.mtime.getFullYear() + jsStats.mtime.getMonth() + jsStats.mtime.getDay() + jsStats.mtime.getTime();
+  // let jsStats = fs.statSync(rootPath + '/public/js/redux-sample.js');
+  // jsDate = jsStats.mtime.getFullYear() + jsStats.mtime.getMonth() + jsStats.mtime.getDay() + jsStats.mtime.getTime();
 };
 
 router.get('*', (req, res) => {
@@ -34,10 +33,10 @@ router.get('*', (req, res) => {
   const preloadedState = store.getState();
   const branch = matchRoutes(routes, req.baseUrl + req.url);
   const protocol = req.protocol;
-  const host = req.host + ':3000';
+  let host = req.headers.host;
   const promises = branch.map(({route}) => {
-    let fetchData = route.component.fetchData;
-    return fetchData instanceof Function ? fetchData(store, protocol, host) : Promise.resolve(null);
+    let getInitialProps = route.component.getInitialProps;
+    return getInitialProps instanceof Function ? getInitialProps(store, protocol, host) : Promise.resolve(undefined);
   });
   return Promise.all(promises).then((data) => {
     let context: any = {};

@@ -37,7 +37,7 @@ const reducers: { [key: string]: (state, action: Action<any>) => IState } = {
 };
 
 export function reducer(state: IState = initialState, action: Action<any>): IState {
-  if ( reducers[action.type] != null ) {
+  if ( reducers[action.type] != undefined ) {
     return assign({}, state, reducers[action.type](state, action));
   }
   return state;

@@ -1,6 +1,5 @@
 ﻿var del = require('del'),
     gulp = require('gulp'),
-    livereload = require('gulp-livereload'),
     nodemon = require('gulp-nodemon'),
     plumber = require('gulp-plumber'),
     runSequence = require('run-sequence'),
@@ -13,10 +12,11 @@
     browserSync = require('browser-sync').create(),
     notifier = require('node-notifier'),
     eslint = require('gulp-eslint'),
-    tslint = require('gulp-tslint');
+    tslint = require('gulp-tslint'),
+    jest = require('jest-cli'),
+    through2 = require('through2');
 
-  var tslintconfig = require('./tslint.json');
-
+var tslintconfig = require('./tslint.json');
 var PRODUCT = JSON.parse(process.env.PROD_ENV || '0');
 
 var PRODUCT = JSON.parse(process.env.PROD_ENV || '0');
@@ -39,7 +39,7 @@ gulp.task('tsc', function (cb) {
 
 // Task for development.
 gulp.task('develop', ['copy-assets', 'tsc', 'css', 'lint'], function () {
-  return runSequence('watch', 'webpack', 'start', 'webpack:watch');
+  return runSequence('watch', 'webpack', 'test', 'start', 'webpack:watch');
 });
 
 // Start server and nodemon
@@ -55,6 +55,8 @@ gulp.task('nodemon', (callback) => {
       'built/client/*',
       'built/public/*',
       'built/__test__/*',
+      '*.test.ts',
+      '*.test.js',
       '*.ts',
       '*.tsx',
       '*.json',
@@ -73,8 +75,8 @@ gulp.task('nodemon', (callback) => {
     }
     console.log('nodemon started.');
   })
-  .on('restart', () => {
-    console.log('nodemon restarting...');
+  .on('restart', (hoge) => {
+    console.log('nodemon restarting... by ' + hoge);
     // when server reboot
     setTimeout( () => {
       browserSync.reload();
@@ -158,48 +160,44 @@ gulp.task('webpack:watch', () => {
 gulp.task('watch', () => {
   gulp.watch('./src/public/css/*.scss', ['css'])
   .on('change', function(event) {
-    console.log('File ' + event.path + ' was ' + event.type);
+    console.log('File(scss) ' + event.path + ' was ' + event.type);
   });
 
-  gulp.watch(['./src/**', '!./src/client/**/*', '!./src/public/css/*'], ()=> { return runSequence('tsc', 'copy-assets');})
+  gulp.watch(['./src/**', '!./src/client/**/*', '!./src/public/css/*', '!./src/**/*.test.ts'], ()=> { return runSequence('tsc', 'copy-assets');})
   .on('change', function(event) {
-    console.log('File ' + event.path + ' was ' + event.type);
+    console.log('File(ts) ' + event.path + ' was ' + event.type);
   });
 
-  gulp.watch('./test/**', ()=> { return runSequence( 'tsc', 'test-withtimelag'); })
+  gulp.watch('./src/**/*.test.ts', ()=> { return runSequence( 'tsc', 'test'); })
     .on('change', function(event) {
-      console.log('File ' + event.path + ' was ' + event.type);
+      console.log('File(test) ' + event.path + ' was ' + event.type);
     });
 
   gulp.watch('./built/public/css/*.css',['browser-reload'])
   .on('change', function(event) {
-    console.log('File ' + event.path + ' was ' + event.type);
+    console.log('File(css) ' + event.path + ' was ' + event.type);
   });
 });
 
 // Run test
-// gulp.task('test', () => {
-//   gulp.src(targetPath + '/test/**/*.js', { read: false })
-//     .pipe(plumber({errorHandler:function(error) {
-//         notifier.notify({
-//             message: error.message,
-//             title: error.plugin,
-//             sound: 'Glass'
-//         });
-//     }}))
-//     .pipe(mocha({ reporter: "spec", timeout: "5000" }));
-//     // .on("error", (err) => {
-//     //   console.log(err.toString());
-//     //   this.emit('end');
-//     // });
-// });
+gulp.task('test', () => {
+  jest.runCLI({}, [__dirname]);
+});
 
-// gulp.task('watch-test', function(){
-//   return gulp.watch('./test/**', ()=> { return runSequence('tsc', 'test'); })
-//     .on('change', function(event) {
-//       console.log('File ' + event.path + ' was ' + event.type);
-//     });
-// });
+// Run test by typescript and watch
+gulp.task('test:tswatch', () => {
+  jest.runCLI({
+    watch: true,
+    testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
+   }, [__dirname]);
+});
+
+gulp.task('test:tswatch:all', () => {
+  jest.runCLI({
+    watchAll: true,
+    testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
+   }, [__dirname]);
+});
 
 // uglify javascript files
 gulp.task('uglify', function(){

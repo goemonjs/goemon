@@ -2,9 +2,13 @@ import * as React from 'react';
 import * as ReactRouter from 'react-router';
 import * as ReactRouterDom from 'react-router-dom';
 
+import Button from 'material-ui/Button';
+
 export interface IMainState {
   text: string;
   items?: any;
+  hasError: boolean;
+  errorInfo: string;
 }
 
 export interface IMainProps {
@@ -16,7 +20,9 @@ export default class SimpleApp extends React.Component<IMainProps, IMainState> {
 
   state: IMainState = {
     text : '',
-    items : []
+    items : [],
+    hasError: false,
+    errorInfo: ''
   };
 
   constructor(props) {
@@ -27,9 +33,18 @@ export default class SimpleApp extends React.Component<IMainProps, IMainState> {
     this.onClickAdd = this.onClickAdd.bind(this);
   }
 
-  public componentWillMount() {
+  public componentDidMount() {
     this.state.items = this.props.items;
     this.setState(this.state);
+  }
+
+  public componentDidCatch(error, info) {
+    // Display fallback UI
+    this.setState({
+       hasError: true,
+       errorInfo: info
+      });
+    // You can also log the error to an error reporting service
   }
 
   public onChange(e) {
@@ -47,18 +62,20 @@ export default class SimpleApp extends React.Component<IMainProps, IMainState> {
   }
 
   public render() {
-    const { items = [] } = this.state;
+    const { items = [], hasError, errorInfo } = this.state;
+
     return (
-      <div>
-        <h3>Simple Item View</h3>
-        <ul>
-          {items.map(item => {
-            return (<li key={item.id}>{item.id}: {item.text}</li>);
-          })}
-        </ul>
-        <input onChange={this.onChange} value={this.state.text} />
-        <button onClick={this.onClickAdd}>{'Add #' + (this.state.items.length + 1)}</button>
-      </div>
+        <div>
+          { hasError ? <p>ERROR</p> : null }
+          <h3>Simple Item View</h3>
+          <ul>
+            {items.map(item => {
+              return (<li key={item.id}>{item.id}: {item.text}</li>);
+            })}
+          </ul>
+          <input onChange={this.onChange} value={this.state.text} />
+          <button onClick={this.onClickAdd}>{'Add #' + (this.state.items.length + 1)}</button>
+        </div>
     );
   }
 }
