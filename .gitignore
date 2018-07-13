@@ -1,5 +1,8 @@
 node_modules/
 bower_components/
 .sass-cache
-built/
+build/
+config/development.json
 .DS_Store
+.env
+awsconfig.json

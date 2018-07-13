@@ -1,76 +1,76 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Launch",
-            "type": "node",
-            "request": "launch",
-            "program": "${workspaceRoot}/built/src/app.js",
-            "stopOnEntry": false,
-            "args": [],
-            "cwd": "${workspaceRoot}",
-            "preLaunchTask": "build",
-            "runtimeExecutable": null,
-            "runtimeArgs": [
-                "--nolazy"
-            ],
-            "env": {
-                "NODE_ENV": "development"
-            },
-            "console": "internalConsole",
-            "sourceMaps": true,
-            "outFiles": [
-              "${workspaceRoot}/built/**/*"
-            ]
-        },
-        {
-            "name": "Debug",
-            "type": "node",
-            "request": "launch",
-            "program": "${workspaceRoot}/built/app.js",
-            "stopOnEntry": false,
-            "args": [],
-            "cwd": "${workspaceRoot}",
-            "runtimeExecutable": null,
-            "runtimeArgs": [
-                "--nolazy"
-            ],
-            "env": {
-                "NODE_ENV": "development"
-            },
-            "console":"internalConsole",
-            "sourceMaps": true,
-            "outFiles": [
-              "${workspaceRoot}/built/**/*"
-            ]
-        },
-        {
-            "name": "Attach",
-            "type": "node",
-            "request": "attach",
-            "port": 5858,
-            "address": "localhost",
-            "restart": false,
-            "sourceMaps": false,
-            "outFiles": [
-              "${workspaceRoot}/built/src/**/*"
-            ],
-            "localRoot": "${workspaceRoot}",
-            "remoteRoot": null
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Test with Debug",
-            "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
-            "stopOnEntry": false,
-            "args": [],
-            "cwd": "${workspaceRoot}",
-            "console": "internalConsole",
-            "sourceMaps": true,
-            "outFiles": [
-              "${workspaceRoot}/built/test/**/*"
-            ]
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "Launch",
+          "type": "node",
+          "request": "launch",
+          "program": "${workspaceRoot}/bin/www",
+          "stopOnEntry": false,
+          "args": [],
+          "cwd": "${workspaceRoot}",
+          "preLaunchTask": "build",
+          "runtimeExecutable": null,
+          "runtimeArgs": [
+              "--nolazy"
+          ],
+          "env": {
+              "NODE_ENV": "development"
+          },
+          "console": "internalConsole",
+          "sourceMaps": true,
+          "outFiles": [
+            "${workspaceRoot}/build/**/*"
+          ]
+      },
+      {
+          "name": "Debug",
+          "type": "node",
+          "request": "launch",
+          "program": "${workspaceRoot}/bin/www",
+          "stopOnEntry": false,
+          "args": [],
+          "cwd": "${workspaceRoot}",
+          "runtimeExecutable": null,
+          "runtimeArgs": [
+              "--nolazy"
+          ],
+          "env": {
+              "NODE_ENV": "development"
+          },
+          "console":"internalConsole",
+          "sourceMaps": true,
+          "outFiles": [
+            "${workspaceRoot}/build/**/*"
+          ]
+      },
+      {
+          "name": "Attach",
+          "type": "node",
+          "request": "attach",
+          "port": 5858,
+          "address": "localhost",
+          "restart": false,
+          "sourceMaps": false,
+          "outFiles": [
+            "${workspaceRoot}/build/**/*"
+          ],
+          "localRoot": "${workspaceRoot}",
+          "remoteRoot": null
+      },
+      {
+          "type": "node",
+          "request": "launch",
+          "name": "Test with Debug",
+          "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+          "stopOnEntry": false,
+          "args": [],
+          "cwd": "${workspaceRoot}",
+          "console": "internalConsole",
+          "sourceMaps": true,
+          "outFiles": [
+            "${workspaceRoot}/build/test/**/*"
+          ]
+      }
+  ]
 }

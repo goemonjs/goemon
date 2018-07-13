@@ -49,19 +49,18 @@ const mapStateToProps = (store: IStore) => {
   return {
     todos: store.todoState.todos,
     message: store.todoState.message,
-    isFetching: store.todoState.isFetching
+    isFetching: TodoActions.loadTodos.isPending(store)
   };
 };
 
 const mapDispatchToProps = (dispatch): IDispProps => {
   return {
-    addTodo: (text: string): void => dispatch(TodoActions.addTodo(text)),
+    addTodo: (text: string): void => dispatch(TodoActions.addTodo({ text: text })),
     toggleTodo: (id: number): void => dispatch(TodoActions.toggleTodo(id)),
     loadTodos: (filter, isFetching): void => {
       if ( !isFetching ) {
         let protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://');
         let url = protocol + location.host + '/api/todos';
-        dispatch(TodoActions.updateFetchStatus(true));
         dispatch(TodoActions.loadTodos(url));
       }
     }

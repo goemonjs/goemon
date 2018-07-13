@@ -13,14 +13,13 @@
     notifier = require('node-notifier'),
     eslint = require('gulp-eslint'),
     tslint = require('gulp-tslint'),
-    jest = require('jest-cli'),
-    through2 = require('through2');
+    jest = require('jest-cli');
 
 var tslintconfig = require('./tslint.json');
 var PRODUCT = JSON.parse(process.env.PROD_ENV || '0');
 
 var PRODUCT = JSON.parse(process.env.PROD_ENV || '0');
-var targetPath = './built';
+var targetPath = './build';
 var exec = require('child_process').exec;
 
 // Default task
@@ -47,14 +46,14 @@ gulp.task('nodemon', (callback) => {
   var called = false;
 
   return nodemon({
-    verbose:false,
+    verbose: false,
     script: './bin/www',
     delay: "2500",
     ext: 'js html css ejs ico txt pdf json',
     ignore: [
-      'built/client/*',
-      'built/public/*',
-      'built/__test__/*',
+      'build/client/*',
+      'build/public/*',
+      'build/__test__/*',
       '*.test.ts',
       '*.test.js',
       '*.ts',
@@ -104,7 +103,7 @@ gulp.task('rebuild', ['clean'], () => {
   runSequence('copy-assets', 'tsc', 'css', 'lint', 'webpack-release');
 });
 
-// Copy nesesarry asserts to built folder
+// Copy nesesarry asserts to build folder
 gulp.task('copy-assets', () => {
   gulp.src(
     ['src/public/**/', '!src/public/**/*.scss', 'src/views/**/', 'config/**/' ],
@@ -119,12 +118,12 @@ gulp.task('css', () => {
     .pipe(plumber())
     .pipe(sass())
     .pipe(cssmin())
-    .pipe(gulp.dest('./built/public/css'));
+    .pipe(gulp.dest('./build/public/css'));
   } else {
     gulp.src('./src/public/css/**/*.scss')
     .pipe(plumber())
     .pipe(sass())
-    .pipe(gulp.dest('./built/public/css'));
+    .pipe(gulp.dest('./build/public/css'));
   }
 });
 
@@ -141,7 +140,7 @@ gulp.task('webpack', () => {
     .pipe(gulpWebpack(Object.assign({}, webpackConfig[0], {
       watch: false,
       }), webpack))
-    .pipe(gulp.dest('built/public/js'))
+    .pipe(gulp.dest('build/public/js'))
     .pipe(browserSync.stream());
 });
 
@@ -152,15 +151,19 @@ gulp.task('webpack:watch', () => {
     .pipe(gulpWebpack(Object.assign({}, webpackConfig[0], {
       watch: true,
       }), webpack))
-    .pipe(gulp.dest('built/public/js'))
+    .pipe(gulp.dest('build/public/js'))
     .pipe(browserSync.stream());
 });
 
 // Watch for rebuild
 gulp.task('watch', () => {
-  gulp.watch('./src/public/css/*.scss', ['css'])
+  gulp.watch('./src/public/css/*.scss')
   .on('change', function(event) {
-    console.log('File(scss) ' + event.path + ' was ' + event.type);
+    gulp.src(event.path)
+    .pipe(plumber())
+    .pipe(sass())
+    .pipe(gulp.dest('./build/public/css'));
+    console.log('File(scss) ' + event.path + ' was ' + event.type + ', so build css.');
   });
 
   gulp.watch(['./src/**', '!./src/client/**/*', '!./src/public/css/*', '!./src/**/*.test.ts'], ()=> { return runSequence('tsc', 'copy-assets');})
@@ -173,9 +176,9 @@ gulp.task('watch', () => {
       console.log('File(test) ' + event.path + ' was ' + event.type);
     });
 
-  gulp.watch('./built/public/css/*.css',['browser-reload'])
+  gulp.watch('./build/public/css/*.css',['browser-reload'])
   .on('change', function(event) {
-    console.log('File(css) ' + event.path + ' was ' + event.type);
+    console.log('File(css) ' + event.path + ' was ' + event.type + ', so Reloaded Browser');
   });
 });
 
@@ -185,14 +188,14 @@ gulp.task('test', () => {
 });
 
 // Run test by typescript and watch
-gulp.task('test:tswatch', () => {
+gulp.task('test:ts', () => {
   jest.runCLI({
     watch: true,
     testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
    }, [__dirname]);
 });
 
-gulp.task('test:tswatch:all', () => {
+gulp.task('test:ts:watchall', () => {
   jest.runCLI({
     watchAll: true,
     testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
@@ -223,4 +226,4 @@ gulp.task("lint", () =>
 );
 
 // Clean up builted files
-gulp.task('clean', del.bind(null, ['.tmp', 'dist', 'built', 'coverage']));
+gulp.task('clean', del.bind(null, ['.tmp', 'dist', 'build', 'coverage']));

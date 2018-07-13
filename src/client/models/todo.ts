@@ -3,10 +3,7 @@ export default class Todo {
   constructor(
     public text: string,
     public completed: boolean = false,
-    public id?: number
+    public id: number = Date.now()
   ) {
-    if ( id == undefined ) {
-      this.id = Date.now();
-    }
   }
 }

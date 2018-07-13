@@ -25,12 +25,12 @@ type ClassNames = keyof typeof styleTypes;
 
 class ProfileView extends React.Component<IProps & IDispProps & WithStyles<ClassNames>, any> {
 
-  private url: string;
+  private url: string = '';
 
   render() {
     let { profile, isFetching, loadProfile } = this.props;
 
-    if ( this.url == undefined && typeof(document) !== 'undefined' ) {
+    if ( typeof(document) !== 'undefined' ) {
       let protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://');
       this.url = protocol + location.host + '/api/me';
     }

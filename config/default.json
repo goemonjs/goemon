@@ -1,0 +1,10 @@
+{
+  "session": {
+    "secret": "Aihd82920rjhdjqao299euudh3!@Zq",
+    "resave": false,
+    "saveUninitialized": false,
+    "cookie": {
+      "maxAge": null
+    }
+  }
+}

@@ -1,8 +1,6 @@
 import * as express from 'express';
-import * as session from 'express-session';
-
-import { ConfigType } from './config/config';
-const domain = require('domain');
+import * as config from 'config';
+import { AppConfigType } from './app';
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
@@ -15,26 +13,23 @@ const flash = require('connect-flash');
 
 class AppServer {
 
-  public app: any; //express app
-  public config: ConfigType;
-
-  constructor() {
+  constructor(public app?: any, public appConfig?: AppConfigType) {
   }
 
   // start express application
-  public initalize(app: any, config: ConfigType) {
+  public initalize(app: any, appConfig: AppConfigType) {
     this.app = app;
-    this.config = config;
+    this.appConfig = appConfig;
 
     // view engine setup
-    app.set('views', path.join(config.root, 'views'));
+    app.set('views', path.join(appConfig.root, 'views'));
     app.set('view engine', 'ejs');
 
     // validator
     app.use(expressValidator());
 
     // favicon
-    app.use(favicon(path.join(config.root, '.', 'public', 'favicon.ico'))); // uncomment after placing your favicon in /public
+    app.use(favicon(path.join(appConfig.root, '.', 'public', 'favicon.ico'))); // uncomment after placing your favicon in /public
 
     // logger
     app.use(logger('dev'));
@@ -47,16 +42,16 @@ class AppServer {
     app.use(cookieParser());
 
     // session
-    app.use(session({
-      secret: config.session.secret,
-      resave: config.session.resave,
-      saveUninitialized: config.session.saveUninitialized,
-      cookie: { maxAge: config.session.cookie.maxAge }
-    }));
+    let sess: any = {
+      secret: config.get('session.secret'),
+      resave: config.get('session.resave'),
+      saveUninitialized: config.get('session.saveUninitialized'),
+      cookie: { maxAge: config.get('session.cookie.maxAge') }
+    };
 
     // public folder path
     const cacheTime = 10000;     // 10s
-    app.use(express.static(path.join(config.root, '.', 'public'), {
+    app.use(express.static(path.join(appConfig.root, '.', 'public'), {
       maxAge: cacheTime,
       lastModified: true,
       redirect: true }
@@ -77,7 +72,7 @@ class AppServer {
     app.use(passport.session());
 
     // Setup auth
-    let auth = glob.sync(config.root + '/middlewares/*.+(js|ts|jsx|tsx)');
+    let auth = glob.sync(appConfig.root + '/middlewares/*.+(js|ts|jsx|tsx)');
     auth.forEach(function (routes) {
       require(routes)(app);
     });
@@ -132,9 +127,12 @@ class AppServer {
   }
 
   public async start() {
-    this.app.listen(this.config.port, () => {
-      return ('Express server listening on port ' + this.config.port);
-    });
+    if ( this.appConfig != undefined ) {
+      let port = this.appConfig.port;
+      this.app.listen(port, () => {
+        return ('Express server listening on port ' + port);
+      });
+    }
   }
 }
 

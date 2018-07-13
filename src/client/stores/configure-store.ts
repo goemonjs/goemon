@@ -1,24 +1,29 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-let promiseMiddleware = require('redux-promise');
+import * as promiseMiddleware from 'redux-promise';
+import { typePendingReducerSet, TypeReduxPendingState, createTypeReduxInitialState, typeReduxMiddleware } from '../../base/utility/redux';
+import * as assign from 'object-assign';
 
 import * as TodoReducer from './todo-reducer';
 import * as ProfileReducer  from './profile-reducer';
 
 export const rootReducer = combineReducers({
+  ...typePendingReducerSet,
   todoState : TodoReducer.reducer,
   profileState : ProfileReducer.reducer
 });
 
-export type IStore = {
-  todoState: TodoReducer.IState,
-  profileState: ProfileReducer.IState
-};
+export interface IStore extends TypeReduxPendingState {
+  todoState: TodoReducer.IState;
+  profileState: ProfileReducer.IState;
+}
 
-export const InitialState: IStore = {
+export const InitialState: IStore = assign(createTypeReduxInitialState(), {
   todoState : TodoReducer.initialState,
   profileState : ProfileReducer.initialState
-};
+});
+
+const middlewares = [typeReduxMiddleware, promiseMiddleware];
 
 export const configureStore = (initialState: IStore = InitialState) => {
-  return createStore(rootReducer, initialState, applyMiddleware(promiseMiddleware));
+  return createStore(rootReducer, initialState, applyMiddleware(...middlewares));
 };

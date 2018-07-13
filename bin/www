@@ -1,5 +1,12 @@
 #!/usr/bin/env node
-const app = require('../built/app');
+
+// This is a hack to resolve annoying path problem
+// https://gist.github.com/branneman/8048520
+// This is also a hack that might stop working on the previous or next version of node.
+process.env.NODE_PATH = __dirname + "/../build";
+require('module').Module._initPaths();
+
+const app = require('../build/app');
 
 app.init();
 app.start();

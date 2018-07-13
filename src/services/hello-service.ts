@@ -29,9 +29,10 @@ class HelloService {
   }
 
   public rollDice({numDice, numSides}) {
-    let output = [];
+    let output: number[] = [];
     for (let i = 0; i < numDice; i++) {
-      output.push(1 + Math.floor(Math.random() * (numSides || 6)));
+      let diceResult = 1 + Math.floor(Math.random() * (numSides || 6));
+      output.push(diceResult);
     }
     return output;
   }
