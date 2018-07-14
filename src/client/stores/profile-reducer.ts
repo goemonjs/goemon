@@ -3,6 +3,7 @@ import { handleActions, Action } from 'redux-actions';
 import assign = require('object-assign');
 import * as Actions from '../actions/profile-actions';
 
+// Redux Action Reducer Samples
 export type IState = {
   profile?: any,
   isFetching?: boolean

@@ -1,7 +1,7 @@
 import { createTypeAction, createTypeAsyncAction } from '../../base/utility/redux';
 import Todo from '../models/todo';
-import TodoListService from '../services/todo-list-service';
 
+// Type Action Samples
 export interface IPayloadAddTodo {
   text: string;
   todo: Todo;
