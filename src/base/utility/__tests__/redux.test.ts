@@ -26,11 +26,11 @@ describe('redux-utils', () => {
       expect(testReducer.type).toBe('FUGA_ACTION');
     });
 
-    // it('create reducer with initialState object', () => {
-    //   const testReducer = createTypeReducer({ a: 1, b: 'two', c: { three: true } });
-    //   const state = testReducer(undefined, { type: 'NOP' });
-    //   expect(state).toEqual({ a: 1, b: 'two', c: { three: true } });
-    // });
+    it('create reducer with initialState object', () => {
+      const testReducer = createTypeReducer({ a: 1, b: 'two', c: { three: true } });
+      const state = testReducer(undefined, { type: 'NOP' });
+      expect(state).toEqual({ a: 1, b: 'two', c: { three: true } });
+    });
 
     it('create reducer with initialState function', () => {
       const initialStateMock = jest.fn(() => ({ a: 1, b: 'two', c: { three: true } }));
@@ -73,7 +73,7 @@ describe('redux-utils', () => {
 
     it('action isPending', async () => {
       const testAction = createTypeAsyncAction('PIYO_ACTION', () =>
-        new Promise((resolve) => setTimeout(resolve, 100)));
+        new Promise((resolve) => setTimeout(resolve, 100000)));
       const mock = jest.fn((state) => state);
       const testReducer = createTypeReducer({}, testAction.reducer(mock));
       const reducer = combineReducers({
@@ -84,13 +84,14 @@ describe('redux-utils', () => {
       const promise = store.dispatch(testAction());
       expect(testAction.isPending(store.getState())).toBeTruthy();
       jest.runAllTimers();
+      await promise;
       expect(testAction.isPending(store.getState())).toBeFalsy();
       expect(mock).toHaveBeenCalledTimes(1);
     });
 
     it('global isPending', async () => {
-      const testAction = createTypeAsyncAction('PIYO_ACTION', () =>
-        new Promise((resolve) => setTimeout(resolve, 100)));
+      const promise = new Promise((resolve) => setTimeout(resolve, 100000));
+      const testAction = createTypeAsyncAction('PIYO_ACTION', () => promise);
       const mock = jest.fn((state) => state);
       const testReducer = createTypeReducer({}, testAction.reducer(mock));
       const reducer = combineReducers({
@@ -101,6 +102,7 @@ describe('redux-utils', () => {
       store.dispatch(testAction());
       expect(isPending('PIYO_ACTION', store.getState())).toBeTruthy();
       jest.runAllTimers();
+      await promise;
       expect(isPending('PIYO_ACTION', store.getState())).toBeFalsy();
       expect(mock).toHaveBeenCalledTimes(1);
     });
@@ -135,7 +137,7 @@ describe('redux-utils', () => {
   });
 
   it('isTypeAsyncAction true by typeAsyncAction', () => {
-    const sayAsyncHello = createTypeAsyncAction('HELLO', () => new Promise(resolve => setTimeout(resolve, 1000)));
+    const sayAsyncHello = createTypeAsyncAction('HELLO', () => new Promise(resolve => setTimeout(resolve, 100000)));
     const action = sayAsyncHello();
     const result = isTypeAsyncAction(action);
     expect(result).toBeTruthy();
@@ -157,8 +159,9 @@ describe('redux-utils', () => {
     expect(result).toBeFalsy();
   });
 
-  it('middleware', () => {
-    const actionCreator = createTypeAsyncAction('TEST_ACTION', () => new Promise<void>((r) => setTimeout(r, 10000)));
+  it('middleware', async () => {
+    const promise =  new Promise<void>((r) => setTimeout(r, 100000));
+    const actionCreator = createTypeAsyncAction('TEST_ACTION', () => promise);
     const reducer = createTypeReducer({}, actionCreator.reducer(r => ({
       a: 123
     })));
@@ -173,6 +176,7 @@ describe('redux-utils', () => {
       test: {}
     });
     jest.runAllTimers();
+    await promise;
     expect(store.getState()).toEqual({
       '@@redux-type': {
         pendings: {

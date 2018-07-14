@@ -34,6 +34,10 @@ export type TypeRejectAction<Type, Args> = {
   meta: Args,
 };
 
+export interface TypeReducer<State> extends Reducer<State> {
+  (state: State | undefined, action: AnyAction): State;
+}
+
 export interface TypePartialReducer<Type, Payload, State> {
   (state: State, action: AnyAction): Partial<State> | undefined;
   type: Type;
@@ -90,7 +94,7 @@ export function createTypeAsyncAction<Type extends string, Args, Payload>(
 export function createTypeReducer<State>(
   initialState: State | (() => State),
   ...handlers: TypePartialReducer<string, any, State>[]
-): Reducer<State> {
+): TypeReducer<State> {
   const partialReducersMap = handlers.reduce(
     (r, reducer) => {
       (r[reducer.type] || (r[reducer.type] = [])).push(reducer);
