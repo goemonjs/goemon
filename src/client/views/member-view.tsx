@@ -1,15 +1,14 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
-import { Theme, withStyles, WithStyles } from 'material-ui/styles';
-import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import List from 'material-ui/List';
-import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-import Divider from 'material-ui/Divider';
-import MenuItem from 'material-ui/Menu/MenuItem';
+import Button from '@material-ui/core/Button';
+import { Theme, withStyles, WithStyles, createStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Divider from '@material-ui/core/Divider';
+import MenuItem from '@material-ui/core/MenuItem';
 import { mailFolderListItems, otherMailFolderListItems } from './components/tileData';
 
 const drawerWidth = 240;
@@ -17,7 +16,7 @@ const drawerWidth = 240;
 interface IProps  {
 }
 
-const styles = (theme: Theme) => ( {
+const styles = (theme: Theme) => createStyles( {
   root: {
     flexGrow: 1,
     height: 1600,
@@ -332,4 +331,4 @@ type ClassNames = keyof typeof stylesTypes;
     }
   }
 
-export default withStyles<{} & ClassNames>(styles)<IProps>(MemberView);
+export default withStyles(styles)(MemberView);

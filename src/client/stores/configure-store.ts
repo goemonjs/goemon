@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import * as promiseMiddleware from 'redux-promise';
+import promiseMiddleware from 'redux-promise';
 import { typePendingReducerSet, TypeReduxPendingState, createTypeReduxInitialState, typeReduxMiddleware } from '../../base/utility/redux';
 import * as assign from 'object-assign';
 

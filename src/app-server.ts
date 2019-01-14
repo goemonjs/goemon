@@ -6,10 +6,13 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const flash = require('express-flash');
+const session = require('express-session');
 const passport = require('passport');
 const expressValidator = require('express-validator');
 const glob = require('glob');
-const flash = require('connect-flash');
+
+const sessionStore = new session.MemoryStore;
 
 class AppServer {
 
@@ -40,6 +43,13 @@ class AppServer {
 
     // cookieParser
     app.use(cookieParser());
+    app.use(session({
+      cookie: { maxAge: 60000 },
+      store: sessionStore,
+      saveUninitialized: true,
+      resave: 'true',
+      secret: 'secret'
+  }));
 
     // session
     let sess: any = {

@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router';
 import { BrowserRouter, StaticRouter } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import JssProvider from 'react-jss/lib/JssProvider';
-import { MuiThemeProvider, createMuiTheme, createGenerateClassName } from 'material-ui/styles';
+import { MuiThemeProvider, createGenerateClassName } from '@material-ui/core/styles';
 
 interface IProps  {
   store: any;

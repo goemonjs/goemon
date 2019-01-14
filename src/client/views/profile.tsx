@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Theme, withStyles, WithStyles } from 'material-ui/styles';
+import { Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 import * as ProfileActions from '../actions/profile-actions';
 import { IStore } from '../stores/configure-store';
@@ -15,15 +15,7 @@ interface IDispProps {
   loadProfile: (url: string, isFetching: boolean) => void;
 }
 
-const styles = (theme: Theme) => ( {
-});
-
-const styleTypes = {
-};
-
-type ClassNames = keyof typeof styleTypes;
-
-class ProfileView extends React.Component<IProps & IDispProps & WithStyles<ClassNames>, any> {
+class ProfileView extends React.Component<IProps & IDispProps, {}> {
 
   private url: string = '';
 
@@ -59,17 +51,22 @@ class ProfileView extends React.Component<IProps & IDispProps & WithStyles<Class
   }
 }
 
-export default connect(
-  (store: IStore) => ({
+const mapStateToProps = (store: IStore, ownProps) => {
+  return {
     profile: store.profileState.profile,
-    isFetching: store.profileState.isFetching
-  }),
-  dispatch => ({
+    isFetching: ProfileActions.loadProfile.isPending(store)
+  };
+};
+
+const mapDispatchToProps = (dispatch): IDispProps => {
+  return {
     loadProfile: (url, isFetching): void => {
       if ( !isFetching ) {
         dispatch(ProfileActions.updateFetchStatus(true));
         dispatch(ProfileActions.loadProfile(url));
       }
     }
-  })
-)(ProfileView);
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileView);

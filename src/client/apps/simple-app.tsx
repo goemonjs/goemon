@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactRouter from 'react-router';
 import * as ReactRouterDom from 'react-router-dom';
 
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core//Button';
 
 export interface IMainState {
   text: string;
