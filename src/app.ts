@@ -3,6 +3,11 @@ require('dotenv').config();
 
 // imports
 import * as express from 'express';
+import * as http from 'http';
+import * as cluster from 'cluster';	// (1)
+import * as os from 'os';
+
+const numCPUs = os.cpus().length;
 import assign = require('object-assign');
 let path = require('path');
 import AppServer from './app-server';
@@ -49,5 +54,15 @@ export function init(initConfig?: AppConfigType) {
 }
 
 export function start() {
-  AppServer.start();
+  if ( cluster.isMaster ) {
+    for (let i = 0; i < numCPUs; i++) {
+      cluster.fork();
+    }
+    cluster.on('exit', (worker, code, signal) => {
+      console.log(`worker ${worker.process.pid} died`);
+    });
+  } else {
+    AppServer.start();
+    console.log(`Worker ${process.pid} started`);
+  }
 }
