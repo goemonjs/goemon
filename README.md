@@ -5,12 +5,10 @@ This boilerplate supports Visual Studio Code and Google Chrome for debugging.
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-- [Demo](https://goemon-te-ub.azurewebsites.net)
-
 For login the sample, please use id:test@example.com password:test .
 
 ## Enviroment
-Node.js v8.x.x.
+Node.js v10.x.x.
 
 ## Quickstart
 You need to install Node.js v8.x.x.
