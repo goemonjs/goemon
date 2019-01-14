@@ -51,5 +51,6 @@ export const loadTodoReducer = Actions.loadTodos.reducer<IState>((state, action)
 export const reducer = createTypeReducer(
   initialState,
   addTodoReducer,
+  loadTodoReducer,
   toggleTodoReducer
 );
