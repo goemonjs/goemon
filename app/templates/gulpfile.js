@@ -1,4 +1,4 @@
-﻿var del = require('del'),
+var del = require('del'),
     gulp = require('gulp'),
     nodemon = require('gulp-nodemon'),
     plumber = require('gulp-plumber'),

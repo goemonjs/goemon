@@ -1,4 +1,4 @@
-﻿# Boilerplate for Express+React+Redux+TypeScript+SSR
+# Boilerplate for Express+React+Redux+TypeScript+SSR
 The boilerplate for Express + React16 + Redux + React-Router v4 + SSR(Server Side Rendering) development with TypeScript and Node.js.
 This boilerplate supports Visual Studio Code and Google Chrome for debugging.
 

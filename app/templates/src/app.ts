@@ -1,4 +1,4 @@
-﻿// load env vars into process.env
+// load env vars into process.env
 require('dotenv').config();
 
 // imports

@@ -1,8 +1,1 @@
-node_modules/
-bower_components/
-.sass-cache
-build/
-config/development.json
-.DS_Store
-.env
-awsconfig.json
+node_modules
