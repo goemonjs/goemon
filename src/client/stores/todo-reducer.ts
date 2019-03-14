@@ -1,7 +1,4 @@
-import * as Redux from 'redux';
-import { createTypeReducer } from '../../base/utility/redux';
-import { handleActions, Action } from 'redux-actions';
-import assign = require('object-assign');
+import { createTypeReducer } from 'type-redux';
 import * as Actions from '../actions/todo-actions';
 import Todo from '../models/todo';
 

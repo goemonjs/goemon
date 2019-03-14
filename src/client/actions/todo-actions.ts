@@ -1,4 +1,4 @@
-import { createTypeAction, createTypeAsyncAction } from '../../base/utility/redux';
+import { createTypeAction, createTypeAsyncAction } from 'type-redux';
 import Todo from '../models/todo';
 
 // Type Action Samples

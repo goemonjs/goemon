@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise';
-import { typePendingReducerSet, TypeReduxPendingState, createTypeReduxInitialState, typeReduxMiddleware } from '../../base/utility/redux';
+import { typePendingReducerSet, TypeReduxPendingState, createTypeReduxInitialState, typeReduxMiddleware } from 'type-redux';
 import * as assign from 'object-assign';
 
 import * as TodoReducer from './todo-reducer';
