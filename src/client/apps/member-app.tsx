@@ -36,7 +36,10 @@ export const theme = createMuiTheme({
     primary: lightBlue,
     grey: red,
     type: 'light'
-  }
+  },
+  typography: {
+    useNextVariants: true,
+  },
 });
 
 export class MemberApp extends React.Component<IProps, IState> {
