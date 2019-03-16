@@ -10,6 +10,10 @@
     "test": "jest",
     "dev": "node ./node_modules/gulp/bin/gulp develop"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goemonjs/goemon.git"
+  },
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
@@ -25,8 +29,9 @@
     ]
   },
   "author": {
-    "name": "Lunascape Corporation"
+    "name": "Hidekazu Kondo"
   },
+  "license": "MIT",
   "engines": {
     "node": "10.15.3"
   },
