@@ -22,7 +22,7 @@ var exec = require('child_process').exec;
 // Copy nesesarry asserts to build folder
 gulp.task('copy-assets', () => {
   return gulp.src(
-    ['src/public/**/', '!src/public/**/*.scss', 'src/views/**/', 'config/**/' ],
+    ['src/public/**/*', '!src/public/**/*.scss', 'src/views/**/*', 'config/**/*' ],
     { base: './src' }
   ).pipe(gulp.dest(targetPath));
 });
