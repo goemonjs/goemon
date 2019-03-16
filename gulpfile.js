@@ -2,8 +2,7 @@
     gulp = require('gulp'),
     nodemon = require('gulp-nodemon'),
     plumber = require('gulp-plumber'),
-    runSequence = require('run-sequence'),
-    uglify = require('gulp-uglify'),
+    terser = require('gulp-terser'),
     sass = require('gulp-sass'),
     cssmin = require('gulp-cssmin'),
     webpack = require('webpack'),
@@ -15,17 +14,61 @@
     tslint = require('gulp-tslint'),
     jest = require('jest-cli');
 
+var PRODUCT = JSON.parse(process.env.PROD_ENV || '0');
 var tslintconfig = require('./tslint.json');
-var PRODUCT = JSON.parse(process.env.PROD_ENV || '0');
-
-var PRODUCT = JSON.parse(process.env.PROD_ENV || '0');
 var targetPath = './build';
 var exec = require('child_process').exec;
 
-// Default task
-gulp.task('default', function() {
-  runSequence('develop');
+// Copy nesesarry asserts to build folder
+gulp.task('copy-assets', () => {
+  return gulp.src(
+    ['src/public/**/', '!src/public/**/*.scss', 'src/views/**/', 'config/**/' ],
+    { base: './src' }
+  ).pipe(gulp.dest(targetPath));
 });
+
+// Build css
+gulp.task('css', () => {
+  if ( PRODUCT =='production' ) {
+    return gulp.src('./src/public/css/**/*.scss')
+    .pipe(plumber())
+    .pipe(sass())
+    .pipe(cssmin())
+    .pipe(gulp.dest('./build/public/css'));
+  } else {
+    return gulp.src('./src/public/css/**/*.scss')
+    .pipe(plumber())
+    .pipe(sass())
+    .pipe(gulp.dest('./build/public/css'));
+  }
+});
+
+// Linting
+gulp.task("lint", () => {
+  return gulp.src("src/**/*.ts")
+      .pipe(tslint(tslintconfig))
+      .pipe(tslint.report());
+});
+
+// Webpack
+gulp.task('webpack', () => {
+  return gulp.src('build')
+    .pipe(plumber({errorHandler: (error) => {
+        notifier.notify({
+            message: error.message,
+            title: error.plugin,
+            sound: 'Glass'
+        });
+    }}))
+    .pipe(gulpWebpack(Object.assign({}, webpackConfig[0], {
+      watch: false,
+      }), webpack))
+    .pipe(gulp.dest('build/public/js'))
+    .pipe(browserSync.stream());
+});
+
+// Clean up builted files
+gulp.task('clean', del.bind(null, ['.tmp', 'dist', 'build', 'coverage']));
 
 // Build typescript files using native tsc compiler
 gulp.task('tsc', function (cb) {
@@ -34,11 +77,6 @@ gulp.task('tsc', function (cb) {
     console.log(stderr);
     cb(err);
   });
-});
-
-// Task for development.
-gulp.task('develop', ['copy-assets', 'tsc', 'css', 'lint'], function () {
-  return runSequence('watch', 'webpack', 'test', 'start', 'webpack:watch');
 });
 
 // Start server and nodemon
@@ -84,9 +122,7 @@ gulp.task('nodemon', (callback) => {
 });
 
 // Setup browser-sync
-gulp.task('start', ['nodemon'], () => {
-
-});
+gulp.task('start',  gulp.series('nodemon'));
 
 // Reload browser
 gulp.task('browser-reload', () => {
@@ -94,60 +130,15 @@ gulp.task('browser-reload', () => {
 });
 
 // Build all
-gulp.task('build', ['copy-assets', 'tsc', 'css', 'lint'] , () => {
-  return runSequence('webpack');
-});
+gulp.task('build', gulp.series(gulp.parallel('copy-assets', 'tsc', 'css', 'lint') , 'webpack'));
 
 // Rebuild task
-gulp.task('rebuild', ['clean'], () => {
-  runSequence('copy-assets', 'tsc', 'css', 'lint', 'webpack-release');
-});
-
-// Copy nesesarry asserts to build folder
-gulp.task('copy-assets', () => {
-  gulp.src(
-    ['src/public/**/', '!src/public/**/*.scss', 'src/views/**/', 'config/**/' ],
-    { base: './src' }
-  ).pipe(gulp.dest(targetPath));
-});
-
-// Build css
-gulp.task('css', () => {
-  if ( PRODUCT =='production' ) {
-  gulp.src('./src/public/css/**/*.scss')
-    .pipe(plumber())
-    .pipe(sass())
-    .pipe(cssmin())
-    .pipe(gulp.dest('./build/public/css'));
-  } else {
-    gulp.src('./src/public/css/**/*.scss')
-    .pipe(plumber())
-    .pipe(sass())
-    .pipe(gulp.dest('./build/public/css'));
-  }
-});
-
-// Webpack
-gulp.task('webpack', () => {
-  return gulp.src('dummy')
-    .pipe(plumber({errorHandler: (error) => {
-        notifier.notify({
-            message: error.message,
-            title: error.plugin,
-            sound: 'Glass'
-        });
-    }}))
-    .pipe(gulpWebpack(Object.assign({}, webpackConfig[0], {
-      watch: false,
-      }), webpack))
-    .pipe(gulp.dest('build/public/js'))
-    .pipe(browserSync.stream());
-});
+// gulp.task('rebuild', gulp.series('clean', 'copy-assets', 'tsc', 'css', 'lint', 'webpack-release'));
 
 // Webpack with watch:true freese the runSequence, so we need to
 // re-run this webpack with watch:true at the end of the sequence
 gulp.task('webpack:watch', () => {
-  return gulp.src('dummy')
+  return gulp.src('build')
     .pipe(gulpWebpack(Object.assign({}, webpackConfig[0], {
       watch: true,
       }), webpack))
@@ -155,75 +146,75 @@ gulp.task('webpack:watch', () => {
     .pipe(browserSync.stream());
 });
 
-// Watch for rebuild
-gulp.task('watch', () => {
+// Watchs
+gulp.task('watch', (done) => {
   gulp.watch('./src/public/css/*.scss')
-  .on('change', function(event) {
-    gulp.src(event.path)
+  .on('change', function(path) {
+    gulp.src(path)
     .pipe(plumber())
     .pipe(sass())
     .pipe(gulp.dest('./build/public/css'));
-    console.log('File(scss) ' + event.path + ' was ' + event.type + ', so build css.');
+    console.log('File(scss) ' + path + ' was changed');
   });
 
-  gulp.watch(['./src/**', '!./src/client/**/*', '!./src/public/css/*', '!./src/**/*.test.ts'], ()=> { return runSequence('tsc', 'copy-assets');})
-  .on('change', function(event) {
-    console.log('File(ts) ' + event.path + ' was ' + event.type);
-  });
-
-  gulp.watch('./src/**/*.test.ts', ()=> { return runSequence( 'tsc', 'test'); })
-    .on('change', function(event) {
-      console.log('File(test) ' + event.path + ' was ' + event.type);
+  gulp.watch(
+    ['./src/**', '!./src/client/**/*', '!./src/public/css/*', '!./src/**/*.test.ts'], gulp.series('tsc', 'copy-assets'))
+    .on('change', function(path) {
+      console.log('File(ts) ' + path + ' was changed');
     });
 
-  gulp.watch('./build/public/css/*.css',['browser-reload'])
-  .on('change', function(event) {
-    console.log('File(css) ' + event.path + ' was ' + event.type + ', so Reloaded Browser');
+  gulp.watch('./src/**/*.test.ts', gulp.series('tsc', 'test'))
+  .on('change', function(path) {
+    console.log('File(test) ' + path + ' was changed');
   });
+
+  gulp.watch('./build/public/css/*.css', gulp.series('browser-reload'))
+  .on('change', function(path) {
+    console.log('File(css) ' + path + ' was changed');
+  });
+
+  done();
 });
 
 // Run test
 gulp.task('test', () => {
-  jest.runCLI({}, [__dirname]);
+  return jest.runCLI({}, [__dirname]);
 });
 
 // Run test by typescript and watch
 gulp.task('test:ts', () => {
-  jest.runCLI({
+  return jest.runCLI({
     watch: true,
     testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
    }, [__dirname]);
 });
 
 gulp.task('test:ts:watchall', () => {
-  jest.runCLI({
+  return jest.runCLI({
     watchAll: true,
     testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
    }, [__dirname]);
 });
 
 // uglify javascript files
-gulp.task('uglify', function(){
-  gulp.src('./src/public/js/*.js')
-    .pipe(uglify({preserveComments: 'some'}))
-    .pipe(gulp.dest(targetPath +'/public/js/'))
-  ;
-});
+// gulp.task('uglify', () => {
+//   return gulp.src('./src/public/js/*.js')
+//     .pipe(terser)
+//     .pipe(gulp.dest(targetPath));
+// });
 
 // Run jslint for lint javascript statements
-gulp.task('jslint', ()=> {
+gulp.task('jslint', () => {
   return gulp.src(['./src/**/*.js','./src/**/*.jsx'])
     .pipe(eslint({useEslintrc: true}))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 });
 
-// Linting
-gulp.task("lint", () =>
-    gulp.src("src/**/*.ts")
-        .pipe(tslint(tslintconfig))
-        .pipe(tslint.report())
-);
+// Task for development.
+gulp.task('develop',
+  gulp.series(gulp.parallel('copy-assets', 'tsc', 'css', 'lint'),
+  'watch', 'webpack', 'test', 'start', 'webpack:watch'));
 
-// Clean up builted files
-gulp.task('clean', del.bind(null, ['.tmp', 'dist', 'build', 'coverage']));
+// Default task
+gulp.task('default', gulp.series('develop'));
