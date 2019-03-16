@@ -3,7 +3,6 @@ require('dotenv').config();
 
 // imports
 import * as express from 'express';
-import * as http from 'http';
 import * as cluster from 'cluster';	// (1)
 import * as os from 'os';
 
