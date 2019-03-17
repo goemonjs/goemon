@@ -1,5 +1,5 @@
 import UserService from '../../../services/user-service';
-import PassportUtility from '../passport-utility';
+import { IUser } from '../../../objects/user';
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -13,16 +13,14 @@ function enableLocalStrategy() {
       usernameField: 'userid',
       passwordField: 'password',
       passReqToCallback: true
-    }, function (req, userid, password, done) {
-      UserService.authenticate(userid, PassportUtility.getHash(password), (result) => {
-          if ( result ) {
-            UserService.findById(userid, (user) => {
-              return done(undefined, user);
-            });
-          } else {
-            return done(undefined, false, { message: 'Failed to login.' });
-          }
-      });
-    }
-  ));
+    }, async function (req, userid, password, done) {
+      let isSuccess = await UserService.authenticate(userid, password);
+        if ( isSuccess ) {
+          let user: IUser = await UserService.findById(userid);
+          return done(undefined, user);
+        } else {
+          return done(undefined, false, { message: 'Failed to login.' });
+        }
+    })
+  );
 }

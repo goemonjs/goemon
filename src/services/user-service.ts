@@ -1,29 +1,28 @@
-import PassportUtility from '../middlewares/passport/passport-utility';
-
+import { Users } from '../models/user';
 class UserService {
 
-  public isUserExist(userid: string, callback: any) {
-    callback(true);
+  public async isUserExist(userId: string) {
+    return await Users.isUserExist(userId);
   }
 
-  public isValidUser(userId: string, callback: any) {
-    callback(true);
+  public async isValidUser(userId: string) {
+    return true;
   }
 
-  public authenticate(userId: string, password: string, callback: any) {
-    if ( userId == 'test@example.com' && password == PassportUtility.getHash('test') ) {
-      callback(true);
+  public async authenticate(userId: string, password: string) {
+    return true;
+    // return await Users.authenticate(userId, password );
+  }
+
+  public async findById(userId: string) {
+    let userDocument = await Users.findById(userId).exec();
+    if ( userDocument != null ) {
+      return {
+        email: userDocument.email.toString()
+      };
     } else {
-      callback(false);
+      throw new Error(`Can not find user ${userId}`);
     }
-  }
-
-  public findById(userId: string, callback: any) {
-    callback({
-      id : 1,
-      userid: 'test@example.com',
-      username: 'Test User'
-    });
   }
 }
 

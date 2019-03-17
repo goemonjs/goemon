@@ -2,15 +2,15 @@
  *  Copyright (c) Lunascape Corporation. All rights reserved.
  *--------------------------------------------------------------------------------------------*/
 import * as express from 'express';
-import { envs } from './env';
 import * as dotenv from 'dotenv';
-// load env vars into process.env
-dotenv.config();
-
-import { AppServer } from 'app-server';
 import * as cluster from 'cluster';
 import * as os from 'os';
 
+import { AppServer } from './app-server';
+import { envs } from './env';
+
+// load env vars into process.env
+dotenv.config();
 const numCPUs = os.cpus().length;
 
 export const appServer: AppServer = new AppServer();
@@ -26,7 +26,8 @@ export function start() {
     try {
       let app = createApp();
 
-      if ( envs.SESSION_DRIVER.value == 'redis' && cluster.isMaster ) {
+      if ( ( envs.SESSION_DRIVER.value == 'redis' || envs.FORCE_MULTICORE_CLUSTER.value == true )
+         && cluster.isMaster ) {
         for (let i = 0; i < numCPUs; i++) {
           cluster.fork();
         }
@@ -43,24 +44,27 @@ export function start() {
     } catch (err) {
       console.error(err);
     }
-  // }
 }
 
 /*
 * Create Default Express application
 */
-function createApp() {
+export function createApp() {
     let app = express();
 
     try {
       // Setyp enviroment values
       const envKeys = Object.keys(envs);
-      envKeys.forEach( envKey => {
+      envKeys.forEach( async (envKey) => {
         if (envs[envKey].required && !process.env[envKey]) {
           throw new Error(envKey);
         }
         if ( process.env[envKey] === undefined ) {
-          envs[envKey].value = envs[envKey].defaultValue as string;
+          if ( envs[envKey].defaultValue == typeof(Promise) ) {
+            envs[envKey].value = await envs[envKey].defaultValue();
+          } else {
+            envs[envKey].value = envs[envKey].defaultValue as string;
+          }
         } else {
           envs[envKey].value = process.env[envKey] as string;
         }
