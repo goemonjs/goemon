@@ -10,18 +10,25 @@ class UserService {
   }
 
   public async authenticate(userId: string, password: string) {
-    return true;
-    // return await Users.authenticate(userId, password );
+    let userDocument = await Users.authenticate(userId, password );
+    if ( userDocument != null ) {
+      return {
+        id: userDocument.id,
+        email: userDocument.email.toString()
+      };
+    } else {
+      return undefined;
+    }
   }
 
-  public async findById(userId: string) {
-    let userDocument = await Users.findById(userId).exec();
+  public async findById(id: string) {
+    let userDocument = await Users.findById(id).exec();
     if ( userDocument != null ) {
       return {
         email: userDocument.email.toString()
       };
     } else {
-      throw new Error(`Can not find user ${userId}`);
+      throw new Error(`Can not find user ${id}`);
     }
   }
 }

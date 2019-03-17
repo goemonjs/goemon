@@ -8,18 +8,16 @@ module.exports = (app) => {
   enableBasicStrategy();
 };
 
-function enableBasicStrategy() {
+async function enableBasicStrategy() {
   passport.use(new BasicStrategy(
-    function (userid, password, done) {
-      UserService.authenticate(userid, PassportUtility.getHash(password), (result) => {
-        if ( result ) {
-          UserService.findById(userid, (user) => {
-            return done(undefined, user);
-          });
+    async (userid, password, done) => {
+      let result = await UserService.authenticate(userid, password);
+      if ( result ) {
+        let user = await UserService.findById(userid);
+        return done(undefined, user);
         } else {
-          return done('error', undefined);
-        }
-      });
+        return done('error', undefined);
+      }
     }
   ));
 }

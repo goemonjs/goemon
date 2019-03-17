@@ -1,23 +1,24 @@
 import * as app from '../../app';
 import * as supertest from 'supertest';
+import { Users } from '../../models/user';
 
 describe('Test sample', () => {
 
   let agent: supertest.SuperTest<supertest.Test>;
 
   beforeEach((done) => {
-    agent = supertest.agent(app.init());
+    agent = supertest.agent(app.createApp());
     agent
       .post('/member/login')
       .send({
         userid: 'test@example.com',
-        password: 'test',
+        password: 'testpassword',
       })
       .expect(302, done);
   });
 
   test('/member/profile ( not authorized )', async () => {
-    const response = await supertest(app.init()).get('/member/profile');
+    const response = await supertest(app.createApp()).get('/member/profile');
     expect(response.status).toBe(302);
   });
 
@@ -27,14 +28,15 @@ describe('Test sample', () => {
       .end(done);
   });
 
-  it('/api/me', (done) => {
+  it('/api/me', async (done) => {
+    await Users.createUser('test@example.com', 'testpassword');
     agent.get('/api/me')
       .expect(200)
       .end((err, response) => {
         expect(response.type).toBe('application/json');
         let result = JSON.parse(response.text);
-        let expected = {id: 1, userid: 'test@example.com', username: 'Test User'};
-        expect(result).toEqual(expected);
+        let expected = { email: 'test@example.com' };
+        expect(result.email).toEqual(expected.email);
         done();
       });
   });

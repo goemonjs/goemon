@@ -3,7 +3,6 @@
  *--------------------------------------------------------------------------------------------*/
 import { ISeedCreator } from '../../../base/objects/types';
 import { Users } from '../../../models/user';
-import PassportUtility from '../../../middlewares/passport/passport-utility';
 
 module.exports = async (app) => {
   if (!app) {
@@ -25,7 +24,7 @@ const creator: ISeedCreator = {
   },
 
   async createSeed() {
-    // Users.createUser('test@example.com', PassportUtility.getHash('testpassword'));
+    Users.createUser('test@example.com', 'testpassword');
   }
 
 };

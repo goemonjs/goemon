@@ -14,13 +14,15 @@ function enableLocalStrategy() {
       passwordField: 'password',
       passReqToCallback: true
     }, async function (req, userid, password, done) {
-      let isSuccess = await UserService.authenticate(userid, password);
-        if ( isSuccess ) {
-          let user: IUser = await UserService.findById(userid);
+      try {
+        let user = await UserService.authenticate(userid, password);
+        if ( user != undefined ) {
           return done(undefined, user);
         } else {
           return done(undefined, false, { message: 'Failed to login.' });
         }
-    })
-  );
+      } catch (err ) {
+        console.log(err);
+      }
+    }));
 }

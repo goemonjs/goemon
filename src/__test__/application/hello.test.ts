@@ -6,7 +6,7 @@ describe('/hello test', () => {
   let agent: supertest.SuperTest<supertest.Test>;
 
   test('/hello', (done) => {
-    const request = supertest.agent(app.init());
+    const request = supertest.agent(app.createApp());
     const query = {
       query: `
         query {

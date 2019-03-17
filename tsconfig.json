@@ -18,7 +18,7 @@
     "importHelpers": true,
     "moduleResolution": "node",
     "noImplicitReturns": true,
-    "strict": true,
+    "strict": true
   },
   "include": [
     "**/*.ts",

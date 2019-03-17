@@ -11,35 +11,35 @@ import MongoMemoryServer from 'mongodb-memory-server';
 
 module.exports = async (app: express.Express) => {
 
-  // (<any>mongoose.Promise) = Promise;
-  // mongoose.set('useCreateIndex' , true); // against MongoDB warinig
-  // mongoose.set('useNewUrlParser', true); // against MongoDB warinig
+  (<any>mongoose.Promise) = Promise;
+  mongoose.set('useCreateIndex' , true); // against MongoDB warinig
+  mongoose.set('useNewUrlParser', true); // against MongoDB warinig
 
-  // let connectionName: string = envs.MONGODB_CONNECTION_DBNAME.value;
-  // let connectionString: string = envs.MONGODB_CONNECTION_URL.value;
+  let connectionName: string = envs.MONGODB_CONNECTION_DBNAME.value;
+  let connectionString: string = envs.MONGODB_CONNECTION_URL.value;
 
-  // if ( connectionName === undefined ) {
-  //   const mongod = new MongoMemoryServer();
-  //   connectionName = await mongod.getDbName();
-  //   connectionString = await mongod.getConnectionString();
-  // }
+  if ( connectionName === undefined ) {
+    const mongod = new MongoMemoryServer();
+    connectionName = await mongod.getDbName();
+    connectionString = await mongod.getConnectionString();
+  }
 
-  // mongoose.connect( connectionString,
-  //   (err) => {
-  //     if (err) {
-  //       console.error(err);
-  //     } else {
-  //       console.log('Success to connect database : ' + (connectionName ? connectionName : connectionString));
+  mongoose.connect( connectionString,
+    (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log('Success to connect database : ' + (connectionName ? connectionName : connectionString));
 
-  //       // Load modules
-  //       let strategiesPath = path.normalize(__dirname + '/mongodb/seeddata');
-  //       let data = glob.sync(strategiesPath + '/*.?(js|ts)');
-  //       data.forEach(function (routes) {
-  //         require(routes)(app);
-  //       });
-  //     }
-  //   }
-  // );
+        // Load modules
+        let strategiesPath = path.normalize(__dirname + '/mongodb/seeddata');
+        let data = glob.sync(strategiesPath + '/*.?(js|ts)');
+        data.forEach(function (routes) {
+          require(routes)(app);
+        });
+      }
+    }
+  );
 };
 
 process.on('SIGINT', function() { mongoose.disconnect(); });

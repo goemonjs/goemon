@@ -20,7 +20,7 @@ describe('/hello test', () => {
 });
 
 function createServer(app) {
-  const newApp = require('http').createServer(app.init());
+  const newApp = require('http').createServer(app.createApp());
   newApp.listen(0);
   let port = newApp.address().port;
   console.log('Listen port : ' + port);

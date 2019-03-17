@@ -72,10 +72,11 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist', 'build', 'coverage']));
 
 // Build typescript files using native tsc compiler
 gulp.task('tsc', function (cb) {
-  return exec('node ./node_modules/typescript/bin/tsc', function (err, stdout, stderr) {
+  exec('node ./node_modules/typescript/bin/tsc', function (err, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
     cb(err);
+    return;
   });
 });
 

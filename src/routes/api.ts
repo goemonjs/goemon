@@ -30,8 +30,7 @@ router.get('/me', isAuthenticated, (req: any, res, next) => {
   res.json(
     {
       id : req.user.id,
-      userid : req.user.userid,
-      username : req.user.username
+      email : req.user.email
     }
   );
   //res.json(req.user);
