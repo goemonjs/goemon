@@ -8,5 +8,4 @@ require('module').Module._initPaths();
 
 const app = require('../build/app');
 
-app.init();
 app.start();

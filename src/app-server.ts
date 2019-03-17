@@ -1,38 +1,45 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Lunascape Corporation. All rights reserved.
+ *--------------------------------------------------------------------------------------------*/
 import * as express from 'express';
-import * as config from 'config';
-import { AppConfigType } from './app';
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const flash = require('express-flash');
-const session = require('express-session');
-const passport = require('passport');
-const expressValidator = require('express-validator');
-const glob = require('glob');
+import * as session from 'express-session';
+import * as path from 'path';
+import * as favicon from 'serve-favicon';
+import * as logger from 'morgan';
+import * as cookieParser from 'cookie-parser';
+import * as bodyParser from 'body-parser';
+import * as expressValidator from 'express-validator';
+import * as glob from 'glob';
 
-const sessionStore = new session.MemoryStore;
+import { envs } from './env';
+import * as utils from './base/utilities/application';
 
-class AppServer {
+import connectRedis = require('connect-redis');
+import flash = require('connect-flash');
 
-  constructor(public app?: any, public appConfig?: AppConfigType) {
+export class AppServer {
+
+  constructor(
+    public app?
+  ) {
+    if ( app === undefined ) {
+      this.app = express();
+    }
   }
 
   // start express application
-  public initalize(app: any, appConfig: AppConfigType) {
-    this.app = app;
-    this.appConfig = appConfig;
+  public initalize(app) {
 
     // view engine setup
-    app.set('views', path.join(appConfig.root, 'views'));
+    app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'ejs');
 
     // validator
     app.use(expressValidator());
 
     // favicon
-    app.use(favicon(path.join(appConfig.root, '.', 'public', 'favicon.ico'))); // uncomment after placing your favicon in /public
+    let faviconPath = path.join(__dirname, '.', 'public', 'favicon.ico');
+    app.use(favicon(faviconPath)); // uncomment after placing your favicon in /public
 
     // logger
     app.use(logger('dev'));
@@ -43,107 +50,118 @@ class AppServer {
 
     // cookieParser
     app.use(cookieParser());
-    app.use(session({
-      cookie: { maxAge: 60000 },
-      store: sessionStore,
-      saveUninitialized: true,
-      resave: 'true',
-      secret: 'secret'
-  }));
 
     // session
-    let sess: any = {
-      secret: config.get('session.secret'),
-      resave: config.get('session.resave'),
-      saveUninitialized: config.get('session.saveUninitialized'),
-      cookie: { maxAge: config.get('session.cookie.maxAge') }
+    let sess: session.SessionOptions = {
+      secret: envs.SESSION_SECRET.value as string,
+      resave: envs.SESSION_RESAVE.value as boolean,
+      saveUninitialized: envs.SESSION_SAVE_UNINITIALIZED.value as boolean,
+      cookie: {
+        maxAge: envs.SESSION_COOKIE_MAXAGE.value as number,
+      }
     };
 
+    // choose session storage
+    let driver: string = envs.SESSION_DRIVER.value as string;
+
+    switch (driver) {
+      case 'redis':
+        // redis session
+        const RedisStore = connectRedis(session);
+        let redisOptions: connectRedis.RedisStoreOptions;
+
+        if ( envs.SESSION_DRIVER_OPTION.value === undefined ) {
+          redisOptions = {};
+        } else {
+          // Clones options for unlock read-only properties
+          // -> Effect logErrors param overriding in connect-redis
+          redisOptions = JSON.parse(JSON.stringify(envs.SESSION_DRIVER_OPTION.value));
+        }
+
+        if (
+          envs.SESSION_DRIVER_HOST.value === undefined ||
+          envs.SESSION_DRIVER_HOST.value.length < 1
+        ) {
+          throw new Error('process.env.SESSION_DRIVER_HOST must be set when session driver is redis.');
+        }
+        redisOptions.host = envs.SESSION_DRIVER_HOST.value;
+
+        if (envs.SESSION_DRIVER_PORT.value !== undefined) {
+          redisOptions.port = parseInt(envs.SESSION_DRIVER_PORT.value);
+        }
+        if (envs.SESSION_DRIVER_PASSWORD !== undefined) {
+          redisOptions.pass = envs.SESSION_DRIVER_PASSWORD.value;
+        }
+        sess.store = new RedisStore(redisOptions);
+
+        break;
+
+      default:
+        // default in-memory session
+        break;
+    }
+
+    app.use(session(sess));
+
     // public folder path
-    const cacheTime = 10000;     // 10s
-    app.use(express.static(path.join(appConfig.root, '.', 'public'), {
-      maxAge: cacheTime,
+    app.use(express.static(path.join(__dirname, '.', 'public'), {
+      maxAge: envs.STATIC_CONTENTS_CACHE.value,
       lastModified: true,
       redirect: true }
-      ));
+    ));
 
     // Sample cache of extension match
-    // app.use(function (req, res, next) {
-    //     if (req.url.match(/^\/(css|js|img|font)\/.+/)) {
-    //         res.setHeader('Cache-Control', 'public, max-age=3600');
-    //     }
-    //     next();
-    // });
+    if ( process.env.HTTP_CACHE !== undefined ) {
+      app.use(function (req, res, next) {
+        if (req.url.match(/^\/(css|js|img|font)\/.+/)) {
+          res.setHeader('Cache-Control', 'public, max-age=' + process.env.HTTP_CACHE_MAXAGE);
+        }
+        next();
+      });
+    }
 
     // Initialize connect-flash
     app.use(flash());
 
-    app.use(passport.initialize());
-    app.use(passport.session());
+    // Setup express middlewares
+    let middlewares = glob.sync(__dirname + '/middlewares/*.+(js|jsx|ts|tsx)');
 
-    // Setup auth
-    let auth = glob.sync(appConfig.root + '/middlewares/*.+(js|ts|jsx|tsx)');
-    auth.forEach(function (routes) {
-      require(routes)(app);
+    middlewares.forEach( middleware => {
+      console.log('Loading middleware : ' + middleware);
+      try {
+        require(middleware)(app);
+      } catch ( err ) {
+        console.error(err);
+        process.exit(1);
+      }
     });
 
-    // require(__dirname + '/middlewares/passport')(app);
-
-    // Setup routes
-    let routes = glob.sync(__dirname + '/routes/*.+(js|ts|jsx|tsx)');
-      routes.forEach(function (routes) {
-        require(routes)(app);
-      });
-
-    // require(__dirname + '/routes/about')(app);
-    // require(__dirname + '/routes/api')(app);
-    // require(__dirname + '/routes/hello')(app);
-    // require(__dirname + '/routes/index')(app);
-    // require(__dirname + '/routes/material')(app);
-    // require(__dirname + '/routes/member')(app);
-    // require(__dirname + '/routes/redux')(app);
-    // require(__dirname + '/routes/simple')(app);
+    // Setup express routes
+    let routes = glob.sync(__dirname + '/routes/*.+(js|jsx|ts|tsx)');
+    routes.forEach( route => {
+      console.log('Loading route : ' + route);
+      require(route)(app);
+    });
 
     // catch 404 and forward to error handler
-    app.use((req: any, res: any, next: any) => {
-      let err: any = new Error('Not Found');
-      err.status = 404;
-      next(err);
-    });
-
-    // error handlers
-
-    // development error handler
-    // will print stacktrace
-    if (app.get('env') === 'development') {
-      app.use((err: any, req: any, res: any, next: any) => {
-        res.status(err.status || 500);
-        res.render('error', {
-        message: err.message,
-        error: err
-        });
+    app.use((req, res, next) => {
+      res.status(404);
+      res.render('not-found', {
+        title: 'Not Found',
       });
-    }
+    });
 
     // production error handler
     // no stacktraces leaked to user
-    app.use((err: any, req: any, res: any, next: any) => {
+    app.use((err, req, res, next) => {
       res.status(err.status || 500);
       res.render('error', {
+        title: 'Error',
         message: err.message,
-        error: {}
+        error: (utils.isDevMode()) ? err : {}
       });
     });
-  }
 
-  public async start() {
-    if ( this.appConfig != undefined ) {
-      let port = this.appConfig.port;
-      this.app.listen(port, () => {
-        return ('Express server listening on port ' + port);
-      });
-    }
+    return app;
   }
 }
-
-export default new AppServer();
