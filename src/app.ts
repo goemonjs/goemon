@@ -68,7 +68,7 @@ export function createApp() {
         } else {
           envs[envKey].value = process.env[envKey] as string;
         }
-        console.log(`process.env.${envKey} : ${process.env[envKey]} defaultValue: ${envs[envKey].value}`);
+        // console.log(`process.env.${envKey}: ${process.env[envKey]}; defaultValue: ${envs[envKey].value}`);
       });
 
       // Create express application

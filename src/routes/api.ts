@@ -8,9 +8,9 @@ module.exports = function (app: express.Express) {
 
 router.get('/items', (req, res, next) => {
   res.json([
-    {id: 1, text: 'first'},
-    {id: 2, text: 'second'},
-    {id: 3, text: 'third'}
+    { id: 1, text: 'first' },
+    { id: 2, text: 'second' },
+    { id: 3, text: 'third' }
   ]);
 });
 
@@ -27,12 +27,10 @@ router.get('/todos', (req, res, next) => {
 });
 
 router.get('/me', isAuthenticated, (req: any, res, next) => {
-  res.json(
-    {
-      id : req.user.id,
-      email : req.user.email
-    }
-  );
+  res.json({
+    id: req.user.id,
+    email: req.user.email
+  });
   //res.json(req.user);
 });
 

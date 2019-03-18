@@ -10,6 +10,10 @@ import { envs } from '../env';
 import MongoMemoryServer from 'mongodb-memory-server';
 
 module.exports = async (app: express.Express) => {
+  // Return with test environment
+  if (process.env.NODE_ENV === 'test') {
+    return;
+  }
 
   (<any>mongoose.Promise) = Promise;
   mongoose.set('useCreateIndex' , true); // against MongoDB warinig
