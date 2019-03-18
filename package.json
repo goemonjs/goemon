@@ -1,6 +1,6 @@
 {
   "name": "boilerplate-react-express",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Boilerplate using React and Express with server-side rendering.",
   "main": "app.js",
   "scripts": {
