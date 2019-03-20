@@ -127,7 +127,9 @@ export class AppServer {
     let middlewares = glob.sync(__dirname + '/middlewares/*.+(js|jsx|ts|tsx)');
 
     middlewares.forEach( middleware => {
-      // console.log('Loading middleware : ' + middleware);
+      if (!utils.isTestMode) {
+        console.log('Loading middleware : ' + middleware);
+      }
       try {
         require(middleware)(app);
       } catch ( err ) {
@@ -139,7 +141,9 @@ export class AppServer {
     // Setup express routes
     let routes = glob.sync(__dirname + '/routes/*.+(js|jsx|ts|tsx)');
     routes.forEach( route => {
-      // console.log('Loading route : ' + route);
+      if (!utils.isTestMode) {
+        console.log('Loading route : ' + route);
+      }
       require(route)(app);
     });
 
