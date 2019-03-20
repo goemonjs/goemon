@@ -8,6 +8,7 @@ import * as os from 'os';
 
 import { AppServer } from './app-server';
 import { envs } from './env';
+import * as utils from './base/utilities/application';
 
 // load env vars into process.env
 dotenv.config();
@@ -68,7 +69,9 @@ export function createApp() {
         } else {
           envs[envKey].value = process.env[envKey] as string;
         }
-        console.log(`process.env.${envKey} : ${process.env[envKey]} defaultValue: ${envs[envKey].value}`);
+        if (!utils.isTestMode) {
+          console.log(`process.env.${envKey}: ${process.env[envKey]}; defaultValue: ${envs[envKey].value}`);
+        }
       });
 
       // Create express application

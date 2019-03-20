@@ -26,7 +26,8 @@
       "tsx",
       "json",
       "node"
-    ]
+    ],
+    "setupTestFrameworkScriptFile": "./jest-config/jest-setup-test-framework.js"
   },
   "author": {
     "name": "Hidekazu Kondo"

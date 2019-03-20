@@ -64,7 +64,7 @@
           "name": "Test with Debug",
           "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
           "stopOnEntry": false,
-          "args": [],
+          "args": ["${relativeFile}"],
           "cwd": "${workspaceRoot}",
           "console": "internalConsole",
           "sourceMaps": true,

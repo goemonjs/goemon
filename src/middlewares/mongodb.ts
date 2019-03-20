@@ -5,11 +5,16 @@ import * as express from 'express';
 import * as mongoose from 'mongoose';
 import * as glob from'glob';
 import * as path from'path';
-import { envs } from '../env';
-
 import MongoMemoryServer from 'mongodb-memory-server';
 
+import { envs } from '../env';
+import { isTestMode } from '../base/utilities/application';
+
 module.exports = async (app: express.Express) => {
+  // Return with test environment
+  if (isTestMode()) {
+    return;
+  }
 
   (<any>mongoose.Promise) = Promise;
   mongoose.set('useCreateIndex' , true); // against MongoDB warinig
