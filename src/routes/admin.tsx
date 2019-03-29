@@ -15,20 +15,20 @@ const router = Router();
 let jsDate: number = 0;
 
 module.exports = (app) => {
-  app.use('/member', router);
+  app.use('/admin', router);
 };
 
 router.get('/login',  (req: any, res, next) => {
-  res.render('member-login', { message: req.flash('error') });
+  res.render('admin-login', { message: req.flash('error') });
 });
 
 router.post('/login', passport.authenticate('local',
-  { successRedirect: '/member', failureRedirect: '/member/login', failureFlash: true }
+  { successRedirect: '/admin', failureRedirect: '/admin/login', failureFlash: true }
 ));
 
 router.get('/logout', (req: any, res) => {
   req.logout();
-  res.redirect('/member');
+  res.redirect('/admin');
 });
 
 router.get('*', isAuthenticated, (req, res) => {
@@ -71,7 +71,11 @@ router.get('*', isAuthenticated, (req, res) => {
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    return next();
+    if ( req.session.passport.user.admin ) {
+      return next();
+    } else {
+      res.redirect('/admin/login');
+    }
   }
-  res.redirect('/member/login');
+  res.redirect('/admin/login');
 }

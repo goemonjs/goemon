@@ -10,13 +10,17 @@ class UserService {
   }
 
   public async authenticate(userId: string, password: string) {
-    let userDocument = await Users.authenticate(userId, password );
-    if ( userDocument != null ) {
-      return {
-        id: userDocument.id,
-        email: userDocument.email.toString()
-      };
-    } else {
+    try {
+      let userDocument = await Users.authenticate(userId, password );
+      if ( userDocument != null ) {
+        return {
+          id: userDocument.id,
+          email: userDocument.email.toString()
+        };
+      } else {
+        return undefined;
+      }
+    } catch ( err ) {
       return undefined;
     }
   }

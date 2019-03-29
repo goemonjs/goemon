@@ -10,12 +10,12 @@ import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as expressValidator from 'express-validator';
 import * as glob from 'glob';
+import * as flash from 'express-flash';
 
 import { envs } from './env';
 import * as utils from './base/utilities/application';
 
 import connectRedis = require('connect-redis');
-import flash = require('connect-flash');
 
 export class AppServer {
 

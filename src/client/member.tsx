@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { Router, Route } from 'react-router';
 import { Provider } from 'react-redux';
 import { configureStore } from './stores/configure-store';
-import { createClientApp } from '../client/base/common/route';
+import { createClientApp } from './base/common/route';
 // import { routes, theme } from '../client/routes/member-route';
 import { MemberApp, theme } from './apps/member-app';
 
