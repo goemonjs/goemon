@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import Todo from '../models/todo';
-import * as TodoActions from '../actions/todo-actions';
-import TodoListService from '../services/todo-list-service';
-import TodoForm from './components/todo/todo-form';
-import TodoList from './components/todo/todo-list';
-import { IStore } from '../stores/configure-store';
+import Todo from '../../../models/todo';
+import * as TodoActions from '../../../actions/todo-actions';
+import TodoListService from '../../../services/todo-list-service';
+import TodoForm from '../../components/todo/todo-form';
+import TodoList from '../../components/todo/todo-list';
+import { IStore } from '../../../stores/member-store';
 
 interface IProps {
   todos: Todo[];
@@ -39,8 +39,8 @@ class TodoListView extends React.Component<IProps & IDispProps, any> {
 
   // It is called only client rendering
   componentDidMount() {
-    let { loadTodos, isFetching } = this.props;
-    loadTodos('', isFetching);
+    // let { loadTodos, isFetching } = this.props;
+    // loadTodos('', isFetching);
   }
 
 }

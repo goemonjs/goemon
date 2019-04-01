@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 import * as ProfileActions from '../actions/profile-actions';
-import { IStore } from '../stores/configure-store';
+import { IStore } from '../stores/member-store';
 import ProfileService from '../services/profile-service';
 
 interface IProps {

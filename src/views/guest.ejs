@@ -1,9 +1,8 @@
-<%- include('./_guest-header', { title:'Home' }) %>
-  <div class="jumbotron">
-    <h1>Express-React-Redux-Typescript Sample</h1>
-    <p class="lead">This is the sample application!</p>
-    <a class="btn btn-large btn-success" href="/simple">React Sample</a>
-    <a class="btn btn-large btn-success" href="/redux">Redux Sample</a>
-    <a class="btn btn-large btn-success" href="/auth">Auth Sample</a>
-  </div>
+<%- include('./_guest-header') %>
+  <script>
+    window.__PRELOADED_STATE__ = <%- initialState %>;
+  </script>
+  <div id="app"><%- html %></div>
+  <style id="jss-server-side"><%- css %></style>
+  <script type="text/javascript" charset="utf-8" src="/js/guest.js?ver=<%- jsDate %>"></script>
 <%- include('./_guest-footer') %>

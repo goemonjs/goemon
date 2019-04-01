@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router';
-import { Link, match } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import { createMuiTheme } from '@material-ui/core/styles';
-import MemberView from '../views/member-view';
+import MemberTop from '../views/member-top';
 import Profile from '../views/profile';
 import { NotFound } from '../views/components/notfound';
 import { lightBlue, red  } from '@material-ui/core/colors';
@@ -19,14 +17,19 @@ interface IState {
 export const routes = [
   {
     path: '/member',
-    component: MemberView,
+    component: MemberTop,
+    exact: true
+  }, {
+    path: '/member/login',
+    component: MemberTop,
     exact: true
   }, {
     path: '/member/profile',
     component: Profile,
     exact: true
-  }, {
-    path: '/*',
+  },
+   {
+    path: '/member/*',
     component: NotFound
   }
 ];
@@ -42,7 +45,7 @@ export const theme = createMuiTheme({
   },
 });
 
-export class MemberApp extends React.Component<IProps, IState> {
+export class RouteComponent extends React.Component<IProps, IState> {
   // Remove the server-side injected CSS.
   componentDidMount() {
     const jssStyles = document.getElementById('jss-server-side');

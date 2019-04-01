@@ -128,7 +128,7 @@ const currencies = [
 
 type ClassNames = keyof typeof stylesTypes;
 
-  class MemberView extends React.Component<IProps & WithStyles<ClassNames>, {}> {
+class MemberTop extends React.Component<IProps & WithStyles<ClassNames>, {}> {
 
     state = {
       name: 'Cat in the Hat',
@@ -331,4 +331,4 @@ type ClassNames = keyof typeof stylesTypes;
     }
   }
 
-export default withStyles(styles)(MemberView);
+export default withStyles(styles)(MemberTop);

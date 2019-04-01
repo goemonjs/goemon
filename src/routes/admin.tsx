@@ -6,9 +6,9 @@ import { renderToString } from 'react-dom/server';
 import { matchRoutes, renderRoutes } from 'react-router-config';
 import { matchPath } from 'react-router-dom';
 import PassportUtility from '../middlewares/passport/passport-utility';
-import { configureStore, IStore } from '../client/stores/configure-store';
+import { configureStore, IStore } from '../client/stores/member-store';
 import { renderOnServer } from '../client/base/common/route';
-import { MemberApp, routes, theme } from '../client/apps/member-app';
+import { RouteComponent, routes, theme } from '../client/apps/admin-route';
 
 const passport = require('passport');
 const router = Router();
@@ -49,7 +49,7 @@ router.get('*', isAuthenticated, (req, res) => {
     // render on server side
     let context: any = {};
 
-    let contents = renderOnServer(<MemberApp />, theme, req, context, store);
+    let contents = renderOnServer(<RouteComponent />, theme, req, context, store);
 
     if ( context.status === 404) {
       res.status(404);

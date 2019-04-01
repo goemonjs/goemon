@@ -1,8 +1,4 @@
 import * as React from 'react';
-import * as ReactRouter from 'react-router';
-import * as ReactRouterDom from 'react-router-dom';
-
-import Button from '@material-ui/core//Button';
 
 export interface IMainState {
   text: string;
@@ -16,7 +12,7 @@ export interface IMainProps {
   children?: any;
 }
 
-export default class SimpleApp extends React.Component<IMainProps, IMainState> {
+export class SimpleList extends React.Component<IMainProps, IMainState> {
 
   state: IMainState = {
     text : '',
