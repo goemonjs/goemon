@@ -32,19 +32,12 @@ export const routes = [
     path: '/redux/counter',
     component: GuestRedux,
     exact: false
+  }, {
+    path: '*',
+    component: NotFound,
+    exact: false
   }
 ];
-
-export const theme = createMuiTheme({
-  palette: {
-    primary: lightBlue,
-    grey: red,
-    type: 'light'
-  },
-  typography: {
-    useNextVariants: true,
-  },
-});
 
 export class RouteComponent extends React.Component<IProps, IState> {
   // Remove the server-side injected CSS.

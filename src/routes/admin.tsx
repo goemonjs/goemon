@@ -8,7 +8,8 @@ import { matchPath } from 'react-router-dom';
 import PassportUtility from '../middlewares/passport/passport-utility';
 import { configureStore, IStore } from '../client/stores/member-store';
 import { renderOnServer } from '../client/base/common/route';
-import { RouteComponent, routes, theme } from '../client/apps/admin-route';
+import { RouteComponent, routes } from '../client/apps/admin-route';
+import { theme } from '../client/themes/material-ui-lightblue';
 
 const passport = require('passport');
 const router = Router();

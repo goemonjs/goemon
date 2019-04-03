@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-
-import * as ProfileActions from '../actions/profile-actions';
-import { IStore } from '../stores/member-store';
-import ProfileService from '../services/profile-service';
+import * as ProfileActions from '../../../actions/profile-actions';
+import { IStore } from '../../../stores/member-store';
 
 interface IProps {
   profile: any;
@@ -15,7 +12,7 @@ interface IDispProps {
   loadProfile: (url: string, isFetching: boolean) => void;
 }
 
-class ProfileView extends React.Component<IProps & IDispProps, {}> {
+class Profile extends React.Component<IProps & IDispProps, {}> {
 
   private url: string = '';
 
@@ -69,4 +66,4 @@ const mapDispatchToProps = (dispatch): IDispProps => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileView);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

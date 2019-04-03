@@ -17,7 +17,6 @@ export function createClientApp(componant, store, basename) {
   );
 }
 
-
 // Render the component to a string.
 export function renderOnServer(componant, req, context, store) {
 

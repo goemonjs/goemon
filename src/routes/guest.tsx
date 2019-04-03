@@ -1,7 +1,8 @@
 ﻿import * as React from 'react';
 import { Express, Router } from 'express';
 import { configureStore } from '../client/stores/guest-store';
-import { RouteComponent, routes, theme } from '../client/apps/guest-route';
+import { RouteComponent, routes } from '../client/apps/guest-route';
+import { theme } from '../client/themes/material-ui-lightblue';
 import { Renderer } from './base/route-base';
 import { renderToString } from 'react-dom/server';
 
