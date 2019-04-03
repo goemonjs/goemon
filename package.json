@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate-react-express",
-  "version": "0.14.0",
-  "description": "Boilerplate using React and Express with server-side rendering.",
+  "name": "goemon",
+  "version": "0.15.0",
+  "description": "Boilerplate using Express, React, Redux, Typescript",
   "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
