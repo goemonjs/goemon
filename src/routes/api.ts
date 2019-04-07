@@ -5,7 +5,7 @@ module.exports = function (app: express.Express) {
   app.use('/api', router);
 };
 
-router.post('/items', (req, res, next) => {
+router.get('/items', (req, res, next) => {
   res.json([
     { id: 1, text: 'first' },
     { id: 2, text: 'second' },
@@ -13,7 +13,7 @@ router.post('/items', (req, res, next) => {
   ]);
 });
 
-router.post('/listTodo', (req, res, next) => {
+router.get('/listTodo', (req, res, next) => {
   // Be careful of security when use this headres !!
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -25,7 +25,7 @@ router.post('/listTodo', (req, res, next) => {
   ]);
 });
 
-router.post('/me', isAuthenticated, (req: any, res, next) => {
+router.get('/me', isAuthenticated, (req: any, res, next) => {
   res.json({
     id: req.user.id,
     email: req.user.email

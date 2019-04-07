@@ -21,7 +21,6 @@ Object.assign(defaultConfig, {
 config.set(defaultConfig);
 
 const preloadedState = win.__PRELOADED_STATE__;
-
 const store = configureStore(preloadedState);
 const userContext: IContextProps = {
   userType: 'guest',

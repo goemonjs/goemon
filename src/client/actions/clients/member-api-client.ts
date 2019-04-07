@@ -1,4 +1,4 @@
-import { doPost } from '../../../base/utilities/network';
+import { doGet } from '../../../base/utilities/network';
 
 export default class MemberApiClient {
 
@@ -12,6 +12,6 @@ export default class MemberApiClient {
       id: string,
       email: string
     };
-    return await doPost<RESULT_TYPE>(this.baseUrl + '/api/me');
+    return await doGet<RESULT_TYPE>(this.baseUrl + '/api/me');
   }
 }

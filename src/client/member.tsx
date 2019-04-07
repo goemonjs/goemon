@@ -13,9 +13,15 @@ import { UserContext, IContextProps } from './context/user-context';
 import { theme } from './themes/material-ui-lightblue';
 
 const win: any = window;
-const preloadedState = win.__PRELOADED_STATE__;
 const preloadConfig = win.__CONFIG__;
-config.set(Object.assign(defaultConfig, preloadConfig));
+Object.assign(defaultConfig, preloadConfig);
+Object.assign(defaultConfig, {
+  protocol:  (('https:' == document.location.protocol) ? 'https://' : 'http://'),
+  host: location.host
+});
+
+config.set(defaultConfig);
+const preloadedState = win.__PRELOADED_STATE__;
 
 const store = configureStore(preloadedState);
 const userContext: IContextProps = {

@@ -15,10 +15,6 @@ module.exports = (app) => {
   app.use('/member', router);
 };
 
-router.get('/login',  (req: any, res, next) => {
-  res.render('member-login', { message: req.flash('error') });
-});
-
 router.post('/login', passport.authenticate('local',
   { successRedirect: '/member', failureRedirect: '/member/login', failureFlash: true }
 ));
@@ -36,5 +32,5 @@ function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/member/login');
+  res.redirect('/login');
 }

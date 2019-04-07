@@ -36,8 +36,8 @@ router.get('/about', authenticationHandler, (req, res) => {
   res.render('guest', { title: 'About'});
 });
 
-router.get('*', authenticationHandler, (req, res) => {
-  renderer.ssrRouteHandler(req, res, 'guest', { title: 'All'});
+router.get('/login',  (req: any, res, next) => {
+  res.render('login', { message: req.flash('error') });
 });
 
 function authenticationHandler(req, res, next) {

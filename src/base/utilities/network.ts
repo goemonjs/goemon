@@ -20,6 +20,22 @@ export function buildHttpQuery(params: { [key: string]: any }, encoder: any = nu
   return querystring.stringify(params, undefined, undefined, opts);
 }
 
+export async function doGet<T>(url: string): Promise<T> {
+  const apiResult = await fetch(url, {
+    method: 'get',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if ( apiResult.status != 200 ) {
+    throw new Error('Failed to call ' + url);
+  }
+
+  return apiResult.json();
+}
+
 export async function doPost<T>(url: string): Promise<T> {
   const apiResult = await fetch(url, {
     method: 'post',

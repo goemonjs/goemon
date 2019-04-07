@@ -1,4 +1,4 @@
-import { doPost } from '../../../base/utilities/network';
+import { doGet } from '../../../base/utilities/network';
 import { Todo } from '../../objects/todo';
 
 export default class MemberApiClient {
@@ -10,6 +10,6 @@ export default class MemberApiClient {
 
   public async listTodo() {
     type RESULT_TYPE = Todo[];
-    return await doPost<RESULT_TYPE>(this.baseUrl + '/api/listTodo');
+    return await doGet<RESULT_TYPE>(this.baseUrl + '/api/listTodo');
   }
 }
