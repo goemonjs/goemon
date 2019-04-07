@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Todo from '../../../models/todo';
+import { Todo } from '../../../objects/todo';
 
 interface IProps extends React.Props<{}> {
   todos: Todo[];

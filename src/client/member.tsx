@@ -7,7 +7,7 @@ import * as config from 'react-global-configuration';
 import { configureStore } from './stores/member-store';
 import { createClientApp } from './base/common/route';
 // import { createClientApp } from './base/react/material-ui-app-creator';
-import { RouteComponent } from './apps/member-route';
+import { RouteComponent } from './routes/member-route';
 import { defaultConfig } from './config/default';
 import { UserContext, IContextProps } from './context/user-context';
 import { theme } from './themes/material-ui-lightblue';

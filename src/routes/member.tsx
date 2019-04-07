@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Router } from 'express';
 import { configureStore } from '../client/stores/member-store';
-import { RouteComponent, routes } from '../client/apps/member-route';
+import { RouteComponent, routes } from '../client/routes/member-route';
 import { theme } from '../client/themes/material-ui-lightblue';
 import { Renderer } from './base/route-base';
 import * as passport from 'passport';

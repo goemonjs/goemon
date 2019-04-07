@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import Todo from '../../../models/todo';
-import Message from '../../components/message';
+import { Todo } from '../../../objects/todo';
 import { IStore } from '../../../stores/member-store';
+import Message from '../../components/message';
 
 interface IProps {
   todos: Todo[];

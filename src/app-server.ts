@@ -13,7 +13,7 @@ import * as glob from 'glob';
 import * as flash from 'express-flash';
 
 import { envs } from './env';
-import * as utils from './base/utilities/application';
+import { isTestMode, isDevMode } from './base/utilities/debug';
 
 import connectRedis = require('connect-redis');
 
@@ -127,7 +127,7 @@ export class AppServer {
     let middlewares = glob.sync(__dirname + '/middlewares/*.+(js|jsx|ts|tsx)');
 
     middlewares.forEach( middleware => {
-      if (!utils.isTestMode) {
+      if (!isTestMode()) {
         console.log('Loading middleware : ' + middleware);
       }
       try {
@@ -141,7 +141,7 @@ export class AppServer {
     // Setup express routes
     let routes = glob.sync(__dirname + '/routes/*.+(js|jsx|ts|tsx)');
     routes.forEach( route => {
-      if (!utils.isTestMode) {
+      if (!isTestMode()) {
         console.log('Loading route : ' + route);
       }
       require(route)(app);
@@ -162,7 +162,7 @@ export class AppServer {
       res.render('error', {
         title: 'Error',
         message: err.message,
-        error: (utils.isDevMode()) ? err : {}
+        error: (isDevMode()) ? err : {}
       });
     });
 

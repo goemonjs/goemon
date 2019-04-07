@@ -1,5 +1,7 @@
 import { createTypeAction, createTypeAsyncAction } from 'type-redux';
-import Todo from '../models/todo';
+import { Todo } from '../objects/todo';
+import GuestApiClient from './clients/guest-api-client';
+import * as config from 'react-global-configuration';
 
 // Type Action Samples
 export interface IPayloadAddTodo {
@@ -22,12 +24,7 @@ export const toggleTodo = createTypeAction('TOGGLE_TODOS', (id: number) => {
   };
 });
 
-export const loadTodos = createTypeAsyncAction('LOAD_TODOS', (url: string) => {
-  return new Promise<Todo[]>((resolve, reject) => {
-    console.log(url);
-    fetch(url)
-    .then(apiResult => apiResult.json())
-    .then(json => resolve(json))    // Success
-    .catch(error => reject(error)); // Fail
-  });
+export const listTodo = createTypeAsyncAction('LIST_TODOS', () => {
+  const client = new GuestApiClient('http://localhost:3000');
+  return client.listTodo();
 });

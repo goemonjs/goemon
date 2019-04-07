@@ -8,7 +8,7 @@ import * as os from 'os';
 
 import { AppServer } from './app-server';
 import { envs } from './env';
-import * as utils from './base/utilities/application';
+import * as utils from './base/utilities/debug';
 
 // load env vars into process.env
 dotenv.config();

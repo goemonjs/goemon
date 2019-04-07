@@ -1,33 +1,29 @@
-﻿# Boilerplate for Express+React+Redux+TypeScript+SSR
-The boilerplate for Express + React16 + Redux + React-Router v4 + SSR(Server Side Rendering) development with TypeScript and Node.js.
-This boilerplate supports Visual Studio Code and Google Chrome for debugging.
-
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-
-For login the sample, please use id:test@example.com password:test .
+﻿# Full-Stack React Framework
+The boilerplate using React16, Redux, React-Router v4 + SSR(Server Side Rendering), Node, Express, and MongoDB in TypeScript.
+Support debugging in Visual Studio Code and Google Chrome.
 
 ## Enviroment
 Node.js v10.x.x.
 
 ## Quickstart
-You need to install Node.js v8.x.x.
-For login sample, please use id:test@example.com password:test .
 
-#### 1.Install node_mosules
+#### 1.Install Node.js
+1.Install Node.js v10.x.x.
+https://nodejs.org/
+
+#### 2.Install node_modules
 npm install
 
-#### 2 for Development
-npm run dev ( or gulp )
-
-#### Only Build
+#### 3.Build
 npm run build
 
-#### Test
+#### 4.Test
 npm test
 
-#### Start
+#### 5.Start
 npm start
+
+### Other commands
 
 #### Clean build
 npm run rebuild
@@ -42,14 +38,15 @@ npm run clean
 MIT
 
 ### reference
+- Node.js
 - React
 - Redux
-- Jest
 - Express
 - Typescript
+- Jest
 - gulp
 - webpack
-- react-router
+- react-router v4
 - graphql
 - Material UI
 - Passport

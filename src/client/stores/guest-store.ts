@@ -4,22 +4,18 @@ import { typePendingReducerSet, TypeReduxPendingState, createTypeReduxInitialSta
 import * as assign from 'object-assign';
 
 import * as TodoReducer from './todo-reducer';
-import * as ProfileReducer  from './profile-reducer';
 
 export const rootReducer = combineReducers({
   ...typePendingReducerSet,
-  todoState : TodoReducer.reducer,
-  profileState : ProfileReducer.reducer
+  todoState : TodoReducer.reducer
 });
 
 export interface IStore extends TypeReduxPendingState {
   todoState: TodoReducer.IState;
-  profileState: ProfileReducer.IState;
 }
 
 export const InitialState: IStore = assign(createTypeReduxInitialState(), {
   todoState : TodoReducer.initialState,
-  profileState : ProfileReducer.initialState
 });
 
 const middlewares = [typeReduxMiddleware, promiseMiddleware];

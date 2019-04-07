@@ -1,18 +1,16 @@
 import { createTypeReducer } from 'type-redux';
 import * as Actions from '../actions/todo-actions';
-import Todo from '../models/todo';
+import { Todo } from '../objects/todo';
 
 // Type Action Reducer Samples
 export type IState = {
   message: string,
-  todos: Todo[],
-  isFetching: boolean
+  todos: Todo[]
 };
 
 export const initialState: IState = {
   message: 'Please add items',
-  todos: [],
-  isFetching: false
+  todos: []
 };
 
 export const addTodoReducer = Actions.addTodo.reducer<IState>((state, action) => ({
@@ -34,7 +32,7 @@ export const toggleTodoReducer = Actions.toggleTodo.reducer<IState>((state, acti
     };
 });
 
-export const loadTodoReducer = Actions.loadTodos.reducer<IState>((state, action) => {
+export const loadTodoReducer = Actions.listTodo.reducer<IState>((state, action) => {
   if ( action.error ) {
     return {
       message: action.payload && action.payload.message,

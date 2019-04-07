@@ -9,7 +9,7 @@ interface IProps {
 }
 
 interface IDispProps {
-  loadProfile: (url: string, isFetching: boolean) => void;
+  loadProfile: (url: string) => void;
 }
 
 class Profile extends React.Component<IProps & IDispProps, {}> {
@@ -28,7 +28,7 @@ class Profile extends React.Component<IProps & IDispProps, {}> {
       <div>
         <h2>UserId : { profile.userid }</h2>
         <h2>Username : { profile.username }</h2>
-        <button type="button" className="btn btn-primary btn-sm" onClick={() => loadProfile(this.url, isFetching)} >Fetch</button>
+        <button type="button" className="btn btn-primary btn-sm" onClick={() => loadProfile(this.url)} disabled={isFetching}>Fetch</button>
         { isFetching ? <span> Feching...</span> : <span> Done</span> }
         <p>Fetch from <a href="/api/me">/api/me</a></p>
       </div>
@@ -44,24 +44,22 @@ class Profile extends React.Component<IProps & IDispProps, {}> {
   // It is called only client rendering
   componentDidMount() {
     let { isFetching, loadProfile } = this.props;
-    loadProfile(this.url, isFetching);
+    loadProfile(this.url);
   }
 }
 
 const mapStateToProps = (store: IStore, ownProps) => {
   return {
-    profile: store.profileState.profile,
-    isFetching: ProfileActions.loadProfile.isPending(store)
+    profile: store.memberState.profile,
+    isFetching: ProfileActions.getProfile.isPending(store)
   };
 };
 
 const mapDispatchToProps = (dispatch): IDispProps => {
   return {
-    loadProfile: (url, isFetching): void => {
-      if ( !isFetching ) {
-        dispatch(ProfileActions.updateFetchStatus(true));
-        dispatch(ProfileActions.loadProfile(url));
-      }
+    loadProfile: (url): void => {
+      dispatch(ProfileActions.updateFetchStatus(true));
+      dispatch(ProfileActions.getProfile(url));
     }
   };
 };

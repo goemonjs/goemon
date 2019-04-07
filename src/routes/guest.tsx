@@ -1,10 +1,11 @@
 ﻿import * as React from 'react';
 import { Express, Router } from 'express';
 import { configureStore } from '../client/stores/guest-store';
-import { RouteComponent, routes } from '../client/apps/guest-route';
+import { RouteComponent, routes } from '../client/routes/guest-route';
 import { theme } from '../client/themes/material-ui-lightblue';
 import { Renderer } from './base/route-base';
-import { renderToString } from 'react-dom/server';
+import * as ReactDOMServer from 'react-dom/server';
+import { app }  from '../client/guest';
 
 const router = Router();
 const store = configureStore();
@@ -33,6 +34,10 @@ router.get('/redux/counter', authenticationHandler, (req, res) => {
 
 router.get('/about', authenticationHandler, (req, res) => {
   res.render('guest', { title: 'About'});
+});
+
+router.get('*', authenticationHandler, (req, res) => {
+  renderer.ssrRouteHandler(req, res, 'guest', { title: 'All'});
 });
 
 function authenticationHandler(req, res, next) {

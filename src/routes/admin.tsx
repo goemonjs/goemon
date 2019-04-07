@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { Express, Router } from 'express';
-import * as fs from 'fs';
-
-import { renderToString } from 'react-dom/server';
 import { matchRoutes, renderRoutes } from 'react-router-config';
-import { matchPath } from 'react-router-dom';
 import PassportUtility from '../middlewares/passport/passport-utility';
 import { configureStore, IStore } from '../client/stores/member-store';
 import { renderOnServer } from '../client/base/common/route';
-import { RouteComponent, routes } from '../client/apps/admin-route';
+import { RouteComponent, routes } from '../client/routes/admin-route';
 import { theme } from '../client/themes/material-ui-lightblue';
 
 const passport = require('passport');

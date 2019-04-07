@@ -1,29 +1,32 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Lunascape Corporation. All rights reserved.
+ *--------------------------------------------------------------------------------------------*/
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise';
 import { typePendingReducerSet, TypeReduxPendingState, createTypeReduxInitialState, typeReduxMiddleware } from 'type-redux';
 import * as assign from 'object-assign';
 
 import * as TodoReducer from './todo-reducer';
-import * as ProfileReducer  from './profile-reducer';
+import * as MemberReducer from './member-reducers';
 
-export const rootReducer = combineReducers({
+export const rootReducer = combineReducers<IStore>({
   ...typePendingReducerSet,
   todoState : TodoReducer.reducer,
-  profileState : ProfileReducer.reducer
+  memberState: MemberReducer.reducer,
 });
 
 export interface IStore extends TypeReduxPendingState {
   todoState: TodoReducer.IState;
-  profileState: ProfileReducer.IState;
+  memberState: MemberReducer.IState;
 }
 
 export const InitialState: IStore = assign(createTypeReduxInitialState(), {
   todoState : TodoReducer.initialState,
-  profileState : ProfileReducer.initialState
+  memberState: MemberReducer.initialState,
 });
 
 const middlewares = [typeReduxMiddleware, promiseMiddleware];
 
-export const configureStore = (initialState: IStore = InitialState) => {
+export const configureStore = (initialState = InitialState) => {
   return createStore(rootReducer, initialState, applyMiddleware(...middlewares));
 };

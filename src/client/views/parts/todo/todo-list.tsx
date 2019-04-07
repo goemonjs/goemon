@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import Todo from '../../../models/todo';
+import { Todo } from '../../../objects/todo';
 import * as TodoActions from '../../../actions/todo-actions';
-import TodoListService from '../../../services/todo-list-service';
 import TodoForm from '../../components/todo/todo-form';
 import TodoList from '../../components/todo/todo-list';
 import { IStore } from '../../../stores/member-store';
@@ -17,20 +16,20 @@ interface IProps {
 interface IDispProps {
   addTodo: (text: string) => void;
   toggleTodo: (id: number) => void;
-  loadTodos: (filter, isFetching) => void;
+  listTodo: () => void;
 }
 
 class TodoListView extends React.Component<IProps & IDispProps, any> {
 
   render() {
-    let { todos, message, addTodo, toggleTodo, loadTodos, isFetching } = this.props;
+    let { todos, message, addTodo, toggleTodo, listTodo, isFetching } = this.props;
     return (
       <div>
         <hr />
         <TodoList todos={todos} message={message} toggleTodo={toggleTodo}/>
         <TodoForm addTodo={addTodo} />
         <hr />
-        <p><button onClick={() => loadTodos('', isFetching)} >{ isFetching ? <span>Feching...</span> : <span>Fetch</span> }
+        <p><button onClick={() => listTodo()} >{ isFetching ? <span>Feching...</span> : <span>Fetch</span> }
         </button> from <a href="/api/todos">/api/todo</a>
         </p>
       </div>
@@ -49,7 +48,7 @@ const mapStateToProps = (store: IStore) => {
   return {
     todos: store.todoState.todos,
     message: store.todoState.message,
-    isFetching: TodoActions.loadTodos.isPending(store)
+    isFetching: TodoActions.listTodo.isPending(store)
   };
 };
 
@@ -57,12 +56,8 @@ const mapDispatchToProps = (dispatch): IDispProps => {
   return {
     addTodo: (text: string): void => dispatch(TodoActions.addTodo({ text: text })),
     toggleTodo: (id: number): void => dispatch(TodoActions.toggleTodo(id)),
-    loadTodos: (filter, isFetching): void => {
-      if ( !isFetching ) {
-        let protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://');
-        let url = protocol + location.host + '/api/todos';
-        dispatch(TodoActions.loadTodos(url));
-      }
+    listTodo: (): void => {
+      dispatch(TodoActions.listTodo());
     }
   };
 };

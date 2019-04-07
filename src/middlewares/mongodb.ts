@@ -8,7 +8,7 @@ import * as path from'path';
 import MongoMemoryServer from 'mongodb-memory-server';
 
 import { envs } from '../env';
-import { isTestMode } from '../base/utilities/application';
+import { isTestMode } from '../base/utilities/debug';
 
 module.exports = async (app: express.Express) => {
   // Return with test environment

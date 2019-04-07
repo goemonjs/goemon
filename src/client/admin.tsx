@@ -6,7 +6,7 @@ import * as ReactDOM from 'react-dom';
 import * as config from 'react-global-configuration';
 import { configureStore } from './stores/member-store';
 import { createClientApp } from './base/react/app-creator';
-import { RouteComponent } from './apps/admin-route';
+import { RouteComponent } from './routes/admin-route';
 import { defaultConfig } from './config/default';
 import { UserContext, IContextProps } from './context/user-context';
 

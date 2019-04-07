@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 import { withRouter, Link, RouteComponentProps } from 'react-router-dom';
-import { loadTodos } from '../actions/todo-actions';
+import { listTodo } from '../actions/todo-actions';
 import TodoList from './parts/todo/todo-list';
 import TodoCounter from './parts/todo/todo-counter';
 interface IProps extends React.Props<{}>, RouteComponentProps<{}> {
@@ -17,7 +17,7 @@ export class GuestRedux extends React.Component<IProps, IState> {
 
   // To provide initial data for Server side rendering, add this function
   static async getInitialProps(store, protocol: string, host: string) {
-    return store.dispatch(loadTodos(protocol + '://' + host + '/api/todos'));
+    return store.dispatch(listTodo(protocol + '://' + host + '/api/todos'));
   }
 
   constructor(props: IProps) {

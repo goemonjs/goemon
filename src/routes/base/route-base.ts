@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { matchRoutes } from 'react-router-config';
 import { renderOnServer } from '../../client/base/common/route';
+import * as ReactDOMServer from 'react-dom/server';
 
 let jsDate: number = 0;
 

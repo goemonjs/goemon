@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { renderRoutes } from 'react-router-config';
-import { createMuiTheme } from '@material-ui/core/styles';
 import { GuestTop } from '../views/guest-top';
 import { GuestReact } from '../views/guest-react';
 import { GuestRedux } from '../views/guest-redux';
 import { NotFound } from '../views/components/notfound';
-import { lightBlue, red  } from '@material-ui/core/colors';
 
 interface IProps  {
   // routes: any;
@@ -42,10 +40,10 @@ export const routes = [
 export class RouteComponent extends React.Component<IProps, IState> {
   // Remove the server-side injected CSS.
   componentDidMount() {
-    // const jssStyles = document.getElementById('jss-server-side');
-    // if (jssStyles && jssStyles.parentNode) {
-    //   jssStyles.parentNode.removeChild(jssStyles);
-    // }
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
   }
 
   render () {

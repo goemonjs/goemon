@@ -1,4 +1,4 @@
-export default class Todo {
+export class Todo {
 
   constructor(
     public text: string,

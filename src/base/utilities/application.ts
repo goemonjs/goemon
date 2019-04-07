@@ -1,21 +1,11 @@
 /**
- * Application functions module
- */
-
-/**
- * Detect dev environment
+ * sleep
  *
- * @returns boolean (if env is 'development' then returns true or not)
+ * @param milliseconds  sleep time in milliseconds
+ * @returns    Promise<void>
  */
-export function isDevMode() {
-  return ( process.env.NODE_ENV === 'development' ) ? true : false;
-}
-
-/**
- * Detect test environment
- *
- * @returns boolean (if env is 'test' then returns true or not)
- */
-export function isTestMode() {
-  return ( process.env.NODE_ENV === 'test' ) ? true : false;
+export async function sleep(milliseconds: number): Promise<void> {
+  return new Promise<void>(resolve => {
+    setTimeout(() => resolve(), milliseconds);
+  });
 }
