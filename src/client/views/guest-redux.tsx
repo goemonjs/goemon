@@ -16,9 +16,9 @@ interface IState {
 export class GuestRedux extends React.Component<IProps, IState> {
 
   // To provide initial data for Server side rendering, add this function
-  static async getInitialProps(store, protocol: string, host: string) {
-    return store.dispatch(listTodo(protocol + '://' + host + '/api/todos'));
-  }
+  // static async getInitialProps(store, protocol: string, host: string) {
+  //   return store.dispatch(listTodo(protocol + '://' + host + '/api/todos'));
+  // }
 
   constructor(props: IProps) {
     super(props);

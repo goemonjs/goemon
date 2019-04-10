@@ -12,11 +12,11 @@ import { UserContext, IContextProps } from './context/user-context';
 
 const win: any = window;
 const preloadConfig = win.__CONFIG__;
-Object.assign(defaultConfig, preloadConfig);
 Object.assign(defaultConfig, {
   protocol:  (('https:' == document.location.protocol) ? 'https://' : 'http://'),
   host: location.host
 });
+Object.assign(defaultConfig, preloadConfig);
 
 config.set(defaultConfig);
 

@@ -12,7 +12,7 @@ export class Renderer {
 
   public ssrRouteHandler(req: any, res: any, ejsName: string, ejsOptions: any) {
     let context: any = {};
-    const protocol = process.env.PROTOCOL || req.protocol;
+    const protocol = (process.env.PROTOCOL || req.protocol) + '://';
     let host = process.env.HOST || req.headers.host;
 
     // getInitalProps
@@ -39,10 +39,16 @@ export class Renderer {
         initialState = ejsOptions.initialState ;
       }
 
+      const clientConfig =  {
+        host: host,
+        protocol: protocol + '://',
+      };
+
       let option = {
         html: contents.html,
         css: contents.css,
         initialState: JSON.stringify(initialState),
+        config: clientConfig,
         jsDate: jsDate
       };
 

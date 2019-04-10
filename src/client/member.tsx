@@ -14,11 +14,11 @@ import { theme } from './themes/material-ui-lightblue';
 
 const win: any = window;
 const preloadConfig = win.__CONFIG__;
-Object.assign(defaultConfig, preloadConfig);
 Object.assign(defaultConfig, {
   protocol:  (('https:' == document.location.protocol) ? 'https://' : 'http://'),
   host: location.host
 });
+Object.assign(defaultConfig, preloadConfig);
 
 config.set(defaultConfig);
 const preloadedState = win.__PRELOADED_STATE__;

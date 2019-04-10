@@ -25,6 +25,6 @@ export const toggleTodo = createTypeAction('TOGGLE_TODOS', (id: number) => {
 });
 
 export const listTodo = createTypeAsyncAction('LIST_TODOS', () => {
-  const client = new GuestApiClient('http://localhost:3000');
+  const client = new GuestApiClient(config.get('protocol') + config.get('host'));
   return client.listTodo();
 });
