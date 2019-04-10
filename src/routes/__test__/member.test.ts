@@ -9,7 +9,7 @@ import * as supertest from 'supertest';
 import * as App from '../../app';
 import { Users } from '../../models/user';
 
-describe('Test sample', () => {
+describe('routes/member test', () => {
 
   let mongoServer;
   beforeAll(async () => {
