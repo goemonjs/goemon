@@ -119,6 +119,14 @@ gulp.task('nodemon', (callback) => {
     setTimeout( () => {
       browserSync.reload();
     }, 3000);
+  })
+  .on('crash', function() {
+    console.error('Application has crashed!\n');
+    process.exit();
+  })
+  .once('quit', function () {
+    console.error('Application has stopped\n');
+    process.exit();
   });
 });
 
