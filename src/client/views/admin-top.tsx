@@ -12,13 +12,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import FormSample from './parts/member/form-sample';
-import PageSample from './parts/member/page-sample';
-import Profile from './parts/member/profile';
 
 // Styles
-import { styles } from '../themes/material-ui-lightblue';
+import { styles } from '../themes/material-ui-blue';
 
-import { sideMenus } from './parts/member/side-menu';
+import { sideMenus } from './parts/admin/side-menu';
 
 interface IProps extends React.Props<{}>, RouteComponentProps<{}> {
 }
@@ -35,7 +33,7 @@ class AdminTop extends React.Component<IProps & WithStyles<typeof styles>, {}> {
           <Typography variant="title" className={classes.title}>
             Administrator
           </Typography>
-          <Button className={classes.logout} href="/member/logout">Logout</Button>
+          <Button className={classes.logout} href="/admin/logout">Logout</Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -51,8 +49,6 @@ class AdminTop extends React.Component<IProps & WithStyles<typeof styles>, {}> {
         <div className={classes.toolbar} />
         <div><p>URL: {match.url}</p></div>
         <Switch>
-          <Route exact path={`/member/profile`} component={Profile} />
-          <Route exact path={`/member/page`} component={PageSample} />
           <Route exact path={`${match.url}`} component={FormSample} />
         </Switch>
       </main>

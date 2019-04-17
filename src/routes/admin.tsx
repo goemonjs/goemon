@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { Express, Router } from 'express';
-import { matchRoutes, renderRoutes } from 'react-router-config';
-import PassportUtility from '../middlewares/passport/passport-utility';
-import { configureStore, IStore } from '../client/stores/member-store';
-import { renderOnServer } from '../client/base/common/route';
-import { RouteComponent, routes } from '../client/routes/admin-route';
+import { Router } from 'express';
+import { configureStore } from '../client/stores/member-store';
+import { RouteComponent, routes } from '../client/routes/member-route';
 import { theme } from '../client/themes/material-ui-lightblue';
+import { Renderer } from './base/route-base';
+import * as passport from 'passport';
 
-const passport = require('passport');
 const router = Router();
-let jsDate: number = 0;
+const store = configureStore();
+
+let renderer =  new Renderer(store, RouteComponent, routes, theme);
 
 module.exports = (app) => {
   app.use('/admin', router);
@@ -29,50 +29,12 @@ router.get('/logout', (req: any, res) => {
 });
 
 router.get('*', isAuthenticated, (req, res) => {
-  let context: any = {};
-  const protocol = req.protocol;
-  let host = req.headers.host;
-
-  const store = configureStore();
-  const preloadedState = store.getState();
-
-  // getInitalProps
-  const branch = matchRoutes(routes, req.baseUrl + req.url);
-  const promises = branch.map(({route}) => {
-    let getInitialProps = route.component.getInitialProps;
-    return getInitialProps instanceof Function ? getInitialProps(store, protocol, host) : Promise.resolve(undefined);
-  });
-  return Promise.all(promises).then((data) => {
-    // render on server side
-    let context: any = {};
-
-    let contents = renderOnServer(<RouteComponent />, theme, req, context, store);
-
-    if ( context.status === 404) {
-      res.status(404);
-    } else if (context.status === 302) {
-      return res.redirect(302, context.url);
-    }
-
-    res.render('member', {
-      userid: PassportUtility.getUserId(req),
-      title: 'EJS Server Rendering Title',
-      html: contents.html,
-      css: contents.css,
-      initialState: JSON.stringify(store.getState()),
-      jsDate: jsDate
-    });
-
-  });
+  renderer.ssrRouteHandler(req, res, 'admin', { title: 'Admin - Goemon', userid: req.user.email});
 });
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    if ( req.session.passport.user.admin ) {
-      return next();
-    } else {
-      res.redirect('/admin/login');
-    }
+    return next();
   }
   res.redirect('/admin/login');
 }
