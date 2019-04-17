@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import FormSample from './parts/member/form-sample';
 
 // Styles
-import { styles } from '../themes/material-ui-blue';
+import { styles } from '../themes/material-ui-red';
 
 import { sideMenus } from './parts/admin/side-menu';
 

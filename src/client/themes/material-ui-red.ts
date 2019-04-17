@@ -6,7 +6,7 @@ const drawerWidth = 240;
 
 export const theme = createMuiTheme({
   palette: {
-    primary: blue,
+    primary: red,
     grey: red,
     type: 'light'
   },
@@ -26,15 +26,15 @@ export const styles = (theme: Theme) => createStyles( {
   },
   title: {
     flex: 1,
-    color: '#ffffff',
+    color: '#0',
   },
   logout: {
-    color: '#ffffff',
+    color: '#0',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    textColor: '#efefef',
-    color: '#061345',
+    textColor: '#0',
+    color: '#0',
     height: 60,
   },
   drawerPaper: {

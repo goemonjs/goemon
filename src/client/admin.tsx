@@ -10,7 +10,7 @@ import { createClientApp } from './base/common/route';
 import { RouteComponent } from './routes/admin-route';
 import { defaultConfig } from './config/default';
 import { UserContext, IContextProps } from './context/user-context';
-import { theme } from './themes/material-ui-blue';
+import { theme } from './themes/material-ui-red';
 
 const win: any = window;
 const preloadConfig = win.__CONFIG__;
