@@ -69,7 +69,7 @@ export function createApp() {
         } else {
           envs[envKey].value = process.env[envKey] as string;
         }
-        if (!utils.isTestMode) {
+        if (!utils.isTestMode()) {
           console.log(`process.env.${envKey}: ${process.env[envKey]}; defaultValue: ${envs[envKey].value}`);
         }
       });
