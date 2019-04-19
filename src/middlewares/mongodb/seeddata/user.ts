@@ -24,7 +24,12 @@ const creator: ISeedCreator = {
   },
 
   async createSeed() {
-    Users.createUser('test@example.com', 'testpassword');
+    try {
+      await Users.createUser('test@example.com', 'testpassword', ['free']);
+      await Users.createUser('admin@example.com', 'testpassword', ['admin']);
+    } catch ( err ) {
+      console.error('ERROR: Failed to ceate seed user');
+    }
   }
 
 };
