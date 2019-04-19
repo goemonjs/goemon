@@ -35,7 +35,7 @@ npm run clean
 @kazkondo on Twitter
 
 ### License
-MIT
+LPL
 
 ### reference
 - Node.js
