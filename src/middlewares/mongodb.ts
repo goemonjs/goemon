@@ -40,7 +40,11 @@ module.exports = async (app: express.Express) => {
         let strategiesPath = path.normalize(__dirname + '/mongodb/seeddata');
         let data = glob.sync(strategiesPath + '/*.?(js|ts)');
         data.forEach(function (routes) {
-          require(routes)(app);
+          try {
+            require(routes)(app);
+          } catch ( err ) {
+            console.error(err);
+          }
         });
       }
     }

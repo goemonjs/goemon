@@ -15,7 +15,8 @@ class UserService {
       if ( userDocument != null ) {
         return {
           id: userDocument.id,
-          email: userDocument.email.toString()
+          email: userDocument.email.toString(),
+          roles: userDocument.roles
         };
       } else {
         return undefined;

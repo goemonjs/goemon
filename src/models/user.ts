@@ -6,19 +6,20 @@ import * as crypto from 'crypto';
 
 // Define Document properties
 export interface UserDocument extends Document {
-  email: String;
-  password: String;
-  verifyEmail: Boolean;
+  email: string;
+  password: string;
+  verifyEmail: boolean;
   validation: {
-    emailConfirmKey: String;
+    emailConfirmKey: string;
   };
   profile: {
     image: any;
-    firstName: String;
-    middleName: String;
-    lastName: String;
+    firstName: string;
+    middleName: string;
+    lastName: string;
     birthDay: Date;
   };
+  roles: string[];
   createDate: Date;
   updateDate: Date;
 }
@@ -29,7 +30,7 @@ interface IUserModel extends Model<UserDocument> {
 
   // Definitions of static methods
   authenticate(userId: string, password: string): Promise<UserDocument>;
-  createUser(userId: string, password: string): Promise<UserDocument>;
+  createUser(userId: string, password: string, roles: string[]): Promise<UserDocument>;
   isUserExist(userId: string): Promise<boolean>;
 }
 
@@ -49,6 +50,7 @@ function createModel(): IUserModel {
       lastName: String,
       birthDay: Date
     },
+    roles: [String],
     createDate: { type: Date, default: new Date() },
     updateDate: { type: Date, default: new Date() }
   });
@@ -77,10 +79,17 @@ class UserModel {
     }
   }
 
-  public static async createUser(email: string, password: string): Promise<UserDocument> {
+  public static async createUser(email: string, password: string, roles: string[]): Promise<UserDocument> {
+    // Validation
+    if ( email == undefined || password == undefined || roles.length == 0) {
+      throw new Error('Invalid parameters');
+    }
+
+    // Create User objedt
     let user = new Users();
     user.email = email;
     user.password = UserModel.getHash(password);
+    user.roles = roles;
     user.profile.firstName = '-';
     user.profile.lastName = '-';
 

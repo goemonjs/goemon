@@ -34,7 +34,15 @@ router.get('*', isAuthenticated, (req, res) => {
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    return next();
+    if ( req.user.roles.indexOf('admin') > -1 ) {
+      return next();
+    } else {
+      res.status(401);
+      res.render('error', {
+          message: 'Unauthorized',
+          error: {}
+      });
+    }
   }
   res.redirect('/admin/login');
 }
