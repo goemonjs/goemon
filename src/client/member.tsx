@@ -5,8 +5,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as config from 'react-global-configuration';
 import { configureStore } from './stores/member-store';
-import { createClientApp } from './base/common/route';
-// import { createClientApp } from './base/react/material-ui-app-creator';
+import { MaterialUiAppContainer } from './base/react/material-ui-app-container';
 import { RouteComponent } from './routes/member-route';
 import { defaultConfig } from './config/default';
 import { UserContext, IContextProps } from './context/user-context';
@@ -27,10 +26,10 @@ const store = configureStore(preloadedState);
 const userContext: IContextProps = {
   userType: 'member',
 };
-const app = createClientApp(
-  <UserContext.Provider value={userContext}>
+const app = (
+  <MaterialUiAppContainer store={store} context={userContext} theme={theme}>
     <RouteComponent />
-  </UserContext.Provider>
-  , theme, store);
+  </MaterialUiAppContainer>
+);
 
 ReactDOM.hydrate(app, document.getElementById('app'));

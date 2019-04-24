@@ -5,7 +5,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as config from 'react-global-configuration';
 import { configureStore } from './stores/member-store';
-import { createClientApp } from './base/common/route';
+import { MaterialUiAppContainer } from './base/react/material-ui-app-container';
 // import { createClientApp } from './base/react/material-ui-app-creator';
 import { RouteComponent } from './routes/admin-route';
 import { defaultConfig } from './config/default';
@@ -27,10 +27,10 @@ const store = configureStore(preloadedState);
 const userContext: IContextProps = {
   userType: 'admin',
 };
-const app = createClientApp(
-  <UserContext.Provider value={userContext}>
+const app = (
+  <MaterialUiAppContainer store={store} context={userContext} theme={theme}>
     <RouteComponent />
-  </UserContext.Provider>
-  , theme, store);
+  </MaterialUiAppContainer>
+);
 
 ReactDOM.hydrate(app, document.getElementById('app'));

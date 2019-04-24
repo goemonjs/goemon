@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { Router } from 'express';
 import { configureStore } from '../client/stores/member-store';
+import { MaterialUiAppContainer } from '../client/base/react/material-ui-app-container';
 import { RouteComponent, routes } from '../client/routes/member-route';
 import { theme } from '../client/themes/material-ui-lightblue';
-import { Renderer } from './base/route-base';
+import { ServerSideRenderer } from './utilities/ssr-renderer';
+import { SheetsRegistry } from 'react-jss/lib/jss';
 import * as passport from 'passport';
 
 const router = Router();
 const store = configureStore();
 
-let renderer =  new Renderer(store, RouteComponent, routes, theme);
+let renderer =  new ServerSideRenderer('/js/member.js', store);
 
 module.exports = (app) => {
   app.use('/member', router);
@@ -25,7 +27,18 @@ router.get('/logout', (req: any, res) => {
 });
 
 router.get('*', isAuthenticated, (req, res) => {
-  renderer.ssrRouteHandler(req, res, 'member', { title: 'Member - Goemon', userid: req.user.email});
+  const sheetsRegistry = new SheetsRegistry();
+  const app = (
+    <MaterialUiAppContainer store={store} location={req.baseUrl + req.url} theme={theme} sheetsRegistry={sheetsRegistry}>
+      <RouteComponent />
+    </MaterialUiAppContainer>
+  );
+
+  const cssGenerator = () => {
+    return sheetsRegistry.toString();
+  };
+
+  renderer.render(req, res, 'member', { title: 'Member - Goemon' }, app, cssGenerator);
 });
 
 function isAuthenticated(req, res, next) {

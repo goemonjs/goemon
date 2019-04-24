@@ -32,7 +32,7 @@ class MemberTop extends React.Component<IProps & WithStyles<typeof styles>, {}> 
         <div className={classes.root}>
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="title" className={classes.title}>
+          <Typography variant="h6" className={classes.title}>
             Administrator
           </Typography>
           <Button className={classes.logout} href="/member/logout">Logout</Button>

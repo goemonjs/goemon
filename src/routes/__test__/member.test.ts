@@ -28,7 +28,7 @@ describe('routes/member test', () => {
       }
     });
 
-    await Users.createUser('test@example.com', 'testpassword');
+    await Users.createUser('test@example.com', 'testpassword', ['free']);
   });
 
   afterAll(async () => {
