@@ -7,7 +7,7 @@ import { ServerSideRenderer } from './utilities/ssr-renderer';
 
 const router = Router();
 const store = configureStore();
-const renderer = new ServerSideRenderer('/js/guest.js', store);
+const renderer = new ServerSideRenderer('guest.js', store);
 
 module.exports = function (app: Express) {
   app.use('/', router);

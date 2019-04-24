@@ -11,7 +11,7 @@ import * as passport from 'passport';
 const router = Router();
 const store = configureStore();
 
-let renderer =  new ServerSideRenderer('/js/member.js', store);
+let renderer =  new ServerSideRenderer('member.js', store);
 
 module.exports = (app) => {
   app.use('/member', router);

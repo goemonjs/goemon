@@ -1,6 +1,10 @@
 import * as supertest from 'supertest';
-import * as app from '../../../app';
-import HelloService from '../../services/hello-service';
+import * as http from 'http';
+
+import * as App from '../../../app';
+import HelloService from '../hello-service';
+
+const app = App.createApp({isTest: true});
 
 describe('/hello test', () => {
 
@@ -8,7 +12,7 @@ describe('/hello test', () => {
 
   test('hello', async (done) => {
 
-    let server = createServer(app);
+    const server = createServer(app);
     const request = supertest.agent(server.app);
 
     HelloService.hello('http://localhost:' + server.port + '/hello').then( result => {
@@ -20,10 +24,13 @@ describe('/hello test', () => {
 });
 
 function createServer(app) {
-  const newApp = require('http').createServer(app.createApp());
+  const newApp = http.createServer(app);
   newApp.listen(0);
-  let port = newApp.address().port;
-  console.log('Listen port : ' + port);
+
+  const address: any = newApp.address();
+  const port = address.port;
+  // console.log('Listen port : ' + port);
+
   return {
     app: newApp,
     port: port

@@ -37,7 +37,7 @@ describe('routes/member test', () => {
   });
 
   let agent: supertest.SuperTest<supertest.Test>;
-  const app = App.createApp();
+  const app = App.createApp({isTest: true});
 
   beforeEach((done) => {
     agent = supertest.agent(app);

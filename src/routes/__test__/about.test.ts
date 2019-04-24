@@ -33,9 +33,9 @@ describe('routes/guest test', () => {
     await mongoServer.stop();
   });
 
-  const app = App.createApp();
+  const app = App.createApp({isTest: true});
   test('/about', async () => {
-    const response = await supertest(app).get('/redux');
+    const response = await supertest(app).get('/about');
     expect(response.status).toBe(200);
   });
 });

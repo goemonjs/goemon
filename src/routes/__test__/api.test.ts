@@ -33,7 +33,7 @@ describe('routes/api test', () => {
     await mongoServer.stop();
   });
 
-  const app = App.createApp();
+  const app = App.createApp({isTest: true});
 
   test('/api/items', async () => {
     const response = await supertest(app).get('/api/items');

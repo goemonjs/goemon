@@ -13,7 +13,7 @@ import * as glob from 'glob';
 import * as flash from 'express-flash';
 
 import { envs } from './env';
-import { isTestMode, isDevMode } from './base/utilities/debug';
+import { isTestMode, isDevMode, isProductionMode } from './base/utilities/debug';
 
 import connectRedis = require('connect-redis');
 

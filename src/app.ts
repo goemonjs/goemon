@@ -50,7 +50,7 @@ export function start() {
 /*
 * Create Default Express application
 */
-export function createApp() {
+export function createApp(options?: any) {
     let app = express();
 
     try {
@@ -69,10 +69,14 @@ export function createApp() {
         } else {
           envs[envKey].value = process.env[envKey] as string;
         }
-        if (!utils.isTestMode()) {
+        if (options != undefined && options.isTest != true ) {
           console.log(`process.env.${envKey}: ${process.env[envKey]}; defaultValue: ${envs[envKey].value}`);
         }
       });
+
+      if ( options != undefined && options.isTest == true ) {
+        envs.NODE_ENV.value = 'test';
+      }
 
       // Create express application
       return appServer.initalize(app);

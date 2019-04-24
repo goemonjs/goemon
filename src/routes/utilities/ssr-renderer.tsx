@@ -9,36 +9,40 @@ export class ServerSideRenderer {
   }
 
   public render(req: any, res: any, ejsName: string, ejsOptions: any, component: any, cssGenerator?: () => string) {
-    const protocol = (process.env.PROTOCOL || req.protocol) + '://';
-    let host = process.env.HOST || req.headers.host;
-    const html = renderToString(
-      <>
-        {component}
-      </>
-    );
+    try {
+      const protocol = (process.env.PROTOCOL || req.protocol) + '://';
+      let host = process.env.HOST || req.headers.host;
+      const html = renderToString(
+        <>
+          {component}
+        </>
+      );
 
-    let initialState = this.store.getState();
-    if ( ejsOptions.initialState != undefined ) {
-      initialState = ejsOptions.initialState ;
+      let initialState = this.store.getState();
+      if ( ejsOptions.initialState != undefined ) {
+        initialState = ejsOptions.initialState ;
+      }
+
+      const serverState =  {
+        host: host,
+        protocol: protocol + '://',
+      };
+
+      let option = {
+        html: html,
+        initialState: JSON.stringify(initialState),
+        serverState: serverState,
+        config: ejsOptions.config !== undefined ? ejsOptions.config : '',
+        css: cssGenerator !== undefined ? cssGenerator() : '',
+        bundle: this.bundleFilePath + '?ver=' + generateNumberFromTimestamp(__dirname + '/../../../build/public/js/' + this.bundleFilePath)
+      };
+
+      Object.assign(option, ejsOptions);
+
+      res.render(ejsName, option);
+    } catch ( err ) {
+      console.error(err);
     }
-
-    const serverState =  {
-      host: host,
-      protocol: protocol + '://',
-    };
-
-    let option = {
-      html: html,
-      initialState: JSON.stringify(initialState),
-      serverState: serverState,
-      config: ejsOptions.config !== undefined ? ejsOptions.config : '',
-      css: cssGenerator !== undefined ? cssGenerator() : '',
-      bundle: this.bundleFilePath + '?ver=' + generateNumberFromTimestamp(__dirname + '/../../public/' + this.bundleFilePath)
-    };
-
-    Object.assign(option, ejsOptions);
-
-    res.render(ejsName, option);
   }
 
   public renderWithInitialProps(req: any, res: any, ejsName: string, ejsOptions: any, component: any, routes, cssGenerator?: () => string) {
