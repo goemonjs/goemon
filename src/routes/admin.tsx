@@ -11,7 +11,7 @@ import * as passport from 'passport';
 const router = Router();
 const store = configureStore();
 
-let renderer =  new ServerSideRenderer('admin.js', store);
+let renderer =  new ServerSideRenderer('admin.js');
 
 module.exports = (app) => {
   app.use('/admin', router);

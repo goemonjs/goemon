@@ -34,7 +34,7 @@ module.exports = async (app: express.Express) => {
       if (err) {
         console.error(err);
       } else {
-        console.log('Success to connect database : ' + (connectionName ? connectionName : connectionString));
+        console.log('Successfully connected to database : ' + (connectionName ? connectionName : connectionString));
 
         // Load modules
         let strategiesPath = path.normalize(__dirname + '/mongodb/seeddata');

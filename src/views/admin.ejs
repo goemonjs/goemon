@@ -9,12 +9,9 @@
     <title>Sample - <%- userid %></title>
   </head>
   <body>
-  <script>
-    window.__PRELOADED_STATE__ = <%- initialState %>;
-    window.__CONFIG__ = <%- config %>;
-  </script>
   <div id="app"><%- html %></div>
   <style id="jss-server-side"><%- css %></style>
+  <script id="initial-config" type="text/plain" data-json="<%- config %>"></script>
   <script type="text/javascript" charset="utf-8" src="/js/admin.js?ver=<%- jsDate %>"></script>
 </body>
 </html>

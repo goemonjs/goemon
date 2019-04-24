@@ -35,12 +35,6 @@ class Profile extends React.Component<IProps & IDispProps, {}> {
     );
   }
 
-  // This is not work, because the server does not have the credential cookie to asscess api/me
-  // static async getInitialProps(store, protocol: string, host: string) {
-  //   const url = protocol + '://' + host + '/api/me';
-  //   return store.dispatch(ProfileActions.loadProfile(url));
-  // }
-
   // It is called only client rendering
   componentDidMount() {
     let { isFetching, loadProfile } = this.props;

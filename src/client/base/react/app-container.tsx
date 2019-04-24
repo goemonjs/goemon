@@ -23,12 +23,16 @@ export class AppContainer extends React.Component<IProps, {}> {
         </Provider>
       );
     } else {
+      let initialState = JSON.stringify(store.getState());
       return (
+        <>
         <Provider store={store}>
           <StaticRouter location={location} context={context}>
             {this.props.children}
           </StaticRouter>
         </Provider>
+        <script id="initial-data" type="text/plain" data-json={initialState}></script>
+        </>
       );
     }
   }

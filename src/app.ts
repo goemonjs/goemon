@@ -8,7 +8,6 @@ import * as os from 'os';
 
 import { AppServer } from './app-server';
 import { envs } from './env';
-import * as utils from './base/utilities/debug';
 
 // load env vars into process.env
 dotenv.config();
@@ -21,7 +20,7 @@ export const appServer: AppServer = new AppServer();
 */
 export function start() {
 
-    console.log('Starting application..');
+    console.log('Starting application...');
 
     // Start server
     try {
@@ -29,6 +28,7 @@ export function start() {
 
       if ( ( envs.SESSION_DRIVER.value == 'redis' || envs.FORCE_MULTICORE_CLUSTER.value == true )
          && cluster.isMaster ) {
+        console.log('Starting application as Cluster Mode');
         for (let i = 0; i < numCPUs; i++) {
           cluster.fork();
         }
@@ -77,10 +77,6 @@ export function createApp(options?: any) {
       if ( options != undefined && options.isTest == true ) {
         envs.NODE_ENV.value = 'test';
       }
-
-      // Create express application
-      return appServer.initalize(app);
-
     } catch (err) {
 
       // Show error messages
@@ -96,6 +92,9 @@ export function createApp(options?: any) {
       });
       return app;
     }
+
+    // Create express application
+    return appServer.initalize(app);
   }
 
 // Global exception handler
