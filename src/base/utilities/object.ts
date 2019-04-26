@@ -1,4 +1,4 @@
-import * as util from 'util';
+import util from 'util';
 
 /**
  * determine if a (nested) property is set

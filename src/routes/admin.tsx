@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React from 'react';
 import { Router } from 'express';
 import { configureStore } from '../client/stores/member-store';
 import { RouteComponent, routes } from '../client/routes/member-route';
@@ -6,7 +6,7 @@ import { ServerSideRenderer } from './utilities/ssr-renderer';
 import { MaterialUiAppContainer } from '../client/base/react/material-ui-app-container';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import { theme } from '../client/themes/material-ui-lightblue';
-import * as passport from 'passport';
+import passport from 'passport';
 
 const router = Router();
 const store = configureStore();

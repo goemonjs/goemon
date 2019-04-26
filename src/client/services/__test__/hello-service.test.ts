@@ -1,5 +1,5 @@
-import * as supertest from 'supertest';
-import * as http from 'http';
+import supertest from 'supertest';
+import http from 'http';
 
 import * as App from '../../../app';
 import HelloService from '../hello-service';

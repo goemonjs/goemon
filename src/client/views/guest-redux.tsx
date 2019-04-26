@@ -1,5 +1,5 @@
 
-import * as React from 'react';
+import  React from 'react';
 import { Route, Switch } from 'react-router';
 import { withRouter, Link, RouteComponentProps } from 'react-router-dom';
 import { listTodo } from '../actions/todo-actions';

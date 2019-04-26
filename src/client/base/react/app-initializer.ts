@@ -1,4 +1,4 @@
-import * as config from 'react-global-configuration';
+import config from 'react-global-configuration';
 import { defaultConfig } from '../../config/default';
 
 export function initConfig () {

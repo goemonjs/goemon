@@ -1,8 +1,9 @@
-import * as React from 'react';
+import  React from 'react';
 import { matchRoutes } from 'react-router-config';
 import { renderToString } from 'react-dom/server';
 import { generateNumberFromTimestamp } from '../../base/utilities/file';
 import { isProductionMode } from '../../base/utilities/debug';
+import i18n from '../../client/localization/i18n';
 
 /**
  * Server side renderer utility class
@@ -28,6 +29,11 @@ export class ServerSideRenderer {
     try {
       const protocol = (process.env.PROTOCOL || req.protocol);
       let host = process.env.HOST || req.headers.host;
+
+      const lng = req.language;
+      console.log(`Request locale: ${lng}`);
+      i18n.changeLanguage(lng);
+
       const html = renderToString(
         <>
           {component}
@@ -55,6 +61,8 @@ export class ServerSideRenderer {
       };
 
       Object.assign(option, ejsOptions);
+
+      // const lang = req.acceptsLanguages('fr', 'es', 'en', 'ja');
 
       res.render(ejsName, option);
     } catch ( err ) {

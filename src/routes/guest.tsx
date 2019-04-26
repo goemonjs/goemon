@@ -1,4 +1,4 @@
-﻿import * as React from 'react';
+﻿import  React from 'react';
 import { Express, Router } from 'express';
 import { configureStore } from '../client/stores/guest-store';
 import { AppContainer } from '../client/base/react/app-container';

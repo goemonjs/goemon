@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 let router = express.Router();
 
 module.exports = function (app: express.Express) {

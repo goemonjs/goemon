@@ -2,9 +2,9 @@
  * @jest-environment node
  */
 
-import * as mongoose from 'mongoose';
-import MongoMemoryServer from 'mongodb-memory-server';
-import * as supertest from 'supertest';
+import mongoose from 'mongoose';
+import * as mongodbMemoryServer from 'mongodb-memory-server';
+import supertest from 'supertest';
 
 import * as App from '../../app';
 
@@ -12,7 +12,7 @@ describe('routes/api test', () => {
 
   let mongoServer;
   beforeAll(async () => {
-    mongoServer = new MongoMemoryServer();
+    mongoServer = new mongodbMemoryServer.MongoMemoryServer();
     const mongoUri = await mongoServer.getConnectionString();
     const mongooseOpts = { // options for mongoose 4.11.3 and above
       autoReconnect: true,

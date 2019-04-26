@@ -1,10 +1,7 @@
-import * as express from 'express';
-
-let passport = require('passport');
-let session = require('express-session');
-
-import * as glob from 'glob';
-let path = require('path');
+import express from 'express';
+import passport from 'passport';
+import glob from 'glob';
+import path from 'path';
 
 module.exports = (app: express.Express) => {
   // Initialize passport

@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import fs from 'fs';
 
 export function generateNumberFromTimestamp(path: string) {
   let jsStats = fs.statSync(path);

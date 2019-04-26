@@ -1,19 +1,24 @@
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Lunascape Corporation. All rights reserved.
  *--------------------------------------------------------------------------------------------*/
-import * as express from 'express';
-import * as session from 'express-session';
-import * as path from 'path';
-import * as favicon from 'serve-favicon';
-import * as logger from 'morgan';
-import * as cookieParser from 'cookie-parser';
-import * as bodyParser from 'body-parser';
-import * as expressValidator from 'express-validator';
-import * as glob from 'glob';
-import * as flash from 'express-flash';
+import express from 'express';
+import session from 'express-session';
+import path from 'path';
+import favicon from 'serve-favicon';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import expressValidator from 'express-validator';
+import glob from 'glob';
+import flash from 'express-flash';
+import i18nMiddleware from 'i18next-express-middleware';
+import i18n from './client/localization/i18n';
+import requestLanguage from 'express-request-language';
+let i18next = require('i18next');
+let middleware = require('i18next-express-middleware');
 
 import { envs } from './env';
-import { isTestMode, isDevMode, isProductionMode } from './base/utilities/debug';
+import { isTestMode, isDevMode } from './base/utilities/debug';
 
 import connectRedis = require('connect-redis');
 
@@ -36,6 +41,9 @@ export class AppServer {
 
     // validator
     app.use(expressValidator());
+
+    // i18n localication
+    app.use(i18nMiddleware.handle(i18n));
 
     // favicon
     let faviconPath = path.join(__dirname, '.', 'public', 'favicon.ico');

@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions';
 import { createTypeAsyncAction } from 'type-redux';
-import * as config from 'react-global-configuration';
+import config from 'react-global-configuration';
 import { envs } from 'env';
 
 import MemberApiClient from './clients/member-api-client';

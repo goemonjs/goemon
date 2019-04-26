@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React from 'react';
 import { connect } from 'react-redux';
 import * as ProfileActions from '../../../actions/profile-actions';
 import { IStore } from '../../../stores/member-store';

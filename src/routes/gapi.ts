@@ -1,4 +1,3 @@
-import * as express from 'express';
 import Hello from './impl/gapi-hello';
 
 let graphqlHTTP = require('express-graphql');

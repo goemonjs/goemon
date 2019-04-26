@@ -1,13 +1,14 @@
 ﻿/*---------------------------------------------------------------------------------------------
  *  Copyright (c) Lunascape Corporation. All rights reserved.
  *--------------------------------------------------------------------------------------------*/
-import * as express from 'express';
-import * as dotenv from 'dotenv';
-import * as cluster from 'cluster';
-import * as os from 'os';
+import express from 'express';
+import dotenv from 'dotenv';
+import cluster from 'cluster';
+import os from 'os';
 
 import { AppServer } from './app-server';
 import { envs } from './env';
+import { isDevMode } from './base/utilities/debug';
 
 // load env vars into process.env
 dotenv.config();
@@ -23,28 +24,24 @@ export function start() {
     console.log('Starting application...');
 
     // Start server
-    try {
-      let app = createApp();
+    let app = createApp();
 
-      if ( ( envs.SESSION_DRIVER.value == 'redis' || envs.FORCE_MULTICORE_CLUSTER.value == true )
-         && cluster.isMaster ) {
-        console.log('Starting application as Cluster Mode');
-        for (let i = 0; i < numCPUs; i++) {
-          cluster.fork();
-        }
-        cluster.on('exit', (worker, code, signal) => {
-          console.log(`worker ${worker.process.pid} died. code: ${code} signal:${signal}`);
-        });
-      } else {
-        app.listen(envs.PORT.value, () => {
-          return ('Express server listening on port ' + envs.PORT.value);
-        });
+    if ( ( envs.SESSION_DRIVER.value == 'redis' || envs.FORCE_MULTICORE_CLUSTER.value == true )
+        && cluster.isMaster ) {
+      console.log('Starting application as Cluster Mode');
+      for (let i = 0; i < numCPUs; i++) {
+        cluster.fork();
       }
-
-      return app;
-    } catch (err) {
-      console.error(err);
+      cluster.on('exit', (worker, code, signal) => {
+        console.log(`worker ${worker.process.pid} died. code: ${code} signal:${signal}`);
+      });
+    } else {
+      app.listen(envs.PORT.value, () => {
+        return ('Express server listening on port ' + envs.PORT.value);
+      });
     }
+
+    return app;
 }
 
 /*
@@ -93,8 +90,23 @@ export function createApp(options?: any) {
       return app;
     }
 
-    // Create express application
-    return appServer.initalize(app);
+    try {
+      // Create express application
+      return appServer.initalize(app);
+    } catch ( err ) {
+      let app = express();
+      app.get('/', (req, res) => {
+        if ( isDevMode() ) {
+          console.log(err);
+          res.status(500);
+          res.send(`${err.stack}`);
+        } else {
+          res.status(500);
+          res.send('System Error よん');
+        }
+      });
+      return app;
+    }
   }
 
 // Global exception handler

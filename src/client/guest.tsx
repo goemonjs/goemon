@@ -1,8 +1,8 @@
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Lunascape Corporation. All rights reserved.
  *--------------------------------------------------------------------------------------------*/
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import  React from 'react';
+import ReactDOM from 'react-dom';
 
 import { configureStore } from './stores/member-store';
 import { RouteComponent } from './routes/guest-route';

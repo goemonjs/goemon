@@ -1,0 +1,5 @@
+{
+  "userMessagesUnread": "こんにちは <1>{{name}}</1>, あまたは {{count}} 個の未読メッセージがあります。",
+  "currentDate": "現在の日付 : {{date, YYYY/MM/DD}}",
+  "Goemon": "五右衛門"
+}

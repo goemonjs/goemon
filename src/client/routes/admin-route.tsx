@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React from 'react';
 import { renderRoutes } from 'react-router-config';
 import AdminTop from '../views/admin-top';
 import { NotFound } from '../views/components/notfound';

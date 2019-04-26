@@ -1,4 +1,4 @@
-import * as util from 'util';
+import util from 'util';
 import { envs } from '../../env';
 
 /**
@@ -7,7 +7,7 @@ import { envs } from '../../env';
  * @returns boolean (if env is 'development' then returns true or not)
  */
 export function isProductionMode() {
-  return ( envs.NODE_ENV.value === 'production' ) ? true : false;
+  return ( envs.NODE_ENV.value == 'production' ) ? true : false;
 }
 
 /**
@@ -16,7 +16,7 @@ export function isProductionMode() {
  * @returns boolean (if env is 'development' then returns true or not)
  */
 export function isDevMode() {
-  return ( envs.NODE_ENV.value === 'development' ) ? true : false;
+  return ( envs.NODE_ENV.value == undefined || envs.NODE_ENV.value == 'developmemt' ) ? true : false;
 }
 
 /**
@@ -25,7 +25,7 @@ export function isDevMode() {
  * @returns boolean (if env is 'test' then returns true or not)
  */
 export function isTestMode() {
-  return ( envs.NODE_ENV.value === 'test' ) ? true : false;
+  return ( envs.NODE_ENV.value == 'test' ) ? true : false;
 }
 
 /**

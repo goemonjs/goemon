@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React from 'react';
 import { renderRoutes } from 'react-router-config';
 import { GuestTop } from '../views/guest-top';
 import { GuestReact } from '../views/guest-react';

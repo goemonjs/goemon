@@ -1,8 +1,8 @@
-import mongoose = require('mongoose');
+import crypto from 'crypto';
+import mongoose from 'mongoose';
 import Schema = mongoose.Schema;
 import Model = mongoose.Model;
 import Document = mongoose.Document;
-import * as crypto from 'crypto';
 
 // Define Document properties
 export interface UserDocument extends Document {

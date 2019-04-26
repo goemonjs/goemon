@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Lunascape Corporation. All rights reserved.
  *--------------------------------------------------------------------------------------------*/
-import * as React from 'react';
+import  React from 'react';
 
 export type IContextProps = {
   userType: 'guest' | 'member' | 'admin';

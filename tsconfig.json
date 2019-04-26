@@ -12,13 +12,15 @@
     "rootDir": "./src",
     "baseUrl": "./src",
     "allowJs": true,
-    "allowSyntheticDefaultImports": false,
+    // "allowSyntheticDefaultImports": false,
     "experimentalDecorators": true,
     "noEmitHelpers": true,
     "importHelpers": true,
     "moduleResolution": "node",
     "noImplicitReturns": true,
-    "strict": true
+    "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "include": [
     "**/*.ts",
@@ -31,6 +33,7 @@
     "./node_modules",
     "gulpfile.js",
     "webpack.config.js",
-    "**/__test__"
+    "**/__test__",
+    "**/__mocks__"
   ]
 }
