@@ -1,4 +1,11 @@
-import fetch from 'node-fetch';
+interface IGlobalFetch {
+  fetch: GlobalFetch;
+}
+declare var global: NodeJS.Global & IGlobalFetch;
+
+if (!global.fetch) {
+  global.fetch = require('node-fetch');
+}
 
 export async function doPost<T>(path: string): Promise<T> {
   const url = this.baseUrl + path;

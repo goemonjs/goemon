@@ -1,5 +1,13 @@
-import * as querystring from 'querystring';
-import fetch from 'node-fetch';
+import querystring from 'querystring';
+
+interface IGlobalFetch {
+  fetch: GlobalFetch;
+}
+declare var global: NodeJS.Global & IGlobalFetch;
+
+if (!global.fetch) {
+  global.fetch = require('node-fetch');
+}
 
 /**
  * build HTTP query string

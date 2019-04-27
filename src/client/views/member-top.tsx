@@ -51,9 +51,9 @@ class MemberTop extends React.Component<IProps & WithStyles<typeof styles>, {}> 
         <div className={classes.toolbar} />
         <div><p>URL: {match.url}</p></div>
         <Switch>
-          <Route exact path={`${match.url}/profile`} component={Profile} />
-          <Route exact path={`${match.url}/page`} component={PageSample} />
-          <Route exact path={`${match.url}`} component={FormSample} />
+          <Route exact path={`/member/profile`} component={Profile} />
+          <Route exact path={`/member/page`} component={PageSample} />
+          <Route exact path={`/member`} component={FormSample} />
         </Switch>
       </main>
     </div>
