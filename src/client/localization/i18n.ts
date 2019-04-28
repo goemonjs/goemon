@@ -47,7 +47,7 @@ if ( typeof window !== 'undefined' ) { // Check whether this method is called on
   });
 
   i18next
-  // .use(BrowserLanguageDetector)
+  .use(BrowserLanguageDetector)
   .use(initReactI18next) // passes i18n down to react-i18next
   .init(options);
 } else {
