@@ -62,8 +62,6 @@ export class ServerSideRenderer {
 
       Object.assign(option, ejsOptions);
 
-      // const lang = req.acceptsLanguages('fr', 'es', 'en', 'ja');
-
       res.render(ejsName, option);
     } catch ( err ) {
       console.error(err);
