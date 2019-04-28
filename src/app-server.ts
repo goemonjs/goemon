@@ -13,9 +13,6 @@ import glob from 'glob';
 import flash from 'express-flash';
 import i18nMiddleware from 'i18next-express-middleware';
 import i18n from './client/localization/i18n';
-import requestLanguage from 'express-request-language';
-let i18next = require('i18next');
-let middleware = require('i18next-express-middleware');
 
 import { envs } from './env';
 import { isTestMode, isDevMode } from './base/utilities/debug';
@@ -42,9 +39,6 @@ export class AppServer {
     // validator
     app.use(expressValidator());
 
-    // i18n localication
-    app.use(i18nMiddleware.handle(i18n));
-
     // favicon
     let faviconPath = path.join(__dirname, '.', 'public', 'favicon.ico');
     app.use(favicon(faviconPath)); // uncomment after placing your favicon in /public
@@ -58,6 +52,9 @@ export class AppServer {
 
     // cookieParser
     app.use(cookieParser());
+
+    // i18n localication
+    app.use(i18nMiddleware.handle(i18n));
 
     // session
     let sess: session.SessionOptions = {

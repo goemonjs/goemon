@@ -1,23 +1,19 @@
-const { createApolloFetch } = require('apollo-fetch');
+import { createApolloFetch } from 'apollo-fetch';
 
 export default class HelloService {
 
-  public static hello(url) {
-    return new Promise((resolve, reject) => {
+  public static async hello(url) {
       const fetch = createApolloFetch({
         uri: url
       });
 
-      fetch({
+      let res = await fetch({
         query: '{ hello }',
-      }).then(res => {
-        if ( res.data === undefined ) {
-          reject('Failed to call hello');
-        }
-        resolve(res.data.hello);
-      }).catch( err => {
-        reject(err);
       });
-    });
+
+      if ( res.data === undefined ) {
+        throw new Error('Failed to call hello');
+      }
+      return res.data.hello;
   }
 }

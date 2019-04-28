@@ -31,7 +31,7 @@ export class ServerSideRenderer {
       let host = process.env.HOST || req.headers.host;
 
       const lng = req.language;
-      console.log(`Request locale: ${lng}`);
+      // console.log(`Request locale: ${lng}`);
       i18n.changeLanguage(lng);
 
       const html = renderToString(

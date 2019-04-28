@@ -8,7 +8,7 @@ import os from 'os';
 
 import { AppServer } from './app-server';
 import { envs } from './env';
-import { isDevMode } from './base/utilities/debug';
+import { isDevMode, isProductionMode } from './base/utilities/debug';
 
 // load env vars into process.env
 dotenv.config();
@@ -96,13 +96,14 @@ export function createApp(options?: any) {
     } catch ( err ) {
       let app = express();
       app.get('/', (req, res) => {
-        if ( isDevMode() ) {
+        if ( !isProductionMode() ) {
           console.log(err);
           res.status(500);
           res.send(`${err.stack}`);
         } else {
+          console.error(err);
           res.status(500);
-          res.send('System Error よん');
+          res.send('System Error');
         }
       });
       return app;
