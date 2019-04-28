@@ -28,9 +28,7 @@ let options: i18next.InitOptions = {
     },
     escapeValue: false // react already safes from xss
   },
-  // lng: 'en',   // Comment out when fix language
-  // fallbackLng: 'en',
-  // preload: ['en'],
+  // fallbackLng: ['en']      // Comment out if you want to use fallbackLng
 };
 
 if ( typeof window !== 'undefined' ) { // Check whether this method is called on client or server
@@ -38,11 +36,12 @@ if ( typeof window !== 'undefined' ) { // Check whether this method is called on
   // Browser side
   //
   Object.assign(options, {
+
     detection : {
       order: ['querystring', 'cookie', 'navigator'],
       lookupQuerystring: 'locale',
       lookupCookie: 'lng',
-      caches: ['cookie'],
+      caches: false, // ['cookie']
     }
   });
 
@@ -55,13 +54,16 @@ if ( typeof window !== 'undefined' ) { // Check whether this method is called on
   // Server side
   //
   Object.assign(options, {
+    // whitelist: ['en', 'ja'],       // Comment out if you want to use fallbackLng
     detection : {
       order: [/*'path', 'session', */ 'querystring', 'cookie', 'header'],
       lookupQuerystring: 'locale',
       lookupCookie: 'lng',
       lookupHeader: 'accept-language',
       caches: ['cookie'],
-    }
+    },
+    // lng: 'en',   // Comment out when fix language
+    // preload: ['en'],
   });
 
   i18next
