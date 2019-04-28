@@ -23,13 +23,12 @@ export class PageSample extends React.Component<IProps & WithStyles<typeof style
 
     return (
       <>
-        <Typography noWrap>{'Page Sample'}</Typography>
-        {/* <Trans i18nKey="userMessagesUnread" count={count}>
+        <Trans i18nKey="userMessagesUnread" count={count}>
           Not supported lang test. <strong>{{name}}</strong>, you have {{count}} unread message.
         </Trans>
         <Trans i18nKey="currentDate" values={{ date: currentDate}}>
           CurrentDate : {moment(currentDate).format('MM/DD/YYYY')}
-        </Trans> */}
+        </Trans>
       </>
     );
   }

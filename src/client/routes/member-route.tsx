@@ -13,7 +13,7 @@ interface IState {
 
 export const routes = [
   {
-    path: '/member',
+    path: '/member/',
     component: MemberTop,
     exact: true
   }, {
@@ -26,6 +26,10 @@ export const routes = [
     exact: true
   }, {
     path: '/member/page',
+    component: MemberTop,
+    exact: true
+  }, {
+    path: '/member/form',
     component: MemberTop,
     exact: true
   }, {

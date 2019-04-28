@@ -24,15 +24,15 @@ export const sideMenus = (
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary="FormSample" />
+          <ListItemText primary="Page" />
         </ListItem>
       </Link>
-      <Link to="/member/page">
+      <Link to="/member/form">
         <ListItem button>
           <ListItemIcon>
             <StarIcon />
           </ListItemIcon>
-          <ListItemText primary="Page" />
+          <ListItemText primary="FormSample" />
         </ListItem>
       </Link>
     </div>

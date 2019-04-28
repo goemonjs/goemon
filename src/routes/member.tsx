@@ -18,12 +18,12 @@ module.exports = (app) => {
 };
 
 router.post('/login', passport.authenticate('local',
-  { successRedirect: '/member', failureRedirect: '/member/login', failureFlash: true }
+  { successRedirect: '/member/', failureRedirect: '/member/login', failureFlash: true }
 ));
 
 router.get('/logout', (req: any, res) => {
   req.logout();
-  res.redirect('/member');
+  res.redirect('/member/');
 });
 
 router.get('*', isAuthenticated, (req, res) => {
