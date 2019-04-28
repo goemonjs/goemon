@@ -30,7 +30,7 @@ let options: i18next.InitOptions = {
   },
   // lng: 'en',   // Comment out when fix language
   // fallbackLng: 'en',
-  preload: ['en'],
+  // preload: ['en'],
 };
 
 if ( typeof window !== 'undefined' ) { // Check whether this method is called on client or server
@@ -39,7 +39,7 @@ if ( typeof window !== 'undefined' ) { // Check whether this method is called on
   //
   Object.assign(options, {
     detection : {
-      order: ['querystring', 'cookie', /*'localStorage'*/, 'navigator', /*'htmlTag', 'path', 'subdomain'*/],
+      order: ['querystring', 'cookie', 'navigator'],
       lookupQuerystring: 'locale',
       lookupCookie: 'lng',
       caches: ['cookie'],

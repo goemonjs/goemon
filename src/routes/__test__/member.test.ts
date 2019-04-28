@@ -12,6 +12,9 @@ import { Users } from '../../models/user';
 describe('routes/member test', () => {
 
   let mongoServer;
+  let agent: supertest.SuperTest<supertest.Test>;
+  const app = App.createApp({isTest: true});
+
   beforeAll(async () => {
     mongoServer = new mongodbMemoryServer.MongoMemoryServer();
     const mongoUri = await mongoServer.getConnectionString();
@@ -36,10 +39,7 @@ describe('routes/member test', () => {
     await mongoServer.stop();
   });
 
-  let agent: supertest.SuperTest<supertest.Test>;
-  const app = App.createApp({isTest: true});
-
-  beforeEach((done) => {
+  beforeEach( (done) => {
     agent = supertest.agent(app);
     agent
       .post('/member/login')
@@ -47,11 +47,21 @@ describe('routes/member test', () => {
         userid: 'test@example.com',
         password: 'testpassword',
       })
-      .expect(302, done);
+      .expect(302)
+      .then((res: any) => {
+        // Workaround for jest 23.6.0 authentication cookie bug
+        // https://medium.com/@internetross/a-pattern-for-creating-authenticated-sessions-for-routing-specs-with-supertest-and-jest-until-the-baf14d498e9d
+        const cookie = res
+          .headers['set-cookie'][0]
+          .split(',')
+          .map(item => item.split(';')[0]);
+        agent.jar.setCookies(cookie);
+        done();
+      });
   });
 
   test('/member/profile ( not authorized )', async () => {
-    const response = await supertest(app).get('/member/profile');
+   const response = await supertest(app).get('/member/profile');
     expect(response.status).toBe(302);
   });
 
