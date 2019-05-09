@@ -15,9 +15,12 @@ export class GuestTop extends React.Component<IProps, any> {
           <a className="btn btn-large btn-success" href="/react">React Sample</a>
           <a className="btn btn-large btn-success" href="/redux">Redux Sample</a>
           <div>
-            <a href= "/?lng=en">英語</a></div>
+            <a href= "/?lng=en">English</a>
+          </div>
+          <div>
             <a href= "/?lng=ja">日本語</a>
           </div>
+        </div>
       </>
     );
   }
