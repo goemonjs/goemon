@@ -18,13 +18,13 @@ export class AppContainer extends React.Component<IProps, {}> {
     if ( typeof window !== 'undefined' ) { // Check whether this method is called on client or server
       return (
         <Provider store={store}>
-            <BrowserRouter basename={basename}>
-              <UserContext.Provider value={context}>
-                <I18nextProvider i18n={i18n}>
-                  {this.props.children}
-                </I18nextProvider>
-              </UserContext.Provider>
-            </BrowserRouter>
+          <BrowserRouter basename={basename}>
+            <UserContext.Provider value={context}>
+              <I18nextProvider i18n={i18n}>
+                {this.props.children}
+              </I18nextProvider>
+            </UserContext.Provider>
+          </BrowserRouter>
         </Provider>
       );
     } else {

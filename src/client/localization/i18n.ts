@@ -6,6 +6,9 @@ import i18nextExpressMiddleware from 'i18next-express-middleware';
 import enGuestRes from './en/guest.json';
 import jsGuestRes from './ja/guest.json';
 
+// import jaLocale from 'date-fns/locale/ja';
+// import enLocale from 'date-fns/locale/en';
+
 let options: i18next.InitOptions = {
   resources: {
     en: {
@@ -39,7 +42,7 @@ if ( typeof window !== 'undefined' ) { // Check whether this method is called on
 
     detection : {
       order: ['querystring', 'cookie', 'navigator'],
-      lookupQuerystring: 'locale',
+      lookupQuerystring: 'lng',
       lookupCookie: 'lng',
       caches: false, // ['cookie']
     }
@@ -57,7 +60,7 @@ if ( typeof window !== 'undefined' ) { // Check whether this method is called on
     // whitelist: ['en', 'ja'],       // Comment out if you want to use fallbackLng
     detection : {
       order: [/*'path', 'session', */ 'querystring', 'cookie', 'header'],
-      lookupQuerystring: 'locale',
+      lookupQuerystring: 'lng',
       lookupCookie: 'lng',
       lookupHeader: 'accept-language',
       caches: ['cookie'],
@@ -71,5 +74,10 @@ if ( typeof window !== 'undefined' ) { // Check whether this method is called on
   .use(initReactI18next) // passes i18n down to react-i18next
   .init(options);
 }
+
+// export const localeFormatMap = {
+//   en: enLocale,
+//   ja: jaLocale,
+// };
 
 export default i18next;

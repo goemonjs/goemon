@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Lunascape Corporation. All rights reserved.
  *--------------------------------------------------------------------------------------------*/
-import  React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { configureStore } from './stores/member-store';
 import { MaterialUiAppContainer } from './base/react/material-ui-app-container';
@@ -15,6 +15,7 @@ const store = configureStore(getInitialState());
 const userContext: IContextProps = {
   userType: 'member',
 };
+
 const app = (
   <MaterialUiAppContainer store={store} context={userContext} theme={theme}>
     <RouteComponent />

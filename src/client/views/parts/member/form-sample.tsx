@@ -1,10 +1,8 @@
-import  React from 'react';
+import React from 'react';
 
+import { WithStyles, Typography, TextField, MenuItem } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
+import { DatePicker, TimePicker, DateTimePicker } from 'material-ui-pickers';
 
 import { styles } from '../../../themes/material-ui-lightblue';
 
@@ -16,22 +14,19 @@ interface IState  {
   age: string;
   multiline: string;
   currency: string;
+  myDate: Date;
 }
 
-const currencies = [
-  {
+const currencies = [{
     value: 'USD',
     label: '$',
-  },
-  {
+  }, {
     value: 'EUR',
     label: '€',
-  },
-  {
+  }, {
     value: 'BTC',
     label: '฿',
-  },
-  {
+  }, {
     value: 'JPY',
     label: '¥',
   },
@@ -39,28 +34,44 @@ const currencies = [
 
 export class FormSample extends React.Component<IProps & WithStyles<typeof styles>, IState> {
 
-  public componentDidMount() {
-    const state = {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       name: 'Cat in the Hat',
       age: '',
       multiline: 'Controlled',
       currency: 'EUR',
+      myDate: new Date()
     };
+  }
 
-    this.setState(state);
+  public componentDidMount() {
 
     // this.setState({
     //   [name]: event.target.value,
     // });
   }
 
+  public handleDateChange = (date) => {
+    this.setState({
+      myDate: date
+    });
+  }
+
   public render() {
     const { classes } = this.props;
+    const { myDate } = this.state;
 
     return (
       <>
         <Typography noWrap>{'You think water moves fast? You should see ice.'}</Typography>
         <form className={classes.container} noValidate autoComplete="off">
+        <div className="pickers">
+          <DatePicker value={myDate} onChange={this.handleDateChange}/>
+          <TimePicker value={myDate} onChange={this.handleDateChange} />
+          <DateTimePicker value={myDate} onChange={this.handleDateChange} />
+        </div>
         {/* <TextField
           id="name"
           label="Name"
