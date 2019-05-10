@@ -9,7 +9,7 @@ import moment from 'moment';
 import MomentUtils from '@date-io/moment';
 import i18n from '../../localization/i18n';
 
-interface IProps  {
+interface IProps {
   store: any;
   location?: string;
   context?: any;
@@ -41,20 +41,21 @@ class MyUtils extends MomentUtils {
 export class MaterialUiAppContainer extends React.Component<IProps, {}> {
   // Remove the server-side injected CSS.
   componentDidMount() {
-    const jssStyles = document.getElementById('jss-server-side');
-    if (jssStyles && jssStyles.parentNode) {
-      jssStyles.parentNode.removeChild(jssStyles);
-    }
+    // if there is this code, design desapperes when production mode
+    // const jssStyles = document.getElementById('jss-server-side');
+    // if (jssStyles && jssStyles.parentNode) {
+    //   jssStyles.parentNode.removeChild(jssStyles);
+    // }
   }
 
-  render () {
+  render() {
     const { theme, sheetsRegistry } = this.props;
 
     const generateClassName = createGenerateClassName();
 
     moment.locale(i18n.language);
 
-    if ( typeof window !== 'undefined' ) { // Check whether this method is called on client or server
+    if (typeof window !== 'undefined') { // Check whether this method is called on client or server
       return (
         <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
           <MuiThemeProvider theme={theme}>

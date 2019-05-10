@@ -112,9 +112,9 @@
     "util": "^0.11.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/polyfill": "^7.2.5",
-    "@babel/preset-env": "^7.3.4",
+    "@babel/core": "^7.4.4",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
     "@types/config": "0.0.34",
     "@types/connect-flash": "0.0.34",
     "@types/connect-redis": "0.0.7",
@@ -183,9 +183,8 @@
     "ts-loader": "^5.3.3",
     "tslint": "^5.12.1",
     "typescript": "~3.2.1",
-    "uglifyjs-webpack-plugin": "^2.1.1",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2",
     "webpack-stream": "^5.2.1"
   }
 }
