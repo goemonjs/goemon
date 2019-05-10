@@ -1,53 +1,114 @@
-const webpack = require('webpack');
-const path = require('path');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+var webpack = require('webpack');
+var path = require('path');
+var MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 // `CheckerPlugin` is optional. Use it if you want async error reporting.
 // We need this plugin to detect a `--watch` mode. It may be removed later
 // after https://github.com/webpack/webpack/issues/3460 will be resolved.
-const { CheckerPlugin } = require('awesome-typescript-loader')
+// var CheckerPlugin = require('awesome-typescript-loader')
 
-const PRODUCT = JSON.parse(process.env.PROD_ENV || '0');
-const targetPath = __dirname + '/built';
+var TARGET_PATH = __dirname + '/build';
 
-const config = [
-  {
+var config = {
+  dev: {
     name: 'React Client Package',
     entry: {
-      'guest' : './src/client/guest',
-      'member' : './src/client/member',
-      'admin' : './src/client/admin'
+      'guest': './src/client/guest',
+      'member': './src/client/member',
+      'admin': './src/client/admin'
     },
     // watch: true,
     output: {
       filename: '[name].js',
-      path: path.resolve(targetPath + '/src/public/js')
+      path: path.resolve(TARGET_PATH + '/src/public/js')
     },
     // Enable sourcemaps for debugging webpack's output.
     devtool: 'source-map',
     watch: true,
     mode: 'development',
     module: {
-      rules: [
+      rules: [{
         // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-        { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+        test: /\.tsx?$/,
+        loader: "awesome-typescript-loader"
+      }, {
         // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
         // { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
-        { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader') },
-        { test: /\.svg$/, loader: "url-loader?limit=10000&mimetype=image/svg+xml" }
-        ]
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader')
+      }, {
+        test: /\.svg$/,
+        loader: "url-loader?limit=10000&mimetype=image/svg+xml"
+      }]
     },
     resolve: {
-        // modulesDirectories: ['node_modules', 'components'],
-        extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx']
+      // modulesDirectories: ['node_modules', 'components'],
+      extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx']
     },
     plugins: [
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-        }),
-        // new webpack.NoErrorsPlugin(),
-        new CheckerPlugin(),
-        new ExtractTextPlugin('style.css', { allChunks: true }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }),
+      // new webpack.NoErrorsPlugin(),
+      // new CheckerPlugin(),
+    ],
+    // When importing a module whose path matches one of the following, just
+    // assume a corresponding global variable exists and use that instead.
+    // This is important because it allows us to avoid bundling all of our
+    // dependencies, which allows browsers to cache those libraries between builds.
+    externals: {
+      // "react": "React",
+      // "react-dom": "ReactDOM"
+    },
+  },
+  //
+  // Production Setting
+  //
+  production: {
+    name: 'React Client Package',
+    entry: {
+      'guest': ['@babel/polyfill', './src/polyfills.js', './src/client/guest'],
+      'member': ['@babel/polyfill', './src/polyfills.js', './src/client/member'],
+      'admin': ['@babel/polyfill', './src/polyfills.js', './src/client/admin'],
+    },
+    // watch: true,
+    output: {
+      filename: '[name].js',
+      path: path.resolve(TARGET_PATH + '/src/public/js')
+    },
+    // Enable sourcemaps for debugging webpack's output.
+    watch: false,
+    mode: 'production',
+    module: {
+      rules: [{
+        test: /\.tsx?$/,
+        loader: "awesome-typescript-loader"
+      }, {
+        // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+        // { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader')
+      }, {
+        test: /\.svg$/,
+        loader: "url-loader?limit=10000&mimetype=image/svg+xml"
+      }]
+    },
+    resolve: {
+      // modulesDirectories: ['node_modules', 'components'],
+      extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx']
+    },
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': 'production'
+      }),
+      // new webpack.NoErrorsPlugin(),
+      new MiniCssExtractPlugin({
+        filename: "[name].css",
+        chunkFilename: "[id].css"
+      }),
+      // new ExtractTextPlugin('style.css', {
+      //   allChunks: true
+      // }),
     ],
     // When importing a module whose path matches one of the following, just
     // assume a corresponding global variable exists and use that instead.
@@ -58,6 +119,6 @@ const config = [
       // "react-dom": "ReactDOM"
     },
   }
-];
+};
 
 module.exports = config;
