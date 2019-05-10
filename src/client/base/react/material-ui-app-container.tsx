@@ -52,7 +52,7 @@ export class MaterialUiAppContainer extends React.Component<IProps, {}> {
 
     const generateClassName = createGenerateClassName();
 
-    moment.lang(i18n.language);
+    moment.locale(i18n.language);
 
     if ( typeof window !== 'undefined' ) { // Check whether this method is called on client or server
       return (
