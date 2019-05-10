@@ -65,6 +65,7 @@
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
     "history": "^4.9.0",
+    "html-entities": "^1.2.1",
     "https": "^1.0.0",
     "i18next": "^15.1.0",
     "i18next-browser-languagedetector": "^3.0.1",
