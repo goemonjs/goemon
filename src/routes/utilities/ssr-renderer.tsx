@@ -1,6 +1,8 @@
 import  React from 'react';
 import { matchRoutes } from 'react-router-config';
 import { renderToString } from 'react-dom/server';
+const XmlEntities = require('html-entities').XmlEntities;
+const xmlEntities = new XmlEntities();
 import { generateNumberFromTimestamp } from '../../base/utilities/file';
 import { isProductionMode } from '../../base/utilities/debug';
 import i18n from '../../client/localization/i18n';
@@ -55,14 +57,13 @@ export class ServerSideRenderer {
 
       let option = {
         html: html,
-        config: JSON.stringify(config),
+        config: xmlEntities.encode(JSON.stringify(config)),
         css: cssGenerator !== undefined ? cssGenerator() : '',
         bundle: '/js/' + this.bundleFilePath + '?ver=' + timeStamp
       };
+      Object.assign(ejsOptions, option);
 
-      Object.assign(option, ejsOptions);
-
-      res.render(ejsName, option);
+      res.render(ejsName, ejsOptions);
     } catch ( err ) {
       console.error(err);
     }
