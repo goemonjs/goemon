@@ -11,6 +11,7 @@ export const UPDATE_FETCH_STATUS = 'UPDATE_FETCH_STATUS';
 
 export const updateFetchStatus = createAction<boolean>(UPDATE_FETCH_STATUS);
 export const getProfile = createTypeAsyncAction('GET_PROFILE', () => {
-  const client = new MemberApiClient(config.get('protocol') + config.get('host'));
+  const url = config.get('protocol') + '://' + config.get('host');
+  const client = new MemberApiClient(url);
   return client.getUserProfile();
 });

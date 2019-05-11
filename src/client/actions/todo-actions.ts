@@ -24,9 +24,9 @@ export const toggleTodo = createTypeAction('TOGGLE_TODOS', (id: number) => {
   };
 });
 
-export const listTodo = createTypeAsyncAction('LIST_TODOS', (options: any) => {
+export const listTodos = createTypeAsyncAction('LIST_TODOS', (options: any) => {
   const protocol = !options ? config.get('protocol') : options.protocol;
   const host = !options ? config.get('host') : options.host;
   const client = new GuestApiClient(protocol + '://' + host);
-  return client.listTodo();
+  return client.listTodos();
 });

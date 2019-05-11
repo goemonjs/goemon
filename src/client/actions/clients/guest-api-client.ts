@@ -8,8 +8,8 @@ export default class MemberApiClient {
   ) {
   }
 
-  public async listTodo() {
+  public async listTodos() {
     type RESULT_TYPE = Todo[];
-    return await doGet<RESULT_TYPE>(this.baseUrl + '/api/listTodo');
+    return await doGet<RESULT_TYPE>(this.baseUrl + '/api/listTodos');
   }
 }

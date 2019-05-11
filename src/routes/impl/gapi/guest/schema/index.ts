@@ -16,7 +16,6 @@ const linkSchema = gql`
 `;
 
 export default [
-  // linkSchema,
-  // todoSchema,
+  linkSchema,
   helloSchema
 ];

@@ -33,14 +33,18 @@ describe('routes/api test', () => {
     await mongoServer.stop();
   });
 
-  const app = App.createApp({isTest: true});
+  const app = App.createApp({ isTest: true });
 
-  test('/api/items', async () => {
-    const response = await supertest(app).get('/api/items');
+  test('/api/listTodos', async () => {
+    const response = await supertest(app).get('/api/listTodos');
     expect(response.status).toBe(200);
     expect(response.type).toBe('application/json');
     let result = JSON.parse(response.text);
-    let expected = [{id: 1, text: 'first'}, {id: 2, text: 'second'}, {id: 3, text: 'third'}];
+    let expected = [
+      { id: 1, text: 'first feched todo', completed: false },
+      { id: 2, text: 'second feched todo', completed: true },
+      { id: 3, text: 'third feched todo3', completed: false }
+    ];
     expect(result).toEqual(expected);
   });
 

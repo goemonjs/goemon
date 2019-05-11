@@ -1,4 +1,4 @@
-import  React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { Todo } from '../../../objects/todo';
@@ -16,20 +16,20 @@ interface IProps {
 interface IDispProps {
   addTodo: (text: string) => void;
   toggleTodo: (id: number) => void;
-  listTodo: () => void;
+  listTodos: () => void;
 }
 
 class TodoListView extends React.Component<IProps & IDispProps, any> {
 
   render() {
-    let { todos, message, addTodo, toggleTodo, listTodo, isFetching } = this.props;
+    let { todos, message, addTodo, toggleTodo, listTodos, isFetching } = this.props;
     return (
       <div>
         <hr />
-        <TodoList todos={todos} message={message} toggleTodo={toggleTodo}/>
+        <TodoList todos={todos} message={message} toggleTodo={toggleTodo} />
         <TodoForm addTodo={addTodo} />
         <hr />
-        <p><button onClick={() => listTodo()} >{ isFetching ? <span>Feching...</span> : <span>Fetch</span> }
+        <p><button onClick={() => listTodos()} >{isFetching ? <span>Feching...</span> : <span>Fetch</span>}
         </button> from <a href="/api/todos">/api/todo</a>
         </p>
       </div>
@@ -48,7 +48,7 @@ const mapStateToProps = (store: IStore) => {
   return {
     todos: store.todoState.todos,
     message: store.todoState.message,
-    isFetching: TodoActions.listTodo.isPending(store)
+    isFetching: TodoActions.listTodos.isPending(store)
   };
 };
 
@@ -56,8 +56,8 @@ const mapDispatchToProps = (dispatch): IDispProps => {
   return {
     addTodo: (text: string): void => dispatch(TodoActions.addTodo({ text: text })),
     toggleTodo: (id: number): void => dispatch(TodoActions.toggleTodo(id)),
-    listTodo: (): void => {
-      dispatch(TodoActions.listTodo());
+    listTodos: (): void => {
+      dispatch(TodoActions.listTodos());
     }
   };
 };

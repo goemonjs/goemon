@@ -19,21 +19,21 @@ export const addTodoReducer = Actions.addTodo.reducer<IState>((state, action) =>
 }));
 
 export const toggleTodoReducer = Actions.toggleTodo.reducer<IState>((state, action) => {
-    let todos: Todo[] = state.todos.concat();
-    let id: number = action.payload.id;
-    todos.map(todo => {
-      if ( todo.id == id ) {
-        todo.completed = !todo.completed;
-        return;
-      }
-    });
-    return {
-      todos: todos
-    };
+  let todos: Todo[] = state.todos.concat();
+  let id: number = action.payload.id;
+  todos.map(todo => {
+    if (todo.id == id) {
+      todo.completed = !todo.completed;
+      return;
+    }
+  });
+  return {
+    todos: todos
+  };
 });
 
-export const loadTodoReducer = Actions.listTodo.reducer<IState>((state, action) => {
-  if ( action.error ) {
+export const loadTodoReducer = Actions.listTodos.reducer<IState>((state, action) => {
+  if (action.error) {
     return {
       message: action.payload && action.payload.message,
     };

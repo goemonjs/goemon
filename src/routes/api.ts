@@ -5,7 +5,7 @@ module.exports = function (app: express.Express) {
   app.use('/api', router);
 };
 
-router.get('/listTodo', (req, res, next) => {
+router.get('/listTodos', (req, res, next) => {
   // Be careful of security when use this headres !!
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
