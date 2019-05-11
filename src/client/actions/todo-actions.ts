@@ -1,6 +1,6 @@
 import { createTypeAction, createTypeAsyncAction } from 'type-redux';
 import { Todo } from '../objects/todo';
-import GuestApiClient from './clients/guest-api-client';
+import GuestApiClient from './clients/api/guest-api-client';
 import config from 'react-global-configuration';
 
 // Type Action Samples

@@ -37,7 +37,7 @@ export async function doGet<T>(url: string): Promise<T> {
     }
   });
 
-  if ( apiResult.status != 200 ) {
+  if (apiResult.status != 200) {
     throw new Error('Failed to call ' + url);
   }
 
@@ -53,7 +53,7 @@ export async function doPost<T>(url: string): Promise<T> {
     }
   });
 
-  if ( apiResult.status != 200 ) {
+  if (apiResult.status != 200) {
     throw new Error('Failed to call ' + url);
   }
 

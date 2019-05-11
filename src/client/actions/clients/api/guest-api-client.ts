@@ -1,5 +1,5 @@
-import { doGet } from '../../../base/utilities/network';
-import { Todo } from '../../objects/todo';
+import { doGet } from '../../../../base/utilities/network';
+import { Todo } from '../../../objects/todo';
 
 export default class MemberApiClient {
 
