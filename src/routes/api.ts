@@ -5,14 +5,6 @@ module.exports = function (app: express.Express) {
   app.use('/api', router);
 };
 
-router.get('/items', (req, res, next) => {
-  res.json([
-    { id: 1, text: 'first' },
-    { id: 2, text: 'second' },
-    { id: 3, text: 'third' }
-  ]);
-});
-
 router.get('/listTodo', (req, res, next) => {
   // Be careful of security when use this headres !!
   res.header('Access-Control-Allow-Origin', '*');
@@ -38,7 +30,7 @@ function isAuthenticated(req, res, next) {
   }
   res.status(401);
   res.render('error', {
-      message: 'Unauthorized',
-      error: {}
+    message: 'Unauthorized',
+    error: {}
   });
 }

@@ -1,20 +1,8 @@
-import Hello from './impl/gapi-hello';
+import { Express } from 'express';
+import GuestApolloServer from './impl/gapi/guest/index';
+import MemberApolloServer from './impl/gapi/member/index';
 
-let graphqlHTTP = require('express-graphql');
-let { buildSchema } = require('graphql');
-
-module.exports = function (app) {
-  let schema = buildSchema(`
-    type Query {
-      hello: String
-    }
-  `);
-
-  let root = { hello: () => 'Hello world!' };
-
-  app.use('/hello', graphqlHTTP({
-    schema: Hello.schema,
-    rootValue: Hello.rootValue,
-    graphiql: true,
-  }));
+module.exports = function (app: Express) {
+  // GuestApolloServer.applyMiddleware({ app, path: '/gapi/guest' });
+  MemberApolloServer.applyMiddleware({ app, path: '/gapi/member' });
 };

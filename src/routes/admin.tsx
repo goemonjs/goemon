@@ -1,4 +1,4 @@
-import  React from 'react';
+import React from 'react';
 import { Router } from 'express';
 import { configureStore } from '../client/stores/member-store';
 import { RouteComponent, routes } from '../client/routes/member-route';
@@ -11,13 +11,13 @@ import passport from 'passport';
 const router = Router();
 const store = configureStore();
 
-let renderer =  new ServerSideRenderer('admin.js');
+let renderer = new ServerSideRenderer('admin.js');
 
 module.exports = (app) => {
   app.use('/admin', router);
 };
 
-router.get('/login',  (req: any, res, next) => {
+router.get('/login', (req: any, res, next) => {
   res.render('admin-login', { message: req.flash('error') });
 });
 
@@ -32,7 +32,7 @@ router.get('/logout', (req: any, res) => {
 
 router.get('*', isAuthenticated, (req, res) => {
   const sheetsRegistry = new SheetsRegistry();
-  const app = (
+  const component = (
     <MaterialUiAppContainer store={store} location={req.baseUrl + req.url} theme={theme} sheetsRegistry={sheetsRegistry}>
       <RouteComponent />
     </MaterialUiAppContainer>
@@ -42,18 +42,18 @@ router.get('*', isAuthenticated, (req, res) => {
     return sheetsRegistry.toString();
   };
 
-  renderer.render(req, res, 'member', { title: 'Member - Goemon' }, app, cssGenerator);
+  renderer.render(req, res, 'member', { title: 'Member - Goemon' }, component, cssGenerator);
 });
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    if ( req.user.roles.indexOf('admin') > -1 ) {
+    if (req.user.roles.indexOf('admin') > -1) {
       return next();
     } else {
       res.status(401);
       res.render('error', {
-          message: 'Unauthorized',
-          error: {}
+        message: 'Unauthorized',
+        error: {}
       });
     }
   }

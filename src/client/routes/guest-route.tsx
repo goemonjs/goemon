@@ -1,11 +1,11 @@
-import  React from 'react';
+import React from 'react';
 import { renderRoutes } from 'react-router-config';
 import { GuestTop } from '../views/guest-top';
 import { GuestReact } from '../views/guest-react';
 import { GuestRedux } from '../views/guest-redux';
 import { NotFound } from '../views/components/notfound';
 
-interface IProps  {
+interface IProps {
   // routes: any;
 }
 
@@ -18,11 +18,11 @@ export const routes = [
     path: '/',
     component: GuestTop,
     exact: true
-  },  {
+  }, {
     path: '/react',
     component: GuestReact,
     exact: false
-  },  {
+  }, {
     path: '/redux',
     component: GuestRedux,
     exact: false
@@ -38,7 +38,7 @@ export const routes = [
 ];
 
 export class RouteComponent extends React.Component<IProps, IState> {
-  render () {
+  render() {
     // const { match } = this.props;
     return (
       renderRoutes(routes)

@@ -1,4 +1,4 @@
-import  React from 'react';
+import React from 'react';
 import { Router } from 'express';
 import { configureStore } from '../client/stores/member-store';
 import { MaterialUiAppContainer } from '../client/base/react/material-ui-app-container';
@@ -11,7 +11,7 @@ import passport from 'passport';
 const router = Router();
 const store = configureStore();
 
-let renderer =  new ServerSideRenderer('member.js');
+let renderer = new ServerSideRenderer('member.js');
 
 module.exports = (app) => {
   app.use('/member', router);
@@ -28,7 +28,7 @@ router.get('/logout', (req: any, res) => {
 
 router.get('*', isAuthenticated, (req, res) => {
   const sheetsRegistry = new SheetsRegistry();
-  const app = (
+  const component = (
     <MaterialUiAppContainer store={store} location={req.baseUrl + req.url} theme={theme} sheetsRegistry={sheetsRegistry}>
       <RouteComponent />
     </MaterialUiAppContainer>
@@ -38,7 +38,7 @@ router.get('*', isAuthenticated, (req, res) => {
     return sheetsRegistry.toString();
   };
 
-  renderer.render(req, res, 'member', { title: 'Member - Goemon' }, app, cssGenerator);
+  renderer.render(req, res, 'member', { title: 'Member - Goemon' }, component, cssGenerator);
 });
 
 function isAuthenticated(req, res, next) {

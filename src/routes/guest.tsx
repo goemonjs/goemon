@@ -1,8 +1,9 @@
-﻿import  React from 'react';
+﻿import React from 'react';
 import { Express, Router } from 'express';
+import { renderRoutes } from 'react-router-config';
 import { configureStore } from '../client/stores/guest-store';
 import { AppContainer } from '../client/base/react/app-container';
-import { RouteComponent } from '../client/routes/guest-route';
+import { RouteComponent, routes } from '../client/routes/guest-route';
 import { ServerSideRenderer } from './utilities/ssr-renderer';
 
 const router = Router();
@@ -14,53 +15,37 @@ module.exports = function (app: Express) {
 };
 
 router.get('/', authenticationHandler, (req, res) => {
-  // const app = (location) => { return (
-  //   <AppContainer store={store} location={location}>
-  //     <RouteComponent />
-  //   </AppContainer>
-  // ); };
-  const app = (
-    <AppContainer store={store} location={req.baseUrl + req.url}>
-      <RouteComponent />
-    </AppContainer>
-  );
-  renderer.render(req, res, 'guest', { title: 'Home'}, app);
+  renderer.render(req, res, 'guest', { title: 'Home' }, component(req.baseUrl + req.url, store));
 });
 
 router.get('/react', authenticationHandler, (req, res) => {
-  const app = (
-    <AppContainer store={store} location={req.baseUrl + req.url}>
-      <RouteComponent />
-    </AppContainer>
-  );
-  renderer.render(req, res, 'guest', { title: 'React'}, app);
+  renderer.render(req, res, 'guest', { title: 'React' }, component(req.baseUrl + req.url, store));
 });
 
 router.get('/redux', authenticationHandler, (req, res) => {
-  const app = (
-    <AppContainer store={store} location={req.baseUrl + req.url}>
-      <RouteComponent />
-    </AppContainer>
-  );
-  renderer.render(req, res, 'guest', { title: 'Redux'}, app);
+  renderer.renderWithInitialProps(req, res, 'guest', { title: 'Redux' },
+    component(req.baseUrl + req.url, store), routes, store);
 });
 
 router.get('/redux/counter', authenticationHandler, (req, res) => {
-  const app = (
-    <AppContainer store={store} location={req.baseUrl + req.url}>
-      <RouteComponent />
-    </AppContainer>
-  );
-  renderer.render(req, res, 'guest', { title: 'Redux'}, app);
+  renderer.render(req, res, 'guest', { title: 'Redux' }, component(req.baseUrl + req.url, store));
 });
 
 router.get('/about', authenticationHandler, (req, res) => {
-  res.render('about', { title: 'About'});
+  res.render('about', { title: 'About' });
 });
 
-router.get('/login',  (req: any, res, next) => {
+router.get('/login', (req: any, res, next) => {
   res.render('login', { message: req.flash('error') });
 });
+
+function component(location, store) {
+  return (
+    <AppContainer store={store} location={location}>
+      <RouteComponent />
+    </AppContainer>
+  );
+}
 
 function authenticationHandler(req, res, next) {
   if (req.isAuthenticated()) {

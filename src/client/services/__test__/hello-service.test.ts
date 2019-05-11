@@ -19,9 +19,9 @@ if (!global.fetch) {
 describe('/hello test', () => {
 
   test('hello', async (done) => {
-    let app = App.createApp({isTest: true});
+    let app = App.createApp({ isTest: true });
     let server = createServer(app);
-    let result = await HelloService.hello(`http://localhost:${server.port}/hello`);
+    let result = await HelloService.hello(`http://localhost:${server.port}/gapi/guest`);
     expect(result).toEqual('Hello world!');
     done();
   });
