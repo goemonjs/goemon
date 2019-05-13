@@ -25,7 +25,7 @@ interface ITaskModel extends Model<TaskDocument> {
 
 function createModel(): ITaskModel {
   // Define mongoose Schema
-  let userSchema: Schema = new Schema({
+  let todoSchema: Schema = new Schema({
     userId: { type: String, requied: true },
     caption: { type: String, requied: true },
     isChecked: { type: Boolean, required: true },
@@ -34,16 +34,16 @@ function createModel(): ITaskModel {
   });
 
   // Create mongoose Object with IUserModel and UserDocument
-  let User = <ITaskModel>mongoose.model('User', userSchema);
+  let User = <ITaskModel>mongoose.model('TodoCollection', todoSchema);
 
   // Return Model
   return User;
 }
 
-export const Tasks: ITaskModel = createModel();
+export const Todo: ITaskModel = createModel();
 
 //  Implementation of static method for Model
-class UserModel {
+class TodoModel {
   //
   // Implimentation of static methods
   //

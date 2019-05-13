@@ -12,7 +12,7 @@ export default gql`
   }
 
   type Task {
-    id: String!
+    _id: String!
     caption: String!
     isChecked: Boolean!
   }
