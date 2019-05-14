@@ -1,6 +1,6 @@
 {
   "name": "goemon",
-  "version": "0.20.2",
+  "version": "0.21.0",
   "description": "The boilerplate using React16, Redux, React-Router v4 + SSR(Server Side Rendering), Node, Express, and MongoDB in TypeScript.",
   "main": "app.js",
   "scripts": {
