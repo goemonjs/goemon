@@ -4,6 +4,7 @@ import {
 } from 'apollo-server-express';
 
 import { Todo } from '../../../../../models/todo';
+import { AddTaskInput, UpdateTaskInput, RemoveTaskInput } from '../gtypes';
 
 export default {
   Query: {
@@ -22,7 +23,7 @@ async function listTasks() {
   return todos;
 }
 
-async function addTask(obj: any, args: any, context: any, info: any) {
+async function addTask(obj: any, args: AddTaskInput, context: any, info: any) {
   if (!args.caption) {
     throw new UserInputError('Caption is required.');
   }
@@ -35,10 +36,10 @@ async function addTask(obj: any, args: any, context: any, info: any) {
   return todo;
 }
 
-async function updateTask(obj: any, args: any, context: any, info: any) {
+async function updateTask(obj: any, args: UpdateTaskInput, context: any, info: any) {
   if (!args.id) {
     throw new UserInputError('Task ID is required.');
-  } else if (!obj.caption) {
+  } else if (!args.caption) {
     throw new UserInputError('Caption is required.');
   }
 
@@ -49,7 +50,7 @@ async function updateTask(obj: any, args: any, context: any, info: any) {
   return todos[0];
 }
 
-async function removeTask(obj: any, args: any, context: any, info: any) {
+async function removeTask(obj: any, args: RemoveTaskInput, context: any, info: any) {
   if (!args.id) {
     throw new UserInputError('Caption is required.');
   }
