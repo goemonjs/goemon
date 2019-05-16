@@ -1,26 +1,21 @@
 export type Maybe<T> = T | null;
 
-export interface UpdateTaskInput {
-  id: string;
+export interface ListTasksInput {
+  skip?: Maybe<number>;
 
-  caption: string;
+  limit?: Maybe<number>;
 
-  isChecked: boolean;
+  orderBy?: Maybe<ListTasksOrderByInput>;
 }
 
-export interface RemoveTaskInput {
-  id: string;
-}
-
-export interface AddTaskInput {
-  caption: string;
-
-  isChecked: boolean;
+export enum ListTasksOrderByInput {
+  CreatedAtAsc = "createdAt_ASC",
+  CreatedAtDesc = "createdAt_DESC"
 }
 
 export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE'
+  Public = "PUBLIC",
+  Private = "PRIVATE"
 }
 
 /** The `Upload` scalar type represents a file upload. */
@@ -46,6 +41,10 @@ export interface Task {
   caption: string;
 
   isChecked: boolean;
+
+  createdAt?: Maybe<string>;
+
+  updatedAt?: Maybe<string>;
 }
 
 export interface Mutation {
@@ -55,7 +54,7 @@ export interface Mutation {
 
   updateTask?: Maybe<Task>;
 
-  removeTask?: Maybe<Task>;
+  removeTask?: Maybe<number>;
 }
 
 export interface Subscription {
@@ -66,12 +65,21 @@ export interface Subscription {
 // Arguments
 // ====================================================
 
+export interface ListTasksQueryArgs {
+  input?: Maybe<ListTasksInput>;
+}
 export interface AddTaskMutationArgs {
-  caption?: Maybe<string>;
+  caption: string;
+
+  isChecked: boolean;
 }
 export interface UpdateTaskMutationArgs {
-  input: UpdateTaskInput;
+  id: string;
+
+  caption: string;
+
+  isChecked: boolean;
 }
 export interface RemoveTaskMutationArgs {
-  input: RemoveTaskInput;
+  id: string;
 }

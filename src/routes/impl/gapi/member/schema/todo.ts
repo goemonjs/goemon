@@ -2,33 +2,31 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
   extend type Query {
-    listTasks: [Task],
+    listTasks(input: ListTasksInput): [Task],
   }
 
   extend type Mutation {
-    addTask(caption: String): Task,
-    updateTask(input: UpdateTaskInput!): Task,
-    removeTask(input: RemoveTaskInput!): Task
+    addTask(caption: String!, isChecked: Boolean!): Task,
+    updateTask(id: String!, caption: String!, isChecked: Boolean!): Task,
+    removeTask(id: String!): Int
+  }
+
+  input ListTasksInput {
+    skip: Int,
+    limit: Int,
+    orderBy: ListTasksOrderByInput
+  }
+
+  enum ListTasksOrderByInput {
+    createdAt_ASC,
+    createdAt_DESC
   }
 
   type Task {
-    _id: String!
+    _id: ID!
     caption: String!
     isChecked: Boolean!
-  }
-
-  input AddTaskInput {
-    caption: String!
-    isChecked: Boolean!
-  }
-
-  input UpdateTaskInput {
-    id: String!
-    caption: String!
-    isChecked: Boolean!
-  }
-
-  input RemoveTaskInput {
-    id: String!
+    createdAt: String
+    updatedAt: String
   }
 `;

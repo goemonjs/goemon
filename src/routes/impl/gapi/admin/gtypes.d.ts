@@ -1,8 +1,8 @@
 export type Maybe<T> = T | null;
 
 export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE'
+  Public = "PUBLIC",
+  Private = "PRIVATE"
 }
 
 /** The `Upload` scalar type represents a file upload. */

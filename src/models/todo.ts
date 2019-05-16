@@ -8,8 +8,8 @@ export interface TaskDocument extends Document {
   userId: string;
   caption: string;
   isChecked: boolean;
-  createDate: Date;
-  updateDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 // Define static methods for Model
@@ -17,10 +17,6 @@ interface ITaskModel extends Model<TaskDocument> {
   new(doc?: Object): TaskDocument;
 
   // Definitions of static methods
-  // listTasks(userId: string, password: string): Promise<TaskDocument>;
-  // createTask(userId: string, password: string, roles: string[]): Promise<TaskDocument>;
-  // updateTask(userId: string): Promise<TaskDocument>;
-  // removeTask(userId: string): Promise<TaskDocument>;
 }
 
 function createModel(): ITaskModel {
@@ -29,8 +25,8 @@ function createModel(): ITaskModel {
     userId: { type: String, requied: true },
     caption: { type: String, requied: true },
     isChecked: { type: Boolean, required: true },
-    createDate: { type: Date, default: new Date() },
-    updateDate: { type: Date, default: new Date() }
+    createdAt: { type: Date, required: true, default: Date.now },
+    updatedAt: { type: Date, required: true, default: Date.now }
   });
 
   // Create mongoose Object with IUserModel and UserDocument

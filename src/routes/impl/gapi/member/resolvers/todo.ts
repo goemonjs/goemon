@@ -4,7 +4,7 @@ import {
 } from 'apollo-server-express';
 
 import { Todo } from '../../../../../models/todo';
-import { AddTaskInput, UpdateTaskInput, RemoveTaskInput } from '../gtypes';
+import { ListTasksInput, AddTaskMutationArgs, UpdateTaskMutationArgs, RemoveTaskMutationArgs } from '../gtypes';
 
 export default {
   Query: {
@@ -18,15 +18,29 @@ export default {
   }
 };
 
-async function listTasks() {
-  let todos = await Todo.find({}).exec();
-  return todos;
+async function listTasks(parent: any, args: any, context: any, info: any) {
+  const input: ListTasksInput = args.input;
+  const condition = {};
+  const sort = {
+    createdAt: args.input.orderBy == 'createdAt_ASC' ? 1 : -1
+  };
+
+  if (input.orderBy == undefined) {
+    if (input.limit == undefined || input.skip == undefined) {
+      return await Todo.find(condition);
+    } else {
+      return await Todo.find(condition).skip(input.skip).limit(input.limit);
+    }
+  } else {
+    if (input.limit == undefined || input.skip == undefined) {
+      return await Todo.find(condition).sort(sort);
+    } else {
+      return await Todo.find(condition).skip(input.skip).limit(input.limit).sort(sort);
+    }
+  }
 }
 
-async function addTask(obj: any, args: AddTaskInput, context: any, info: any) {
-  if (!args.caption) {
-    throw new UserInputError('Caption is required.');
-  }
+async function addTask(parent: any, args: AddTaskMutationArgs, context: any, info: any) {
   let todo = new Todo({
     caption: args.caption,
     isChecked: args.isChecked
@@ -36,24 +50,26 @@ async function addTask(obj: any, args: AddTaskInput, context: any, info: any) {
   return todo;
 }
 
-async function updateTask(obj: any, args: UpdateTaskInput, context: any, info: any) {
-  if (!args.id) {
-    throw new UserInputError('Task ID is required.');
-  } else if (!args.caption) {
-    throw new UserInputError('Caption is required.');
+async function updateTask(parent: any, args: UpdateTaskMutationArgs, context: any, info: any) {
+  try {
+    let todo = await Todo.findOne({ _id: args.id }).exec();
+    if (todo != null) {
+      todo.caption = args.caption;
+      todo.isChecked = args.isChecked;
+      todo.updatedAt = new Date();
+      todo.save();
+    }
+    return todo;
+  } catch (err) {
+    throw new UserInputError('Invalid id');
   }
-
-  let todos = await Todo.find({ _id: args.id }).exec();
-  todos[0].caption = args.caption;
-  todos[0].isChecked = args.isChecked;
-
-  return todos[0];
 }
 
-async function removeTask(obj: any, args: RemoveTaskInput, context: any, info: any) {
-  if (!args.id) {
-    throw new UserInputError('Caption is required.');
+async function removeTask(parent: any, args: RemoveTaskMutationArgs, context: any, info: any) {
+  try {
+    let count = await Todo.remove({ _id: args.id }).exec();
+    return count.ok;
+  } catch (err) {
+    throw new UserInputError('Invalid id');
   }
-
-  await Todo.remove({ _id: args.id }).exec();
 }

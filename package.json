@@ -10,7 +10,8 @@
     "clean": "node ./node_modules/gulp/bin/gulp clean",
     "pack": "node ./node_modules/gulp/bin/gulp build:production && sh ./scripts/pack.sh",
     "test": "jest",
-    "dev": "node ./node_modules/gulp/bin/gulp develop"
+    "dev": "node ./node_modules/gulp/bin/gulp develop",
+    "gentypes": "node ./scripts/gen-types"
   },
   "repository": {
     "type": "git",
@@ -68,6 +69,7 @@
     "graphql": "^14.2.1",
     "graphql-code-generator": "^0.18.1",
     "graphql-codegen-typescript-common": "^0.18.1",
+    "graphql-iso-date": "^3.6.1",
     "graphql-tag": "^2.10.1",
     "history": "^4.9.0",
     "html-entities": "^1.2.1",
@@ -81,6 +83,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.4.0",
     "json-loader": "^0.5.7",
+    "jsonwebtoken": "^8.5.1",
     "material-ui-pickers": "^2.2.4",
     "memory-cache": "^0.2.0",
     "moment": "^2.24.0",

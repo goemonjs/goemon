@@ -52,7 +52,7 @@ gulp.task('css', () => {
 // lint
 //
 gulp.task("lint", () => {
-  return gulp.src("src/**/*.ts")
+  return gulp.src(["src/**/*.ts", "!src/**/*.d.ts"])
     .pipe(tslint(tslintconfig))
     .pipe(tslint.report());
 });

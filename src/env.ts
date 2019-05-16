@@ -12,6 +12,7 @@ type MyEnvsType =
   | 'PORT'
   | 'PROTOCOL'
   | 'VERBOSE'
+  | 'JWT_TOKEN_SECRET'
   | 'MONGODB_CONNECTION_URL'
   | 'MONGODB_CONNECTION_PORT'
   | 'MONGODB_CONNECTION_DBPATH'
@@ -32,11 +33,12 @@ type MyEnvsType =
   | 'HTTP_CACHE_MAXAGE';
 
 // These default values are overwritten by .env values
-export const envs: { [P in MyEnvsType] : EnvType } = {
+export const envs: { [P in MyEnvsType]: EnvType } = {
   HOST: { development: false, production: false },
   PORT: { development: false, production: false, defaultValue: process.env.NODE_ENV == 'production' ? 80 : 3000 },
   PROTOCOL: { development: false, production: false, defaultValue: 'http' }, // default | http | https
   VERBOSE: { development: false, production: false, defaultValue: false },  // true | false
+  JWT_TOKEN_SECRET: { development: false, production: true, defaultValue: 'Aihd82920rjhdjqao299euudh3!@Zq' },  // true | false
   NODE_ENV: { development: true, production: true },
   NODE_CONFIG_DIR: { development: false, production: true },
   MONGODB_CONNECTION_URL: { development: false, production: true },
