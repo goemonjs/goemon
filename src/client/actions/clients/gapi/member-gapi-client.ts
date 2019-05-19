@@ -1,8 +1,8 @@
 import GApiClient from './gapi-client';
 
-import { helloQuery, HELLO_RESULT_TYPE } from './guest/query/hello';
+import { getProfileQuery, GETPROFILE_RESULT_TYPE } from './member/query/profile';
 
-export class GuestGApiClient extends GApiClient {
+export class MemberGApiClient extends GApiClient {
   constructor({
     baseUrl,
     credentials,
@@ -14,13 +14,13 @@ export class GuestGApiClient extends GApiClient {
   }) {
     super({
       baseUrl: baseUrl,
-      endPoint: '/gapi/guest',
+      endPoint: '/gapi/member',
       credentials: credentials,
       token: token
     });
   }
 
-  public async hello() {
-    return this.doQuery<HELLO_RESULT_TYPE, void>(this.endPoint, helloQuery);
+  public async getProfile() {
+    return this.doQuery<GETPROFILE_RESULT_TYPE, void>(this.endPoint, getProfileQuery);
   }
 }

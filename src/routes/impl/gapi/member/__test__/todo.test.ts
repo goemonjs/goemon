@@ -2,41 +2,34 @@
  * @jest-environment node
  */
 
-import mongoose from 'mongoose';
-import * as mongodbMemoryServer from 'mongodb-memory-server';
 import supertest from 'supertest';
-
+import TestHelper from '../../../../../base/utilities/test-helper';
 import * as App from '../../../../../app';
 
 describe('routes/api test', () => {
 
-  let mongoServer;
-  beforeAll(async () => {
-    mongoServer = new mongodbMemoryServer.MongoMemoryServer();
-    const mongoUri = await mongoServer.getConnectionString();
-    const mongooseOpts = { // options for mongoose 4.11.3 and above
-      autoReconnect: true,
-      reconnectTries: Number.MAX_VALUE,
-      reconnectInterval: 1000,
-    };
+  const app = App.createApp({ isTest: true });
 
-    await mongoose.connect(mongoUri, mongooseOpts, err => {
-      if (err) {
-        console.log('Mongoose connect to MongoMemory failed!');
-        console.error(err);
-      }
-    });
+  let token;
+
+  beforeAll(async () => {
+    await TestHelper.initializeDB();
+    const agent = await TestHelper.getAuthenticatedAgent(app);
+    token = await TestHelper.getAuthToekn(agent);
   });
 
   afterAll(async () => {
-    await mongoose.disconnect();
-    await mongoServer.stop();
+    TestHelper.finalizeDB();
   });
 
-  const app = App.createApp({ isTest: true });
+  beforeEach(async () => {
+    const agent = await TestHelper.getAuthenticatedAgent(app);
+    token = await TestHelper.getAuthToekn(agent);
+  });
 
   test('/gapi/member addTask', async () => {
-    let res = await addTask(app, 'Test caption1', false);
+
+    let res = await addTask(app, 'Test caption1', false, token);
     expect(res.body.data.addTask._id).not.toBeNull();
     expect(res.body.data.addTask.caption).toEqual('Test caption1');
     expect(res.body.data.addTask.isChecked).toEqual(false);
@@ -46,8 +39,8 @@ describe('routes/api test', () => {
   });
 
   test('/gapi/member listTasks', async () => {
-    let res1 = await addTask(app, 'Test caption1', false);
-    let res2 = await addTask(app, 'Test caption2', false);
+    let res1 = await addTask(app, 'Test caption1', false, token);
+    let res2 = await addTask(app, 'Test caption2', false, token);
     let res3 = await listTask(app, 'createdAt_ASC');
 
     expect(res3.body.data.listTasks[0]).toEqual(res1.body.data.addTask);
@@ -74,7 +67,7 @@ describe('routes/api test', () => {
   });
 
   test('/gapi/member updateTask', async () => {
-    let res = await addTask(app, 'Test caption1', false);
+    let res = await addTask(app, 'Test caption1', false, token);
     expect(res.body.data.addTask._id).not.toBeNull();
     expect(res.body.data.addTask.caption).toEqual('Test caption1');
     expect(res.body.data.addTask.isChecked).toEqual(false);
@@ -97,9 +90,7 @@ describe('routes/api test', () => {
   });
 
   test('/gapi/member removeTask', async () => {
-    let request = supertest(app);
-
-    let res = await addTask(app, 'Test caption1', false);
+    let res = await addTask(app, 'Test caption1', false, token);
     expect(res.body.data.addTask._id).not.toBeNull();
     expect(res.body.data.addTask.caption).toEqual('Test caption1');
     expect(res.body.data.addTask.isChecked).toEqual(false);
@@ -115,95 +106,101 @@ describe('routes/api test', () => {
     expect(res.body.errors[0].message).toBe('Invalid id');
     expect(res.body.errors[0].extensions.code).toBe('BAD_USER_INPUT');
   });
+
+  async function addTask(app, caption, isChecked, token) {
+    return supertest(app).post('/gapi/member')
+      .set('Authorization', token)
+      .send({
+        query:
+          `mutation Test {
+            addTask(caption: "${caption}", isChecked: ${isChecked}){
+              _id,
+              caption,
+              isChecked,
+              createdAt,
+              updatedAt
+            }
+          }`
+      })
+      .expect(200);
+  }
+
+  async function removeTask(app, id) {
+    return supertest(app).post('/gapi/member')
+      .set('Authorization', token)
+      .send({
+        query:
+          `mutation Test {
+            removeTask(id: "${id}")
+          }`
+      })
+      .expect(200);
+  }
+
+  async function updateTask(app, id, caption, isChecked) {
+    return supertest(app).post('/gapi/member')
+      .set('Authorization', token)
+      .send({
+        query:
+          `mutation Test {
+            updateTask(id: "${id}" caption: "${caption}", isChecked: ${isChecked}){
+              _id,
+              caption,
+              isChecked,
+              createdAt,
+              updatedAt
+            }
+          }`
+      })
+      .expect(200);
+  }
+
+  async function listTask(app, orderBy) {
+    return supertest(app).post('/gapi/member')
+      .set('Authorization', token)
+      .send({
+        query:
+          `query Test {
+            listTasks(
+              input: {
+                orderBy: ${orderBy},
+              }
+            )
+          {
+            _id,
+            caption,
+            isChecked,
+            createdAt,
+            updatedAt
+          }
+        }`
+      })
+      .expect(200);
+  }
+
+  async function listTaskWithLimit(app, skip, limit, orderBy) {
+    return supertest(app).post('/gapi/member')
+      .set('Authorization', token)
+      .send({
+        query:
+          `query Test {
+            listTasks(
+              input: {
+                skip: ${skip},
+                limit: ${limit},
+                orderBy: ${orderBy},
+              }
+            )
+          {
+            _id,
+            caption,
+            isChecked,
+            createdAt,
+            updatedAt
+          }
+        }`
+      })
+      .expect(200);
+  }
+
 });
-
-function addTask(app, caption, isChecked) {
-  return supertest(app).post('/gapi/member')
-    .send({
-      query:
-        `mutation Test {
-          addTask(caption: "${caption}", isChecked: ${isChecked}){
-            _id,
-            caption,
-            isChecked,
-            createdAt,
-            updatedAt
-          }
-        }`
-    })
-    .expect(200);
-}
-
-function removeTask(app, id) {
-  return supertest(app).post('/gapi/member')
-    .send({
-      query:
-        `mutation Test {
-          removeTask(id: "${id}")
-        }`
-    })
-    .expect(200);
-}
-
-function updateTask(app, id, caption, isChecked) {
-  return supertest(app).post('/gapi/member')
-    .send({
-      query:
-        `mutation Test {
-          updateTask(id: "${id}" caption: "${caption}", isChecked: ${isChecked}){
-            _id,
-            caption,
-            isChecked,
-            createdAt,
-            updatedAt
-          }
-        }`
-    })
-    .expect(200);
-}
-
-function listTask(app, orderBy) {
-  return supertest(app).post('/gapi/member')
-    .send({
-      query:
-        `query Test {
-          listTasks(
-            input: {
-              orderBy: ${orderBy},
-            }
-          )
-        {
-          _id,
-          caption,
-          isChecked,
-          createdAt,
-          updatedAt
-        }
-      }`
-    })
-    .expect(200);
-}
-
-function listTaskWithLimit(app, skip, limit, orderBy) {
-  return supertest(app).post('/gapi/member')
-    .send({
-      query:
-        `query Test {
-          listTasks(
-            input: {
-              skip: ${skip},
-              limit: ${limit},
-              orderBy: ${orderBy},
-            }
-          )
-        {
-          _id,
-          caption,
-          isChecked,
-          createdAt,
-          updatedAt
-        }
-      }`
-    })
-    .expect(200);
-}

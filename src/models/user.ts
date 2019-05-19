@@ -8,7 +8,8 @@ import Document = mongoose.Document;
 export interface UserDocument extends Document {
   email: string;
   password: string;
-  verifyEmail: boolean;
+  displayName: string;
+  isEmailVerified: boolean;
   validation: {
     emailConfirmKey: string;
   };
@@ -20,13 +21,13 @@ export interface UserDocument extends Document {
     birthDay: Date;
   };
   roles: string[];
-  createDate: Date;
-  updateDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 // Define static methods for Model
 interface IUserModel extends Model<UserDocument> {
-  new (doc?: Object): UserDocument;
+  new(doc?: Object): UserDocument;
 
   // Definitions of static methods
   authenticate(userId: string, password: string): Promise<UserDocument>;
@@ -37,8 +38,9 @@ interface IUserModel extends Model<UserDocument> {
 function createModel(): IUserModel {
   // Define mongoose Schema
   let userSchema: Schema = new Schema({
-    email: { type: String, index: { unique: true }},
-    password: { type: String, required : true },
+    email: { type: String, index: { unique: true } },
+    password: { type: String, required: true },
+    displayName: { type: String, required: true },
     validation: {
       emailVerified: { type: Boolean, default: false },
       emailConfirmKey: String
@@ -56,7 +58,7 @@ function createModel(): IUserModel {
   });
 
   // Create mongoose Object with IUserModel and UserDocument
-  let User = <IUserModel>mongoose.model('User', userSchema);
+  let User = <IUserModel>mongoose.model('UserCollection', userSchema);
 
   // Return Model
   return User;
@@ -72,7 +74,7 @@ class UserModel {
   //
   public static async authenticate(email: string, password: string) {
     let user = await Users.findOne({ email: email }).exec();
-    if ( user != null && ( user.password === UserModel.getHash(password) ) ) {
+    if (user != null && (user.password === UserModel.getHash(password))) {
       return user;
     } else {
       throw new Error('Password does not match.');
@@ -81,13 +83,14 @@ class UserModel {
 
   public static async createUser(email: string, password: string, roles: string[]): Promise<UserDocument> {
     // Validation
-    if ( email == undefined || password == undefined || roles.length == 0) {
+    if (email == undefined || password == undefined || roles.length == 0) {
       throw new Error('Invalid parameters');
     }
 
     // Create User objedt
     let user = new Users();
     user.email = email;
+    user.displayName = email;
     user.password = UserModel.getHash(password);
     user.roles = roles;
     user.profile.firstName = '-';
@@ -97,8 +100,8 @@ class UserModel {
   }
 
   public static async isUserExist(email: string) {
-    let result = await Users.findOne({ email : email } ).countDocuments();
-    if ( result > 0 ) {
+    let result = await Users.findOne({ email: email }).countDocuments();
+    if (result > 0) {
       return true;
     } else {
       return false;

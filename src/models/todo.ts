@@ -4,7 +4,7 @@ import Model = mongoose.Model;
 import Document = mongoose.Document;
 
 // Define Document properties
-export interface TaskDocument extends Document {
+export interface TodoDocument extends Document {
   userId: string;
   caption: string;
   isChecked: boolean;
@@ -13,8 +13,8 @@ export interface TaskDocument extends Document {
 }
 
 // Define static methods for Model
-interface ITaskModel extends Model<TaskDocument> {
-  new(doc?: Object): TaskDocument;
+interface ITaskModel extends Model<TodoDocument> {
+  new(doc?: Object): TodoDocument;
 
   // Definitions of static methods
 }

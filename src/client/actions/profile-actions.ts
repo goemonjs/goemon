@@ -3,7 +3,7 @@ import { createTypeAsyncAction } from 'type-redux';
 import config from 'react-global-configuration';
 import { envs } from 'env';
 
-import MemberApiClient from './clients/member-api-client';
+import MemberApiClient from './clients/api/member-api-client';
 
 // Redux Action Reducer Samples
 export const LOAD_PROFILE = 'LOAD_PROFILE';

@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import { createServer } from '../../../base/utilities/test-utilities';
+import TestHelper from '../../../base/utilities/test-helper';
 import * as App from '../../../app';
 import HelloService from '../hello-service';
 
@@ -20,7 +20,7 @@ describe('/hello test', () => {
 
   test('hello', async (done) => {
     let app = App.createApp({ isTest: true });
-    let server = createServer(app);
+    let server = TestHelper.createServer(app);
     let result = await HelloService.hello(`http://localhost:${server.port}/gapi/guest`);
     expect(result).toEqual('Hello world!');
     done();

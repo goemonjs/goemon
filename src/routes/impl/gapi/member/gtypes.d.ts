@@ -33,6 +33,8 @@ export interface Query {
   _?: Maybe<boolean>;
 
   listTasks?: Maybe<(Maybe<Task>)[]>;
+
+  getProfile?: Maybe<Profile>;
 }
 
 export interface Task {
@@ -41,6 +43,30 @@ export interface Task {
   caption: string;
 
   isChecked: boolean;
+
+  createdAt?: Maybe<string>;
+
+  updatedAt?: Maybe<string>;
+}
+
+export interface Profile {
+  email: string;
+
+  roles?: Maybe<(Maybe<string>)[]>;
+
+  displayName: string;
+
+  isEmailVeried?: Maybe<boolean>;
+
+  image: string;
+
+  firstName: string;
+
+  middleName?: Maybe<string>;
+
+  lastName: string;
+
+  birthDay?: Maybe<string>;
 
   createdAt?: Maybe<string>;
 
@@ -59,6 +85,16 @@ export interface Mutation {
 
 export interface Subscription {
   _?: Maybe<boolean>;
+}
+
+export interface User {
+  id: string;
+
+  email: string;
+
+  displayName: string;
+
+  roles?: Maybe<(Maybe<string>)[]>;
 }
 
 // ====================================================

@@ -1,4 +1,5 @@
 import express from 'express';
+import { createJWTToken } from '../base/utilities/jwt';
 let router = express.Router();
 
 module.exports = function (app: express.Express) {
@@ -22,6 +23,23 @@ router.get('/me', isAuthenticated, (req: any, res, next) => {
     id: req.user.id,
     email: req.user.email
   });
+});
+
+router.get('/token', isAuthenticated, (req: any, res, next) => {
+  if (!req.session) {
+    throw new Error('Session expired');
+  }
+
+  try {
+    const token = createJWTToken(req.user);
+    const result = {
+      token,
+    };
+
+    return res.json(result);
+  } catch (error) {
+    throw error;
+  }
 });
 
 function isAuthenticated(req, res, next) {
