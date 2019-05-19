@@ -23,8 +23,6 @@ describe('routes/api test', () => {
   });
 
   beforeEach(async () => {
-    const agent = await TestHelper.getAuthenticatedAgent(app);
-    token = await TestHelper.getAuthToekn(agent);
   });
 
   test('/gapi/member getProfile', async () => {
