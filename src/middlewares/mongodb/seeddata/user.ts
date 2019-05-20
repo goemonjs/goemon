@@ -3,6 +3,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { ISeedCreator } from '../../../base/objects/types';
 import { Users } from '../../../models/user';
+import { logger } from '../../../base/utilities/logger';
 
 module.exports = async (app) => {
   if (!app) {
@@ -27,8 +28,8 @@ const creator: ISeedCreator = {
     try {
       await Users.createUser('test@example.com', 'testpassword', ['free']);
       await Users.createUser('admin@example.com', 'testpassword', ['admin']);
-    } catch ( err ) {
-      console.error('ERROR: Failed to ceate seed user');
+    } catch (err) {
+      logger.error('ERROR: Failed to ceate seed user');
     }
   }
 

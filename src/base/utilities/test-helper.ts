@@ -3,6 +3,7 @@ import supertest from 'supertest';
 import http from 'http';
 import * as mongodbMemoryServer from 'mongodb-memory-server';
 import { Users } from '../../models/user';
+import { logger } from './logger';
 
 let mongoServer;
 
@@ -17,8 +18,8 @@ export async function initializeDB() {
 
   await mongoose.connect(mongoUri, mongooseOpts, err => {
     if (err) {
-      console.log('Mongoose connect to MongoMemory failed!');
-      console.error(err);
+      logger.error('Mongoose connect to MongoMemory failed!');
+      logger.error(err);
     }
   });
 
@@ -66,7 +67,7 @@ export function createServer(app) {
 
   const address: any = newApp.address();
   const port = address.port;
-  // console.log('Listen port : ' + port);
+  logger.debug('Listen port : ' + port);
 
   return {
     app: newApp,

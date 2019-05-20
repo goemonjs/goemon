@@ -8,7 +8,8 @@ import os from 'os';
 
 import { AppServer } from './app-server';
 import { envs } from './env';
-import { isDevMode, isProductionMode } from './base/utilities/debug';
+import { isProductionMode } from './base/utilities/debug';
+import { logger } from './base/utilities/logger';
 
 // load env vars into process.env
 dotenv.config();
@@ -21,19 +22,19 @@ export const appServer: AppServer = new AppServer();
 */
 export function start() {
 
-  console.log('Starting application...');
+  logger.info('Starting application...');
 
   // Start server
   let app = createApp();
 
   if ((envs.SESSION_DRIVER.value == 'redis' || envs.FORCE_MULTICORE_CLUSTER.value == true)
     && cluster.isMaster) {
-    console.log('Starting application as Cluster Mode');
+    logger.info('Starting application as Cluster Mode');
     for (let i = 0; i < numCPUs; i++) {
       cluster.fork();
     }
     cluster.on('exit', (worker, code, signal) => {
-      console.log(`worker ${worker.process.pid} died. code: ${code} signal:${signal}`);
+      logger.info(`worker ${worker.process.pid} died. code: ${code} signal:${signal}`);
     });
   } else {
     app.listen(envs.PORT.value, () => {
@@ -67,7 +68,7 @@ export function createApp(options?: any) {
         envs[envKey].value = process.env[envKey] as string;
       }
       if (options != undefined && options.isTest != true) {
-        console.log(`process.env.${envKey}: ${process.env[envKey]}; defaultValue: ${envs[envKey].value}`);
+        logger.info(`process.env.${envKey}: ${process.env[envKey]}; defaultValue: ${envs[envKey].value}`);
       }
     });
 
@@ -77,9 +78,9 @@ export function createApp(options?: any) {
   } catch (err) {
 
     // Show error messages
-    console.error('*** ERROR ***: The environment variable is not enough.');
-    console.error(`'${err.message}' not specified.`);
-    console.error('Launch failed.');
+    logger.fatal('*** ERROR ***: The environment variable is not enough.');
+    logger.fatal(`'${err.message}' not specified.`);
+    logger.fatal('Launch failed.');
 
     // Create error express application
     app.get('/', (req, res) => {
@@ -97,11 +98,11 @@ export function createApp(options?: any) {
     let app = express();
     app.get('/', (req, res) => {
       if (!isProductionMode()) {
-        console.log(err);
+        logger.fatal(err);
         res.status(500);
         res.send(`${err.stack}`);
       } else {
-        console.error(err);
+        logger.fatal(err);
         res.status(500);
         res.send('System Error');
       }
@@ -111,5 +112,5 @@ export function createApp(options?: any) {
 }
 
 // Global exception handler
-process.on('uncaughtException', (err) => console.error(err));
-process.on('unhandledRejection', (err) => console.error(err));
+process.on('uncaughtException', (err) => logger.fatal(err));
+process.on('unhandledRejection', (err) => logger.fatal(err));

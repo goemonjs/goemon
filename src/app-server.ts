@@ -5,7 +5,7 @@ import express from 'express';
 import session from 'express-session';
 import path from 'path';
 import favicon from 'serve-favicon';
-import logger from 'morgan';
+import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
@@ -13,6 +13,7 @@ import glob from 'glob';
 import flash from 'express-flash';
 import i18nMiddleware from 'i18next-express-middleware';
 import i18n from './client/localization/i18n';
+import { logger } from './base/utilities/logger';
 
 import { envs } from './env';
 import { isTestMode, isDevMode } from './base/utilities/debug';
@@ -24,7 +25,7 @@ export class AppServer {
   constructor(
     public app?
   ) {
-    if ( app === undefined ) {
+    if (app === undefined) {
       this.app = express();
     }
   }
@@ -44,7 +45,7 @@ export class AppServer {
     app.use(favicon(faviconPath)); // uncomment after placing your favicon in /public
 
     // logger
-    app.use(logger('dev'));
+    app.use(morgan('dev'));
 
     // bodyParser
     app.use(bodyParser.json());
@@ -75,7 +76,7 @@ export class AppServer {
         const RedisStore = connectRedis(session);
         let redisOptions: connectRedis.RedisStoreOptions;
 
-        if ( envs.SESSION_DRIVER_OPTION.value === undefined ) {
+        if (envs.SESSION_DRIVER_OPTION.value === undefined) {
           redisOptions = {};
         } else {
           // Clones options for unlock read-only properties
@@ -112,11 +113,12 @@ export class AppServer {
     app.use(express.static(path.join(__dirname, '.', 'public'), {
       maxAge: envs.STATIC_CONTENTS_CACHE.value,
       lastModified: true,
-      redirect: true }
+      redirect: true
+    }
     ));
 
     // Sample cache of extension match
-    if ( process.env.HTTP_CACHE !== undefined ) {
+    if (process.env.HTTP_CACHE !== undefined) {
       app.use(function (req, res, next) {
         if (req.url.match(/^\/(css|js|img|font)\/.+/)) {
           res.setHeader('Cache-Control', 'public, max-age=' + process.env.HTTP_CACHE_MAXAGE);
@@ -131,23 +133,23 @@ export class AppServer {
     // Setup express middlewares
     let middlewares = glob.sync(__dirname + '/middlewares/*.+(js|jsx|ts|tsx)');
 
-    middlewares.forEach( middleware => {
+    middlewares.forEach(middleware => {
       if (!isTestMode()) {
-        console.log('Loading middleware : ' + middleware);
+        logger.info('Loading middleware : ' + middleware);
       }
       try {
         require(middleware)(app);
-      } catch ( err ) {
-        console.error(err);
+      } catch (err) {
+        logger.fatal(err);
         process.exit(1);
       }
     });
 
     // Setup express routes
     let routes = glob.sync(__dirname + '/routes/*.+(js|jsx|ts|tsx)');
-    routes.forEach( route => {
+    routes.forEach(route => {
       if (!isTestMode()) {
-        console.log('Loading route : ' + route);
+        logger.info('Loading route : ' + route);
       }
       require(route)(app);
     });

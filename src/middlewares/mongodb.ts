@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import glob from 'glob';
 import path from 'path';
 import * as mongodbMemoryServer from 'mongodb-memory-server';
+import { logger } from '../base/utilities/logger';
 
 import { envs } from '../env';
 import { isTestMode } from '../base/utilities/debug';
@@ -17,24 +18,24 @@ module.exports = async (app: express.Express) => {
   }
 
   (<any>mongoose.Promise) = Promise;
-  mongoose.set('useCreateIndex' , true); // against MongoDB warinig
+  mongoose.set('useCreateIndex', true); // against MongoDB warinig
   mongoose.set('useNewUrlParser', true); // against MongoDB warinig
 
   let connectionName: string = envs.MONGODB_CONNECTION_DBNAME.value;
   let connectionString: string = envs.MONGODB_CONNECTION_URL.value;
 
-  if ( connectionName === undefined ) {
+  if (connectionName === undefined) {
     const mongod = new mongodbMemoryServer.MongoMemoryServer();
     connectionName = await mongod.getDbName();
     connectionString = await mongod.getConnectionString();
   }
 
-  mongoose.connect( connectionString,
+  mongoose.connect(connectionString,
     (err) => {
       if (err) {
-        console.error(err);
+        logger.error(err);
       } else {
-        console.log('Successfully connected to database : ' + (connectionName ? connectionName : connectionString));
+        logger.info('Successfully connected to database : ' + (connectionName ? connectionName : connectionString));
 
         // Load modules
         let strategiesPath = path.normalize(__dirname + '/mongodb/seeddata');
@@ -42,8 +43,8 @@ module.exports = async (app: express.Express) => {
         data.forEach(function (routes) {
           try {
             require(routes)(app);
-          } catch ( err ) {
-            console.error(err);
+          } catch (err) {
+            logger.error(err);
           }
         });
       }
@@ -51,4 +52,4 @@ module.exports = async (app: express.Express) => {
   );
 };
 
-process.on('SIGINT', function() { mongoose.disconnect(); });
+process.on('SIGINT', function () { mongoose.disconnect(); });

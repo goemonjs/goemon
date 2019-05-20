@@ -1,8 +1,10 @@
-import UserService from '../../../services/user-service';
-import { IUser } from '../../../objects/user';
+import passport from 'passport';
+import passportLocal from 'passport-local';
+import { logger } from '../../../base/utilities/logger';
 
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+import UserService from '../../../services/user-service';
+
+const LocalStrategy = passportLocal.Strategy;
 
 module.exports = (app) => {
   enableLocalStrategy();
@@ -10,19 +12,19 @@ module.exports = (app) => {
 
 function enableLocalStrategy() {
   passport.use(new LocalStrategy({
-      usernameField: 'userid',
-      passwordField: 'password',
-      passReqToCallback: true
-    }, async function (req, userid, password, done) {
-      try {
-        let user = await UserService.authenticate(userid, password);
-        if ( user != undefined ) {
-          return done(undefined, user);
-        } else {
-          return done(undefined, false, { message: 'Failed to login.' });
-        }
-      } catch (err ) {
-        console.log(err);
+    usernameField: 'userid',
+    passwordField: 'password',
+    passReqToCallback: true
+  }, async function (req, userid, password, done) {
+    try {
+      let user = await UserService.authenticate(userid, password);
+      if (user != undefined) {
+        return done(undefined, user);
+      } else {
+        return done(undefined, false, { message: 'Failed to login.' });
       }
-    }));
+    } catch (err) {
+      logger.error(err);
+    }
+  }));
 }

@@ -6,6 +6,7 @@ const xmlEntities = new XmlEntities();
 import { generateNumberFromTimestamp } from '../../base/utilities/file';
 import { isProductionMode } from '../../base/utilities/debug';
 import i18n from '../../client/localization/i18n';
+import { logger } from '../../base/utilities/logger';
 
 /**
  * Server side renderer utility class
@@ -33,7 +34,7 @@ export class ServerSideRenderer {
       let host = process.env.HOST || req.headers.host;
 
       const lng = req.language;
-      // console.log(`Request locale: ${lng}`);
+      logger.debug(`Request locale: ${lng}`);
       i18n.changeLanguage(lng);
 
       const html = renderToString(
@@ -65,7 +66,7 @@ export class ServerSideRenderer {
 
       res.render(ejsName, ejsOptions);
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     }
   }
 
