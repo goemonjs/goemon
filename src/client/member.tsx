@@ -9,6 +9,7 @@ import { RouteComponent } from './routes/member-route';
 import { initConfig, getInitialState } from './base/react/app-initializer';
 import { UserContext, IContextProps } from './context/user-context';
 import { theme } from './themes/material-ui-lightblue';
+import { ErrorBoundary } from './base/react/error-boundary';
 
 initConfig();
 const store = configureStore(getInitialState());
@@ -17,9 +18,11 @@ const userContext: IContextProps = {
 };
 
 const app = (
-  <MaterialUiAppContainer store={store} context={userContext} theme={theme}>
-    <RouteComponent />
-  </MaterialUiAppContainer>
+  <ErrorBoundary>
+    <MaterialUiAppContainer store={store} context={userContext} theme={theme}>
+      <RouteComponent />
+    </MaterialUiAppContainer>
+  </ErrorBoundary>
 );
 
 ReactDOM.hydrate(app, document.getElementById('app'));

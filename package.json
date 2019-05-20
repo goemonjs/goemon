@@ -85,6 +85,7 @@
     "jquery": "^3.4.0",
     "json-loader": "^0.5.7",
     "jsonwebtoken": "^8.5.1",
+    "log4javascript": "^1.4.15",
     "log4js": "^4.2.0",
     "material-ui-pickers": "^2.2.4",
     "memory-cache": "^0.2.0",
