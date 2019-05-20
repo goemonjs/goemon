@@ -1,6 +1,6 @@
 import { doGet } from '../../../../base/utilities/network';
 
-export default class MemberApiClient {
+export class MemberApiClient {
 
   constructor(
     private baseUrl: string
@@ -20,5 +20,12 @@ export default class MemberApiClient {
       email: string
     };
     return await doGet<RESULT_TYPE>(this.baseUrl + '/api/me');
+  }
+
+  public async getToken() {
+    type RESULT_TYPE = {
+      token
+    };
+    return await doGet<RESULT_TYPE>(this.baseUrl + '/api/token');
   }
 }

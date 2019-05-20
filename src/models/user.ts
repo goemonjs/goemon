@@ -93,8 +93,8 @@ class UserModel {
     user.displayName = email;
     user.password = UserModel.getHash(password);
     user.roles = roles;
-    user.profile.firstName = '-';
-    user.profile.lastName = '-';
+    user.profile.firstName = 'Not set';
+    user.profile.lastName = 'Not set';
 
     return await user.save();
   }

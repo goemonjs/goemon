@@ -41,7 +41,17 @@ describe('routes/api test', () => {
         query:
           `query Profile {
             getProfile {
-              email
+              email,
+              roles,
+              email,
+              displayName,
+              isEmailVeried,
+              firstName,
+              middleName,
+              lastName,
+              birthDay,
+              createdAt,
+              updatedAt
             }
           }`
       })

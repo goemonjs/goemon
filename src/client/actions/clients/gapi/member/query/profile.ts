@@ -3,7 +3,16 @@ import { Profile } from '../../../../../../routes/impl/gapi/member/gtypes';
 
 export const getProfileQuery = `query {
   getProfile {
-    email
+    email,
+    roles,
+    displayName,
+    isEmailVeried,
+    firstName,
+    middleName,
+    lastName,
+    birthDay,
+    createdAt,
+    updatedAt
   }
 }`;
 

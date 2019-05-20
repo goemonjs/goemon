@@ -32,11 +32,9 @@ router.get('/token', isAuthenticated, (req: any, res, next) => {
 
   try {
     const token = createJWTToken(req.user);
-    const result = {
+    return res.json({
       token,
-    };
-
-    return res.json(result);
+    });
   } catch (error) {
     throw error;
   }

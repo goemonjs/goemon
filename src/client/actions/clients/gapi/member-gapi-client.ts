@@ -9,8 +9,8 @@ export class MemberGApiClient extends GApiClient {
     token,
   }: {
     baseUrl: string;
+    token: string;
     credentials?: string;
-    token?: string;
   }) {
     super({
       baseUrl: baseUrl,
