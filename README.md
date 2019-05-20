@@ -22,6 +22,8 @@ npm install
 
 npm run build
 
+( or gulp when you install gulp as global)
+
 #### 4.Test
 
 npm test
@@ -35,8 +37,6 @@ npm start
 #### Make production package
 
 npm run pack
-
-
 
 #### Clean build
 
@@ -56,19 +56,19 @@ LPL
 
 ### reference
 
-- Node.js
-- React
+- Node.js 10
+- React 16
 - Redux
-- Express
-- Typescript
+- Express 4
+- Typescript 3
 - Jest
 - gulp
-- webpack
-- react-router v4
+- webpack 4
+- react-router 4
 - graphql
 - Material UI
 - Passport
-- MongoDB
+- MongoDB 4
 
 ### Recommend VSCode extentions
 
