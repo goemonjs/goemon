@@ -32,6 +32,12 @@ npm start
 
 ### Other commands
 
+#### Make production package
+
+npm run pack
+
+
+
 #### Clean build
 
 npm run rebuild

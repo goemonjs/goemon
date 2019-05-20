@@ -8,7 +8,7 @@ import { configureStore } from './stores/member-store';
 import { RouteComponent } from './routes/guest-route';
 
 import { UserContext, IContextProps } from './context/user-context';
-import { initConfig, getInitialState } from './base/react/app-initializer';
+import { initConfig, getInitialState } from './base/app/app-initializer';
 import { AppContainer } from './base/react/app-container';
 import { ErrorBoundary } from './base/react/error-boundary';
 

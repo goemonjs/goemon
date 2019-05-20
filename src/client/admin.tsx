@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import { configureStore } from './stores/member-store';
 import { MaterialUiAppContainer } from './base/react/material-ui-app-container';
 import { RouteComponent } from './routes/admin-route';
-import { initConfig, getInitialState } from './base/react/app-initializer';
+import { initConfig, getInitialState } from './base/app/app-initializer';
 import { UserContext, IContextProps } from './context/user-context';
 import { theme } from './themes/material-ui-red';
 import { ErrorBoundary } from './base/react/error-boundary';
