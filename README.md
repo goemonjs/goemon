@@ -3,7 +3,7 @@
 The boilerplate using React16, Redux, React-Router v4 + SSR(Server Side Rendering), Node, Express, and MongoDB in TypeScript.
 Support debugging in Visual Studio Code and Google Chrome.
 
-## Enviroment
+## Environment
 
 Node.js v10.x.x.
 
@@ -22,15 +22,19 @@ npm install
 
 npm run build
 
-( or gulp when you install gulp as global)
-
 #### 4.Test
 
 npm test
 
-#### 5.Start
+#### 5.Simple Start ( wait on localhost:3000)
 
 npm start
+
+#### 6.Start development
+
+npm run dev ( or gulp )
+
+Under this mode, Goemon is automatically rebuilt and refreshed when changing the code
 
 ### Other commands
 
