@@ -1,4 +1,5 @@
-import { createTypeAsyncAction } from 'type-redux';
+
+import { createTypeAction, createTypeAsyncAction } from 'type-redux';
 import config from 'react-global-configuration';
 
 import { MemberApiClient } from './clients/api/member-api-client';
@@ -20,4 +21,10 @@ export const getProfileByGAPI = createTypeAsyncAction('GET_PROFILE_BY_GAPI', asy
     token: args.token
   });
   return await client.getProfile();
+});
+
+export const initProfile = createTypeAsyncAction('INIT_PROFILE', async (args: { displayName }) => {
+  return {
+    displayName: args.displayName
+  };
 });

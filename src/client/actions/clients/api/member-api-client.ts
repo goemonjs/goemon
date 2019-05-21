@@ -16,8 +16,9 @@ export class MemberApiClient {
 
   public async getUserProfile() {
     type RESULT_TYPE = {
-      id: string,
-      email: string
+      email: string,
+      displayName: string,
+      roles: string[]
     };
     return await doGet<RESULT_TYPE>(this.baseUrl + '/api/me');
   }

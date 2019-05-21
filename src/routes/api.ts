@@ -40,8 +40,9 @@ router.get('/listTodos', (req, res, next) => {
 
 router.get('/me', isAuthenticated, (req: any, res, next) => {
   res.json({
-    id: req.user.id,
-    email: req.user.email
+    email: req.user.email,
+    displayName: req.user.displayName,
+    roles: req.user.roles
   });
 });
 

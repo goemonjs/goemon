@@ -13,6 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import * as AuthActions from '../actions/auth-actions';
+import * as ProfileActions from '../actions/profile-actions';
 import FormSample from './parts/member/form-sample';
 import PageSample from './parts/member/page-sample';
 import Profile from './parts/member/profile';
@@ -29,13 +30,19 @@ interface IProps extends React.Props<{}>, RouteComponentProps<{}> {
 
 interface IDispProps {
   getToekn: () => void;
+  getProfileByRestAPI: () => void;
 }
 
 class MemberTop extends React.Component<IProps & IDispProps & WithStyles<typeof styles>, {}> {
 
   componentDidMount() {
     this.props.getToekn();
+    this.props.getProfileByRestAPI();
   }
+
+  // static async getInitialProps(options: any) {
+  //   return options.store.dispatch(ProfileActions.initProfile({ displayName: options.req.user.displayName }));
+  // }
 
   public render() {
     const { classes, match } = this.props;
@@ -82,6 +89,9 @@ const mapDispatchToProps = (dispatch): IDispProps => {
   return {
     getToekn: (): void => {
       dispatch(AuthActions.getToken());
+    },
+    getProfileByRestAPI: (): void => {
+      dispatch(ProfileActions.getProfile());
     }
   };
 };

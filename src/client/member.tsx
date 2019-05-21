@@ -12,7 +12,8 @@ import { theme } from './themes/material-ui-lightblue';
 import { ErrorBoundary } from './base/react/error-boundary';
 
 initConfig();
-const store = configureStore(getInitialState());
+const initialState = getInitialState();
+const store = configureStore(initialState);
 const userContext: IContextProps = {
   userType: 'member',
 };
