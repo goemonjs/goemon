@@ -39,7 +39,6 @@ class Profile extends React.Component<IProps & IDispProps & WithStyles<typeof st
 
     if (!profile.displayName) {
       getProfileByGAPI(this.props.token);
-      return (<div>Loading Profile...</div>);
     }
 
     if (typeof (document) !== 'undefined') {
