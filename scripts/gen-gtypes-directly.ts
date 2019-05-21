@@ -2,7 +2,7 @@ import { generateTypeScriptTypes, GenerateTypescriptOptions } from 'graphql-sche
 import { makeExecutableSchema } from 'graphql-tools';
 import glob from 'glob';
 
-const generateGTypes = async (schemaDir: string, outputPath: string) => {
+const generateGTypes = (schemaDir: string, outputPath: string) => {
   const schemasPath = glob.sync(schemaDir + '/*.+(js|ts|jsx|tsx)');
   let typeDefs: string[] = [];
   schemasPath.forEach(function (schema) {
@@ -17,7 +17,7 @@ const generateGTypes = async (schemaDir: string, outputPath: string) => {
     asyncResult: true
   };
 
-  await generateTypeScriptTypes(executableSchema, outputPath, options);
+  return generateTypeScriptTypes(executableSchema, outputPath, options);
 };
 
 // Generate Guest Gtypes
