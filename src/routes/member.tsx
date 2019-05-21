@@ -34,13 +34,11 @@ router.get('*', isAuthenticated, (req, res) => {
   const store = configureStore(InitialState);
 
   // Component
-  const component = (store) => {
-    return (
-      <MaterialUiAppContainer store={store} location={req.baseUrl + req.url} theme={theme} sheetsRegistry={sheetsRegistry}>
-        <RouteComponent />
-      </MaterialUiAppContainer>
-    );
-  };
+  const component = (
+    <MaterialUiAppContainer store={store} location={req.baseUrl + req.url} theme={theme} sheetsRegistry={sheetsRegistry}>
+      <RouteComponent />
+    </MaterialUiAppContainer>
+  );
 
   const cssGenerator = () => {
     return sheetsRegistry.toString();

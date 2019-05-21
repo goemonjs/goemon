@@ -82,10 +82,15 @@ export class ServerSideRenderer {
    */
   public renderWithInitialProps(req: any, res: any, ejsName: string, ejsOptions: any, component: any, routes, store, cssGenerator?: () => string) {
 
+    const protocol = (process.env.PROTOCOL || req.protocol);
+    const host = process.env.HOST || req.headers.host;
+
     const branch = matchRoutes(routes, req.baseUrl + req.url);
     const promises = branch.map(({ route }) => {
       let getInitialProps = route.component.getInitialProps;
       return getInitialProps instanceof Function ? getInitialProps({
+        protocol: protocol,
+        host: host,
         store: store,
         req: req,
         env: process.env
@@ -98,7 +103,7 @@ export class ServerSideRenderer {
       };
       Object.assign(option, ejsOptions);
 
-      this.render(req, res, ejsName, ejsOptions, component(store), cssGenerator);
+      this.render(req, res, ejsName, ejsOptions, component, cssGenerator);
     });
   }
 
