@@ -11,7 +11,7 @@
     "pack": "node ./node_modules/gulp/bin/gulp build:production && sh ./scripts/pack.sh",
     "test": "jest",
     "dev": "node ./node_modules/gulp/bin/gulp develop",
-    "gen-gtypes-directly": "./node_modules/ts-node/dist/bin.js scripts/gen-gtypes-directly.ts",
+    "gengtypes": "./node_modules/ts-node/dist/bin.js scripts/gen-gtypes-directly.ts",
     "gen-gtypes-server": "./node_modules/ts-node/dist/bin.js ./scripts/gen-gtypes-server.ts"
   },
   "repository": {
