@@ -11,7 +11,8 @@
     "pack": "node ./node_modules/gulp/bin/gulp build:production && sh ./scripts/pack.sh",
     "test": "jest",
     "dev": "node ./node_modules/gulp/bin/gulp develop",
-    "gentypes": "node ./scripts/gen-types"
+    "gen-gtypes-directly": "./node_modules/ts-node/dist/bin.js scripts/gen-gtypes-directly.ts",
+    "gen-gtypes-server": "./node_modules/ts-node/dist/bin.js ./scripts/gen-gtypes-server.ts"
   },
   "repository": {
     "type": "git",
@@ -71,7 +72,9 @@
     "graphql-code-generator": "^0.18.1",
     "graphql-codegen-typescript-common": "^0.18.1",
     "graphql-iso-date": "^3.6.1",
+    "graphql-schema-typescript": "^1.2.9",
     "graphql-tag": "^2.10.1",
+    "graphql-tools": "^4.0.4",
     "history": "^4.9.0",
     "html-entities": "^1.2.1",
     "https": "^1.0.0",
@@ -118,6 +121,7 @@
     "redux-thunk": "^2.3.0",
     "rimraf": "^2.6.3",
     "serve-favicon": "^2.5.0",
+    "ts-node": "^8.1.0",
     "type-redux": "git+https://github.com/goemonjs/type-redux.git",
     "underscore.string": "^3.3.5",
     "util": "^0.11.1"

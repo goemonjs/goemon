@@ -1,8 +1,4 @@
-import { gql } from 'apollo-server-express';
-import profileSchema from './profile';
-import todoSchema from './todo';
-
-const linkSchema = gql`
+module.exports = `
   type Query {
     _: Boolean
   }
@@ -22,9 +18,3 @@ const linkSchema = gql`
     roles: [String]
   }
 `;
-
-export default [
-  linkSchema,
-  todoSchema,
-  profileSchema
-];

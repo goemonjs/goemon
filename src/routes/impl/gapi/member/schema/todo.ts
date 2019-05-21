@@ -1,6 +1,4 @@
-import { gql } from 'apollo-server-express';
-
-export default gql`
+module.exports = `
   extend type Query {
     listTasks(input: ListTasksInput): [Task],
   }
