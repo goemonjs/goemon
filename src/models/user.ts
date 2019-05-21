@@ -31,7 +31,19 @@ interface IUserModel extends Model<UserDocument> {
 
   // Definitions of static methods
   authenticate(userId: string, password: string): Promise<UserDocument>;
-  createUser(userId: string, password: string, roles: string[]): Promise<UserDocument>;
+  createUser(user: {
+    email: string;
+    password: string;
+    displayName: string;
+    profile: {
+      image: any;
+      firstName: string;
+      middleName: string;
+      lastName: string;
+      birthDay: Date;
+    };
+    roles: string[];
+  }): Promise<UserDocument>;
   isUserExist(userId: string): Promise<boolean>;
 }
 
@@ -81,22 +93,34 @@ class UserModel {
     }
   }
 
-  public static async createUser(email: string, password: string, roles: string[]): Promise<UserDocument> {
+  public static async createUser(user: {
+    email: string;
+    password: string;
+    displayName: string;
+    profile: {
+      image: any;
+      firstName: string;
+      middleName: string;
+      lastName: string;
+      birthDay: Date;
+    },
+    roles: string[];
+  }
+  ): Promise<UserDocument> {
     // Validation
-    if (email == undefined || password == undefined || roles.length == 0) {
+    if (user.email == undefined || user.password == undefined || user.roles.length == 0) {
       throw new Error('Invalid parameters');
     }
 
     // Create User objedt
-    let user = new Users();
-    user.email = email;
-    user.displayName = email;
-    user.password = UserModel.getHash(password);
-    user.roles = roles;
-    user.profile.firstName = 'Not set';
-    user.profile.lastName = 'Not set';
+    let newUser = new Users();
+    newUser.email = user.email;
+    newUser.displayName = user.displayName;
+    newUser.password = UserModel.getHash(user.password);
+    newUser.roles = user.roles;
+    newUser.profile = user.profile;
 
-    return await user.save();
+    return await newUser.save();
   }
 
   public static async isUserExist(email: string) {

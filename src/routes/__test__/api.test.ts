@@ -9,15 +9,17 @@ import * as App from '../../app';
 
 describe('routes/api test', () => {
 
+  const app = App.createApp({ isTest: true });
+  let agent;
+
   beforeAll(async () => {
     await TestHelper.initializeDB();
+    agent = await TestHelper.getAuthenticatedAgent(app);
   });
 
   afterAll(async () => {
     await TestHelper.finalizeDB();
   });
-
-  const app = App.createApp({ isTest: true });
 
   test('/api/listTodos', async () => {
     const response = await supertest(app).get('/api/listTodos');
@@ -33,7 +35,7 @@ describe('routes/api test', () => {
   });
 
   test('/api/me', async () => {
-    const response = await supertest(app).get('/api/me');
-    expect(response.status).toBe(401);
+    const res1 = await supertest(app).get('/api/me');
+    expect(res1.status).toBe(401);
   });
 });

@@ -1,5 +1,5 @@
 {
-  "userMessagesUnread": "Hello <1>{{name}}</1>, you have {{count}} unread message..",
+  "userMessagesUnread": "Hello <1>{{displayName}}</1>, you have {{count}} unread message..",
   "currentDate": "CurrentDate : {{date, MM/DD/YYYY}}",
   "Goemon": "Goemon"
 }

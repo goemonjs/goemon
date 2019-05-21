@@ -16,9 +16,8 @@ class UserService {
       let userDocument = await Users.authenticate(userId, password);
       if (userDocument != null) {
         return {
-          id: userDocument.id,
           email: userDocument.email.toString(),
-          displayName: userDocument.profile.firstName + ' ' + userDocument.profile.lastName,
+          displayName: userDocument.displayName,
           roles: userDocument.roles
         };
       } else {

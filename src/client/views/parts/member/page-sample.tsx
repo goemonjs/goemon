@@ -8,13 +8,17 @@ import { WithStyles } from '@material-ui/core';
 
 import { styles } from '../../../themes/material-ui-lightblue';
 import { IStore } from '../../../stores/member-store';
+
 import * as ProfileActions from '../../../actions/profile-actions';
 
 interface IProps {
-  token?: string;
+  email?: string;
+  displayName?: string;
+  roles?: string[];
 }
 
 interface IDispProps {
+  getProfileByRestAPI: () => void;
 }
 
 interface IState {
@@ -22,21 +26,32 @@ interface IState {
 
 export class PageSample extends React.Component<IProps & IDispProps & WithStyles<typeof styles>, IState> {
 
+  componentDidMount() {
+    let { getProfileByRestAPI } = this.props;
+    getProfileByRestAPI();
+  }
+
+  static async getInitialProps(options: any) {
+    return options.store.dispatch(ProfileActions.initProfile({ displayName: 'hoGEGEGE' }));
+  }
+
   public render() {
+    const { displayName } = this.props;
     const count = 1;
-    const name = 'bababa';
     const currentDate = new Date();
 
     return (
       <>
-        <Trans i18nKey="userMessagesUnread" count={count}>
-          Not supported lang test. <strong>{{ name }}</strong>, you have {{ count }} unread message.
+        <p>
+          <Trans i18nKey="userMessagesUnread" count={count}>
+            Not supported lang test. <strong>{{ displayName }}</strong>, you have {{ count }} unread message.
         </Trans>
-        <Trans i18nKey="currentDate" values={{ date: currentDate }}>
-          CurrentDate : {moment(currentDate).format('MM/DD/YYYY')}
-        </Trans>
-        <p>Authentication token:</p>
-        <p>{this.props.token}</p>
+        </p>
+        <p>
+          <Trans i18nKey="currentDate" values={{ date: currentDate }}>
+            CurrentDate : {moment(currentDate).format('MM/DD/YYYY')}
+          </Trans>
+        </p>
       </>
     );
   }
@@ -44,12 +59,17 @@ export class PageSample extends React.Component<IProps & IDispProps & WithStyles
 
 const mapStateToProps = (store: IStore) => {
   return {
-    token: store.memberState.token
+    email: store.memberState.email,
+    displayName: store.memberState.displayName,
+    roles: store.memberState.roles
   };
 };
 
 const mapDispatchToProps = (dispatch): IDispProps => {
   return {
+    getProfileByRestAPI: (): void => {
+      dispatch(ProfileActions.getProfile());
+    }
   };
 };
 

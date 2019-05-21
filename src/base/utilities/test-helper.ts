@@ -23,7 +23,19 @@ export async function initializeDB() {
     }
   });
 
-  await Users.createUser('test@example.com', 'testpassword', ['free']);
+  await Users.createUser({
+    email: 'test@example.com',
+    password: 'testpassword',
+    displayName: 'Test Normal User',
+    profile: {
+      image: undefined,
+      firstName: 'First',
+      middleName: 'Middle',
+      lastName: 'Last',
+      birthDay: new Date()
+    },
+    roles: ['free']
+  });
 
   return mongoServer;
 }

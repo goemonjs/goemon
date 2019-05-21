@@ -26,8 +26,32 @@ const creator: ISeedCreator = {
 
   async createSeed() {
     try {
-      await Users.createUser('test@example.com', 'testpassword', ['free']);
-      await Users.createUser('admin@example.com', 'testpassword', ['admin']);
+      await Users.createUser({
+        email: 'test@example.com',
+        password: 'testpassword',
+        displayName: 'Test Normal User',
+        profile: {
+          image: undefined,
+          firstName: 'First',
+          middleName: 'Middle',
+          lastName: 'Last',
+          birthDay: new Date()
+        },
+        roles: ['free']
+      });
+      await Users.createUser({
+        email: 'admin@example.com',
+        password: 'testpassword',
+        displayName: 'Test Admin User',
+        profile: {
+          image: undefined,
+          firstName: 'First',
+          middleName: 'Middle',
+          lastName: 'Last',
+          birthDay: new Date()
+        },
+        roles: ['admin']
+      });
     } catch (err) {
       logger.error('ERROR: Failed to ceate seed user');
     }

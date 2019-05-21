@@ -1,10 +1,10 @@
 ﻿import React from 'react';
 import { Express, Router } from 'express';
-import { renderRoutes } from 'react-router-config';
 import { configureStore } from '../client/stores/guest-store';
 import { AppContainer } from '../client/base/react/app-container';
 import { RouteComponent, routes } from '../client/routes/guest-route';
 import { ServerSideRenderer } from './utilities/ssr-renderer';
+import * as TodoAction from '../client/actions/todo-actions';
 
 const router = Router();
 const store = configureStore();
