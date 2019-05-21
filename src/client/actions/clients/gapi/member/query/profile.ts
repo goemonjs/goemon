@@ -1,4 +1,3 @@
-import Schema from '../../../../../../routes/impl/gapi/member/schema';
 import { Profile } from '../../../../../../routes/impl/gapi/member/gtypes';
 
 export const getProfileQuery = `query {

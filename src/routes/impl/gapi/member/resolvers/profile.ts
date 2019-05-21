@@ -27,9 +27,9 @@ async function getProfile(parent: any, args: any, context: { me: GUser }, info: 
     firstName: user.profile.firstName,
     middleName: user.profile.middleName,
     lastName: user.profile.lastName,
-    birthDay: user.profile.birthDay == undefined ? null : user.profile.birthDay.toISOString(),
-    createdAt: user.createdAt == undefined ? null : user.createdAt.toISOString(),
-    updatedAt: user.updatedAt == undefined ? null : user.updatedAt.toISOString()
+    birthDay: user.profile.birthDay && user.profile.birthDay.toISOString(),
+    createdAt: user.createdAt && user.createdAt.toISOString(),
+    updatedAt: user.updatedAt && user.updatedAt.toISOString()
   };
   return profile;
 }

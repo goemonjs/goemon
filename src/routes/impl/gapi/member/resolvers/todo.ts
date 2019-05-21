@@ -4,7 +4,7 @@ import {
 } from 'apollo-server-express';
 
 import { Todo } from '../../../../../models/todo';
-import { ListTasksInput, AddTaskMutationArgs, UpdateTaskMutationArgs, RemoveTaskMutationArgs } from '../gtypes';
+import { ListTasksInput, MutationToAddTaskArgs, MutationToUpdateTaskArgs, MutationToRemoveTaskArgs } from '../gtypes';
 
 export default {
   Query: {
@@ -42,7 +42,7 @@ async function listTasks(parent: any, args: any, context: { me }, info: any) {
   }
 }
 
-async function addTask(parent: any, args: AddTaskMutationArgs, context: { me }, info: any) {
+async function addTask(parent: any, args: MutationToAddTaskArgs, context: { me }, info: any) {
   let todo = new Todo({
     userId: context.me.id,
     caption: args.caption,
@@ -53,7 +53,7 @@ async function addTask(parent: any, args: AddTaskMutationArgs, context: { me }, 
   return todo;
 }
 
-async function updateTask(parent: any, args: UpdateTaskMutationArgs, context: { me }, info: any) {
+async function updateTask(parent: any, args: MutationToUpdateTaskArgs, context: { me }, info: any) {
   try {
     let todo = await Todo.findOne({ userId: context.me.id, _id: args.id }).exec();
     if (todo != null) {
@@ -68,7 +68,7 @@ async function updateTask(parent: any, args: UpdateTaskMutationArgs, context: { 
   }
 }
 
-async function removeTask(parent: any, args: RemoveTaskMutationArgs, context: { me }, info: any) {
+async function removeTask(parent: any, args: MutationToRemoveTaskArgs, context: { me }, info: any) {
   try {
     let count = await Todo.remove({ userId: context.me.id, _id: args.id }).exec();
     return count.ok;

@@ -1,7 +1,4 @@
-import { gql } from 'apollo-server-express';
-import helloSchema from './hello';
-
-const linkSchema = gql`
+module.exports = `
   type Query {
     _: Boolean
   }
@@ -14,8 +11,3 @@ const linkSchema = gql`
     _: Boolean
   }
 `;
-
-export default [
-  linkSchema,
-  helloSchema
-];

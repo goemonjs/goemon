@@ -2,7 +2,14 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "lib": ["dom", "es2015.promise", "es2015", "es2016", "es5", "esnext"],
+    "lib": [
+      "dom",
+      "es2015.promise",
+      "es2015",
+      "es2016",
+      "es5",
+      "esnext"
+    ],
     "declaration": false,
     "noImplicitAny": false,
     "sourceMap": true,
@@ -28,6 +35,7 @@
   ],
   "exclude": [
     "./src/client",
+    "./scripts",
     "./bin",
     "./build",
     "./node_modules",
