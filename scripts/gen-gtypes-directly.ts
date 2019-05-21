@@ -3,13 +3,13 @@ import { makeExecutableSchema } from 'graphql-tools';
 import glob from 'glob';
 
 const generateGTypes = async (schemaDir: string, outputPath: string) => {
-  let schemasPath = glob.sync(schemaDir + '/*.+(js|ts|jsx|tsx)');
+  const schemasPath = glob.sync(schemaDir + '/*.+(js|ts|jsx|tsx)');
   let typeDefs: string[] = [];
   schemasPath.forEach(function (schema) {
     typeDefs.push(require(schema));
   });
 
-  let executableSchema = makeExecutableSchema({ typeDefs });
+  const executableSchema = makeExecutableSchema({ typeDefs });
   const options: GenerateTypescriptOptions = {
     typePrefix: '',
     noStringEnum: true,
