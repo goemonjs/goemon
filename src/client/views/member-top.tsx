@@ -14,9 +14,11 @@ import Typography from '@material-ui/core/Typography';
 
 import * as AuthActions from '../actions/auth-actions';
 import * as ProfileActions from '../actions/profile-actions';
-import FormSample from './parts/member/form-sample';
-import PageSample from './parts/member/page-sample';
+import Form from './parts/member/form';
+import Page from './parts/member/page';
 import Profile from './parts/member/profile';
+import Admin from './parts/member/admin';
+import Todo from './parts/member/todo';
 
 import { IStore } from '../stores/member-store';
 
@@ -70,9 +72,11 @@ class MemberTop extends React.Component<IProps & IDispProps & WithStyles<typeof 
           <div className={classes.toolbar} />
           <div><p>URL: {match.url}</p></div>
           <Switch>
+            <Route exact path={`/member/form`} component={Form} />
             <Route exact path={`/member/profile`} component={Profile} />
-            <Route exact path={`/member/form`} component={FormSample} />
-            <Route exact path={`/member/`} component={PageSample} />
+            <Route exact path={`/member/todo`} component={Todo} />
+            <Route exact path={`/member/admin`} component={Admin} />
+            <Route exact path={`/member/`} component={Page} />
           </Switch>
         </main>
       </div>

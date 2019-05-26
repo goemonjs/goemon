@@ -1,4 +1,4 @@
-import  React from 'react';
+import React from 'react';
 
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -17,38 +17,54 @@ import { Link } from 'react-router-dom';
 
 export const sideMenus = (
   <>
-  <List>
-    <div>
-      <Link to="/member/">
-        <ListItem button>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Page" />
-        </ListItem>
-      </Link>
-      <Link to="/member/form">
-        <ListItem button>
-          <ListItemIcon>
-            <StarIcon />
-          </ListItemIcon>
-          <ListItemText primary="FormSample" />
-        </ListItem>
-      </Link>
-    </div>
-  </List>
-  <Divider />
-  <List>
-    <div>
-    <Link to="/member/profile">
-      <ListItem button>
-        <ListItemIcon>
-          <MailIcon />
-        </ListItemIcon>
-          <ListItemText primary="Profile" />
-      </ListItem>
-      </Link>
-    </div>
-  </List>
+    <List>
+      <div>
+        <Link to="/member/">
+          <ListItem button>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Page" />
+          </ListItem>
+        </Link>
+        <Link to="/member/form">
+          <ListItem button>
+            <ListItemIcon>
+              <StarIcon />
+            </ListItemIcon>
+            <ListItemText primary="Form" />
+          </ListItem>
+        </Link>
+        <Link to="/member/profile">
+          <ListItem button>
+            <ListItemIcon>
+              <MailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItem>
+        </Link>
+        <Link to="/member/todo">
+          <ListItem button>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText primary="Todo" />
+          </ListItem>
+        </Link>
+      </div>
+    </List>
+    <Divider />
+    <List>
+      <div>
+        <Link to="/member/admin">
+          <ListItem button>
+            <ListItemIcon>
+              <DraftsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Admin" />
+          </ListItem>
+        </Link>
+      </div>
+    </List>
   </>
 );

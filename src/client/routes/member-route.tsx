@@ -3,7 +3,7 @@ import { renderRoutes } from 'react-router-config';
 import MemberTop from '../views/member-top';
 import { NotFound } from '../views/components/notfound';
 
-interface IProps  {
+interface IProps {
 }
 
 interface IState {
@@ -32,6 +32,14 @@ export const routes = [
     component: MemberTop,
     exact: true
   }, {
+    path: '/member/todo',
+    component: MemberTop,
+    exact: true
+  }, {
+    path: '/member/admin',
+    component: MemberTop,
+    exact: true
+  }, {
     path: '/member/*',
     component: NotFound
   }
@@ -46,10 +54,10 @@ export class RouteComponent extends React.Component<IProps, IState> {
     };
   }
 
-  render () {
+  render() {
 
     return (
-        renderRoutes(routes)
+      renderRoutes(routes)
     );
   }
 }
