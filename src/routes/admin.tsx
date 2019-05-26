@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router } from 'express';
-import { configureStore } from '../client/stores/member-store';
+import { configureStore, InitialState } from '../client/stores/member-store';
 import { RouteComponent, routes } from '../client/routes/member-route';
 import { ServerSideRenderer } from './utilities/ssr-renderer';
 import { MaterialUiAppContainer } from '../client/base/react/material-ui-app-container';
@@ -9,7 +9,6 @@ import { theme } from '../client/themes/material-ui-lightblue';
 import passport from 'passport';
 
 const router = Router();
-const store = configureStore();
 
 let renderer = new ServerSideRenderer('admin.js');
 
@@ -31,6 +30,9 @@ router.get('/logout', (req: any, res) => {
 });
 
 router.get('*', isAuthenticated, (req, res) => {
+  let initialState = InitialState;
+  initialState.memberState.displayName = req.user.displayName;
+  const store = configureStore();
   const sheetsRegistry = new SheetsRegistry();
   const component = (
     <MaterialUiAppContainer store={store} location={req.baseUrl + req.url} theme={theme} sheetsRegistry={sheetsRegistry}>

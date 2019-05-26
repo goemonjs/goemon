@@ -7,7 +7,7 @@ import { ServerSideRenderer } from './utilities/ssr-renderer';
 import * as TodoAction from '../client/actions/todo-actions';
 
 const router = Router();
-const store = configureStore();
+
 const renderer = new ServerSideRenderer('guest.js');
 
 module.exports = function (app: Express) {
@@ -15,19 +15,23 @@ module.exports = function (app: Express) {
 };
 
 router.get('/', authenticationHandler, (req, res) => {
+  const store = configureStore();
   renderer.render(req, res, 'guest', { title: 'Home' }, component(req.baseUrl + req.url, store));
 });
 
 router.get('/react', authenticationHandler, (req, res) => {
+  const store = configureStore();
   renderer.render(req, res, 'guest', { title: 'React' }, component(req.baseUrl + req.url, store));
 });
 
 router.get('/redux', authenticationHandler, (req, res) => {
+  const store = configureStore();
   renderer.renderWithInitialProps(req, res, 'guest', { title: 'Redux' },
     component(req.baseUrl + req.url, store), routes, store);
 });
 
 router.get('/redux/counter', authenticationHandler, (req, res) => {
+  const store = configureStore();
   renderer.render(req, res, 'guest', { title: 'Redux' }, component(req.baseUrl + req.url, store));
 });
 
