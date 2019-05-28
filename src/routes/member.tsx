@@ -1,4 +1,6 @@
 import React from 'react';
+import passport from 'passport';
+
 import { Router } from 'express';
 import { configureStore, InitialState } from '../client/stores/member-store';
 import { MaterialUiAppContainer } from '../client/base/react/material-ui-app-container';
@@ -6,7 +8,7 @@ import { RouteComponent, routes } from '../client/routes/member-route';
 import { theme } from '../client/themes/material-ui-lightblue';
 import { ServerSideRenderer } from './utilities/ssr-renderer';
 import { SheetsRegistry } from 'react-jss/lib/jss';
-import passport from 'passport';
+import i18n from '../client/localization/i18n';
 
 const router = Router();
 
@@ -34,17 +36,19 @@ router.get('*', isAuthenticated, (req, res) => {
   const store = configureStore(InitialState);
 
   // Component
-  const component = (
-    <MaterialUiAppContainer store={store} location={req.baseUrl + req.url} theme={theme} sheetsRegistry={sheetsRegistry}>
-      <RouteComponent />
-    </MaterialUiAppContainer>
-  );
+  const component = (req, store, i18n) => {
+    return (
+      <MaterialUiAppContainer i18n={i18n} store={store} location={req.baseUrl + req.url} theme={theme} sheetsRegistry={sheetsRegistry}>
+        <RouteComponent />
+      </MaterialUiAppContainer>
+    );
+  };
 
   const cssGenerator = () => {
     return sheetsRegistry.toString();
   };
 
-  renderer.renderWithInitialProps(req, res, 'member', { title: 'Member - Goemon' }, component, routes, store, cssGenerator);
+  renderer.renderWithInitialProps(req, res, 'member', { title: 'Member - Goemon' }, store, component, routes, cssGenerator);
 });
 
 function isAuthenticated(req, res, next) {

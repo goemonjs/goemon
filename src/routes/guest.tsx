@@ -16,23 +16,22 @@ module.exports = function (app: Express) {
 
 router.get('/', authenticationHandler, (req, res) => {
   const store = configureStore();
-  renderer.render(req, res, 'guest', { title: 'Home' }, component(req.baseUrl + req.url, store));
+  renderer.render(req, res, 'guest', { title: 'Home' }, store, component);
 });
 
 router.get('/react', authenticationHandler, (req, res) => {
   const store = configureStore();
-  renderer.render(req, res, 'guest', { title: 'React' }, component(req.baseUrl + req.url, store));
+  renderer.render(req, res, 'guest', { title: 'React' }, store, component);
 });
 
 router.get('/redux', authenticationHandler, (req, res) => {
   const store = configureStore();
-  renderer.renderWithInitialProps(req, res, 'guest', { title: 'Redux' },
-    component(req.baseUrl + req.url, store), routes, store);
+  renderer.renderWithInitialProps(req, res, 'guest', { title: 'Redux' }, store, component, routes);
 });
 
 router.get('/redux/counter', authenticationHandler, (req, res) => {
   const store = configureStore();
-  renderer.render(req, res, 'guest', { title: 'Redux' }, component(req.baseUrl + req.url, store));
+  renderer.render(req, res, 'guest', { title: 'Redux' }, store, component);
 });
 
 router.get('/about', authenticationHandler, (req, res) => {
@@ -43,9 +42,9 @@ router.get('/login', (req: any, res, next) => {
   res.render('login', { message: req.flash('error') });
 });
 
-function component(location, store) {
+function component(req, store, i18n) {
   return (
-    <AppContainer store={store} location={location}>
+    <AppContainer store={store} location={req.baseUrl + req.url} i18n={i18n}>
       <RouteComponent />
     </AppContainer>
   );

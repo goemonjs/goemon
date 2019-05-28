@@ -34,11 +34,14 @@ router.get('*', isAuthenticated, (req, res) => {
   initialState.memberState.displayName = req.user.displayName;
   const store = configureStore();
   const sheetsRegistry = new SheetsRegistry();
-  const component = (
-    <MaterialUiAppContainer store={store} location={req.baseUrl + req.url} theme={theme} sheetsRegistry={sheetsRegistry}>
-      <RouteComponent />
-    </MaterialUiAppContainer>
-  );
+
+  const component = (req, store, i18n) => {
+    return (
+      <MaterialUiAppContainer i18n={i18n} store={store} location={req.baseUrl + req.url} theme={theme} sheetsRegistry={sheetsRegistry}>
+        <RouteComponent />
+      </MaterialUiAppContainer>
+    );
+  };
 
   const cssGenerator = () => {
     return sheetsRegistry.toString();

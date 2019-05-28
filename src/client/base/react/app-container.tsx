@@ -3,9 +3,10 @@ import { BrowserRouter, StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { UserContext, IContextProps } from '../../context/user-context';
-import i18n from '../../localization/i18n';
+// import i18n from '../../localization/i18n';
 
 interface IProps {
+  i18n: any;
   store: any;
   location?: string;
   context?: any;
@@ -13,7 +14,7 @@ interface IProps {
 }
 export class AppContainer extends React.Component<IProps, {}> {
   render() {
-    const { store, context, location, basename } = this.props;
+    const { store, context, location, basename, i18n } = this.props;
 
     if (typeof window !== 'undefined') { // Check whether this method is called on client or server
       return (

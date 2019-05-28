@@ -28,18 +28,19 @@ export class ServerSideRenderer {
    * @param component container component
    * @param cssGenerator css generator
    */
-  public render(req: any, res: any, ejsName: string, ejsOptions: any, component: any, cssGenerator?: () => string) {
+  public render(req: any, res: any, ejsName: string, ejsOptions: any, store: any, component: (req, store, i18n) => any, cssGenerator?: () => string) {
     try {
       const protocol = (process.env.PROTOCOL || req.protocol);
       let host = process.env.HOST || req.headers.host;
 
       const lng = req.language;
       logger.debug(`Request locale: ${lng}`);
-      i18n.changeLanguage(lng);
+      const i18nServer = i18n.cloneInstance();
+      i18nServer.changeLanguage(lng);
 
       const html = renderToString(
         <>
-          {component}
+          {component(req, store, i18nServer)}
         </>
       );
 
@@ -80,7 +81,7 @@ export class ServerSideRenderer {
    * @param routes route
    * @param cssGenerator css generator
    */
-  public renderWithInitialProps(req: any, res: any, ejsName: string, ejsOptions: any, component: any, routes, store, cssGenerator?: () => string) {
+  public renderWithInitialProps(req: any, res: any, ejsName: string, ejsOptions: any, store, component: (req, store, i18n) => any, routes, cssGenerator?: () => string) {
 
     const protocol = (process.env.PROTOCOL || req.protocol);
     const host = process.env.HOST || req.headers.host;
@@ -103,7 +104,7 @@ export class ServerSideRenderer {
       };
       Object.assign(option, ejsOptions);
 
-      this.render(req, res, ejsName, ejsOptions, component, cssGenerator);
+      this.render(req, res, ejsName, ejsOptions, store, component, cssGenerator);
     });
   }
 

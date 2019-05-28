@@ -10,6 +10,7 @@ import { initConfig, getInitialState } from './base/app/app-initializer';
 import { UserContext, IContextProps } from './context/user-context';
 import { theme } from './themes/material-ui-red';
 import { ErrorBoundary } from './base/react/error-boundary';
+import i18n from './localization/i18n';
 
 initConfig();
 const store = configureStore(getInitialState());
@@ -18,7 +19,7 @@ const userContext: IContextProps = {
 };
 const app = (
   <ErrorBoundary>
-    <MaterialUiAppContainer store={store} context={userContext} theme={theme}>
+    <MaterialUiAppContainer i18n={i18n} store={store} context={userContext} theme={theme}>
       <RouteComponent />
     </MaterialUiAppContainer>
   </ErrorBoundary>
