@@ -5,6 +5,7 @@ import BrowserLanguageDetector from 'i18next-browser-languagedetector';
 import i18nextExpressMiddleware from 'i18next-express-middleware';
 import enGuestRes from './en/guest.json';
 import jsGuestRes from './ja/guest.json';
+import { isClientSide } from '../base/utilities/utils';
 
 // import jaLocale from 'date-fns/locale/ja';
 // import enLocale from 'date-fns/locale/en';
@@ -34,7 +35,7 @@ let options: i18next.InitOptions = {
   // fallbackLng: ['en']      // Comment out if you want to use fallbackLng
 };
 
-if ( typeof window !== 'undefined' ) { // Check whether this method is called on client or server
+if (isClientSide()) { // Check whether this method is called on client or server
   //
   // Browser side
   //
