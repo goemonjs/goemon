@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Guest Top Component Test renders correctly in English 1`] = `
+<div
+  className="jumbotron"
+>
+  <h1>
+    Goemon
+  </h1>
+  <p
+    className="lead"
+  >
+    The boilerplate using React16, Redux, React-Router v4 + SSR(Server Side Rendering), Node, Express, and MongoDB in TypeScript.
+  </p>
+  <a
+    className="btn btn-large btn-success"
+    href="/react"
+  >
+    React Sample
+  </a>
+  <a
+    className="btn btn-large btn-success"
+    href="/redux"
+  >
+    Redux Sample
+  </a>
+  <div>
+    <a
+      href="/?lng=en"
+    >
+      English
+    </a>
+  </div>
+  <div>
+    <a
+      href="/?lng=ja"
+    >
+      日本語
+    </a>
+  </div>
+</div>
+`;
+
+exports[`Guest Top Component Test renders correctly in Japanese 1`] = `
+<div
+  className="jumbotron"
+>
+  <h1>
+    五右衛門
+  </h1>
+  <p
+    className="lead"
+  >
+    The boilerplate using React16, Redux, React-Router v4 + SSR(Server Side Rendering), Node, Express, and MongoDB in TypeScript.
+  </p>
+  <a
+    className="btn btn-large btn-success"
+    href="/react"
+  >
+    React Sample
+  </a>
+  <a
+    className="btn btn-large btn-success"
+    href="/redux"
+  >
+    Redux Sample
+  </a>
+  <div>
+    <a
+      href="/?lng=en"
+    >
+      English
+    </a>
+  </div>
+  <div>
+    <a
+      href="/?lng=ja"
+    >
+      日本語
+    </a>
+  </div>
+</div>
+`;
+
+exports[`Guest Top Component Test renders correctly in not supported language 1`] = `
+<div
+  className="jumbotron"
+>
+  <h1>
+    Goemon-
+  </h1>
+  <p
+    className="lead"
+  >
+    The boilerplate using React16, Redux, React-Router v4 + SSR(Server Side Rendering), Node, Express, and MongoDB in TypeScript.
+  </p>
+  <a
+    className="btn btn-large btn-success"
+    href="/react"
+  >
+    React Sample
+  </a>
+  <a
+    className="btn btn-large btn-success"
+    href="/redux"
+  >
+    Redux Sample
+  </a>
+  <div>
+    <a
+      href="/?lng=en"
+    >
+      English
+    </a>
+  </div>
+  <div>
+    <a
+      href="/?lng=ja"
+    >
+      日本語
+    </a>
+  </div>
+</div>
+`;

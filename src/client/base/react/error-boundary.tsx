@@ -1,5 +1,5 @@
 import React from 'react';
-import { logger } from '../utilities/logger';
+import { getLogger } from '../utilities/logger';
 
 interface IState {
   hasError: boolean;
@@ -23,8 +23,10 @@ export class ErrorBoundary extends React.Component<{}, IState>  {
       errorMessage: error.message,
       errorInfo: info.componentStack
     });
-    // You can also log the error to an error reporting service
-    logger.error(error.message, info.componentStack);
+    if (typeof window !== 'undefined') {  // Check wheter this is client side
+      let logger = getLogger();
+      logger.error(error.message, info.componentStack);
+    }
   }
 
   render() {

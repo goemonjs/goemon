@@ -7,15 +7,14 @@ import { AppContainer } from './app-container';
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import moment from 'moment';
 import MomentUtils from '@date-io/moment';
-// import i18n from '../../localization/i18n';
 
 interface IProps {
   i18n: any;
   store: any;
+  theme: any;
   location?: string;
   context?: any;
   basename?: string;
-  theme?: any;
   sheetsRegistry?: SheetsRegistry;
 }
 
