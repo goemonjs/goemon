@@ -1,6 +1,6 @@
 ﻿# Full-Stack React Boilerplate
 
-The boilerplate using React16, Redux, React-Router v4 + SSR(Server Side Rendering), Node, Express, and MongoDB in TypeScript.
+A boilerplate using React16, Redux, React-Router v4 + SSR(Server Side Rendering), Node, Express, and MongoDB in TypeScript.
 Support debugging in Visual Studio Code and Google Chrome.
 
 ## Environment
