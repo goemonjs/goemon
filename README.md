@@ -34,7 +34,7 @@ npm start
 
 npm run dev ( or gulp )
 
-Under this mode, Goemon automatically rebuild and refresh the browser when you change your code
+Under this mode, Goemon automatically rebuilds and refresh the browser when you change your code.
 
 ### Other commands
 
