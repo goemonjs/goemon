@@ -13,7 +13,8 @@ import { ErrorBoundary } from './base/react/error-boundary';
 import i18n from './localization/i18n';
 
 initConfig();
-const store = configureStore(getInitialState());
+// const initialState = getInitialState();
+const store = configureStore();
 const userContext: IContextProps = {
   userType: 'admin',
 };
