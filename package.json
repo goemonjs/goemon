@@ -38,7 +38,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": "10.15.3"
+    "node": "12.18.2"
   },
   "dependencies": {
     "@date-io/date-fns": "^1.0.0",
