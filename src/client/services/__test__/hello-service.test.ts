@@ -6,7 +6,9 @@ import * as App from '../../../app';
 import HelloService from '../hello-service';
 
 // const app = App.createApp({isTest: true});
-
+declare interface GlobalFetch {
+  fetch(input: RequestInfo, init?: RequestInit): Promise<Response>;
+}
 interface IGlobalFetch {
   fetch: GlobalFetch;
 }

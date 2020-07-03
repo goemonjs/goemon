@@ -28,7 +28,14 @@ export class ServerSideRenderer {
    * @param component container component
    * @param cssGenerator css generator
    */
-  public render(req: any, res: any, ejsName: string, ejsOptions: any, store: any, component: (req, store, i18n) => any, cssGenerator?: () => string) {
+  public render(
+    req: any,
+    res: any,
+    ejsName: string,
+    ejsOptions: any,
+    store: any,
+    htmlGenerator: (req, store, i18n) => any,
+    cssGenerator?: () => string) {
     try {
       const protocol = (process.env.PROTOCOL || req.protocol);
       let host = process.env.HOST || req.headers.host;
@@ -38,11 +45,7 @@ export class ServerSideRenderer {
       const i18nServer = i18n.cloneInstance();
       i18nServer.changeLanguage(lng);
 
-      const html = renderToString(
-        <>
-          {component(req, store, i18nServer)}
-        </>
-      );
+      const html = htmlGenerator(req, store, i18nServer);
 
       let config = ejsOptions.config !== undefined ? ejsOptions.config : {};
 
@@ -81,7 +84,15 @@ export class ServerSideRenderer {
    * @param routes route
    * @param cssGenerator css generator
    */
-  public renderWithInitialProps(req: any, res: any, ejsName: string, ejsOptions: any, store, component: (req, store, i18n) => any, routes, cssGenerator?: () => string) {
+  public renderWithInitialProps(
+    req: any,
+    res: any,
+    ejsName: string,
+    ejsOptions: any,
+    store,
+    routes,
+    htmlGenerator: (req, store, i18n) => string,
+    cssGenerator?: () => string) {
 
     const protocol = (process.env.PROTOCOL || req.protocol);
     const host = process.env.HOST || req.headers.host;
@@ -104,7 +115,7 @@ export class ServerSideRenderer {
       };
       Object.assign(option, ejsOptions);
 
-      this.render(req, res, ejsName, ejsOptions, store, component, cssGenerator);
+      this.render(req, res, ejsName, ejsOptions, store, htmlGenerator, cssGenerator);
     });
   }
 

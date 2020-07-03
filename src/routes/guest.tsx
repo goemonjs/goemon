@@ -4,7 +4,7 @@ import { configureStore } from '../client/stores/guest-store';
 import { AppContainer } from '../client/base/react/app-container';
 import { RouteComponent, routes } from '../client/routes/guest-route';
 import { ServerSideRenderer } from './utilities/ssr-renderer';
-import * as TodoAction from '../client/actions/todo-actions';
+import { renderToString } from 'react-dom/server';
 
 const router = Router();
 
@@ -16,22 +16,22 @@ module.exports = function (app: Express) {
 
 router.get('/', authenticationHandler, (req, res) => {
   const store = configureStore();
-  renderer.render(req, res, 'guest', { title: 'Home' }, store, component);
+  renderer.render(req, res, 'guest', { title: 'Home' }, store, htmlGenerator);
 });
 
 router.get('/react', authenticationHandler, (req, res) => {
   const store = configureStore();
-  renderer.render(req, res, 'guest', { title: 'React' }, store, component);
+  renderer.render(req, res, 'guest', { title: 'React' }, store, htmlGenerator);
 });
 
 router.get('/redux', authenticationHandler, (req, res) => {
   const store = configureStore();
-  renderer.renderWithInitialProps(req, res, 'guest', { title: 'Redux' }, store, component, routes);
+  renderer.renderWithInitialProps(req, res, 'guest', { title: 'Redux' }, store, routes, htmlGenerator);
 });
 
 router.get('/redux/counter', authenticationHandler, (req, res) => {
   const store = configureStore();
-  renderer.render(req, res, 'guest', { title: 'Redux' }, store, component);
+  renderer.render(req, res, 'guest', { title: 'Redux' }, store, htmlGenerator);
 });
 
 router.get('/about', authenticationHandler, (req, res) => {
@@ -42,13 +42,13 @@ router.get('/login', (req: any, res, next) => {
   res.render('login', { message: req.flash('error') });
 });
 
-function component(req, store, i18n) {
-  return (
+const htmlGenerator = (req, store, i18n) => {
+  return renderToString(
     <AppContainer store={store} location={req.baseUrl + req.url} i18n={i18n}>
       <RouteComponent />
     </AppContainer>
   );
-}
+};
 
 function authenticationHandler(req, res, next) {
   if (req.isAuthenticated()) {

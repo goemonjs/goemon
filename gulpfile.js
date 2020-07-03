@@ -12,7 +12,7 @@ var del = require('del'),
   notifier = require('node-notifier'),
   eslint = require('gulp-eslint'),
   tslint = require('gulp-tslint'),
-  jest = require('jest-cli');
+  jest = require('@jest/core');
 
 var PRODUCT = JSON.parse(process.env.PROD_ENV || '0');
 var tslintconfig = require('./tslint.json');
@@ -25,8 +25,8 @@ var exec = require('child_process').exec;
 gulp.task('copy-assets', () => {
   return gulp.src(
     ['src/public/**/*', '!src/public/**/*.scss', 'src/views/**/*', 'config/**/*'], {
-      base: './src'
-    }
+    base: './src'
+  }
   ).pipe(gulp.dest(targetPath));
 });
 
@@ -122,22 +122,22 @@ gulp.task('nodemon', (callback) => {
   var called = false;
 
   return nodemon({
-      verbose: false,
-      script: './bin/www',
-      delay: "2500",
-      ext: 'js html css ejs ico txt pdf json',
-      ignore: [
-        'build/client/*',
-        'build/public/*',
-        'build/__test__/*',
-        '*.test.ts',
-        '*.test.js',
-        '*.ts',
-        '*.tsx',
-        '*.json',
-        'node_modules'
-      ]
-    })
+    verbose: false,
+    script: './bin/www',
+    delay: "2500",
+    ext: 'js html css ejs ico txt pdf json',
+    ignore: [
+      'build/client/*',
+      'build/public/*',
+      'build/__test__/*',
+      '*.test.ts',
+      '*.test.js',
+      '*.ts',
+      '*.tsx',
+      '*.json',
+      'node_modules'
+    ]
+  })
     .on('start', () => {
       if (!called) {
         called = true;
@@ -219,7 +219,7 @@ gulp.task('watch', (done) => {
     });
 
   gulp.watch(
-      ['./src/**', '!./src/client/**/*', '!./src/public/css/*', '!./src/**/*.test.ts'], gulp.series('tsc', 'copy-assets'))
+    ['./src/**', '!./src/client/**/*', '!./src/public/css/*', '!./src/**/*.test.ts'], gulp.series('tsc', 'copy-assets'))
     .on('change', function (path) {
       console.log('File(ts) ' + path + ' was changed');
     });

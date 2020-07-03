@@ -1,5 +1,8 @@
 import querystring from 'querystring';
 
+declare interface GlobalFetch {
+  fetch(input: RequestInfo, init?: RequestInit): Promise<Response>;
+}
 interface IGlobalFetch {
   fetch: GlobalFetch;
 }

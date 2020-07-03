@@ -8,7 +8,7 @@ import favicon from 'serve-favicon';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import expressValidator from 'express-validator';
+// import expressValidator from 'express-validator';
 import glob from 'glob';
 import flash from 'express-flash';
 import i18nMiddleware from 'i18next-express-middleware';
@@ -38,7 +38,7 @@ export class AppServer {
     app.set('view engine', 'ejs');
 
     // validator
-    app.use(expressValidator());
+    // app.use(expressValidator());
 
     // favicon
     let faviconPath = path.join(__dirname, '.', 'public', 'favicon.ico');

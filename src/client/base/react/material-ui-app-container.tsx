@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { SheetsRegistry } from 'react-jss/lib/jss';
-import { JssProvider } from 'react-jss/lib';
+import { SheetsRegistry } from 'react-jss';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { MuiThemeProvider, createGenerateClassName } from '@material-ui/core/styles';
 import { AppContainer } from './app-container';
-import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import moment from 'moment';
-import MomentUtils from '@date-io/moment';
+// import MomentUtils from '@date-io/moment';
+import DateFnsUtils from '@date-io/date-fns';
 
 import { isClientSide } from '../utilities/utils';
 
@@ -20,7 +20,7 @@ interface IProps {
   sheetsRegistry?: SheetsRegistry;
 }
 
-class MyUtils extends MomentUtils {
+class MyUtils extends DateFnsUtils {
 
   constructor(value) {
     super(value);
@@ -55,29 +55,29 @@ export class MaterialUiAppContainer extends React.Component<IProps, {}> {
   render() {
     const { theme, sheetsRegistry, i18n } = this.props;
 
-    const generateClassName = createGenerateClassName();
-
     moment.locale(i18n.language);
 
     if (isClientSide()) { // Check whether this method is called on client or server
       return (
-        <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+        // <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <MuiThemeProvider theme={theme}>
-            <MuiPickersUtilsProvider utils={MyUtils}>
-              <AppContainer {...this.props} />
-            </MuiPickersUtilsProvider>
+            <AppContainer {...this.props} />
           </MuiThemeProvider>
-        </JssProvider>
+        </MuiPickersUtilsProvider>
+        // </JssProvider>
       );
     } else {
       return (
-        <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-          <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
-            <MuiPickersUtilsProvider utils={MyUtils}>
-              <AppContainer {...this.props} />
-            </MuiPickersUtilsProvider>
+        // TODO
+        // <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+        // <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <MuiThemeProvider theme={theme}>
+            <AppContainer {...this.props} />
           </MuiThemeProvider>
-        </JssProvider>
+        </MuiPickersUtilsProvider >
+        // </JssProvider>
       );
     }
   }

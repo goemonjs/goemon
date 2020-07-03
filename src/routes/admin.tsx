@@ -4,9 +4,10 @@ import { configureStore, InitialState } from '../client/stores/member-store';
 import { RouteComponent, routes } from '../client/routes/member-route';
 import { ServerSideRenderer } from './utilities/ssr-renderer';
 import { MaterialUiAppContainer } from '../client/base/react/material-ui-app-container';
-import { SheetsRegistry } from 'react-jss/lib/jss';
 import { theme } from '../client/themes/material-ui-lightblue';
 import passport from 'passport';
+import { renderToString } from 'react-dom/server';
+import { ServerStyleSheets } from '@material-ui/core/styles';
 
 const router = Router();
 
@@ -31,23 +32,26 @@ router.get('/logout', (req: any, res) => {
 
 router.get('*', isAuthenticated, (req, res) => {
   let initialState = InitialState;
-  initialState.memberState.displayName = req.user.displayName;
-  const store = configureStore();
-  const sheetsRegistry = new SheetsRegistry();
-
-  const component = (req, store, i18n) => {
-    return (
-      <MaterialUiAppContainer i18n={i18n} store={store} location={req.baseUrl + req.url} theme={theme} sheetsRegistry={sheetsRegistry}>
-        <RouteComponent />
-      </MaterialUiAppContainer>
+  if (req.user) {
+    const user: any = req.user;
+    initialState.memberState.displayName = user.displayName;
+  }
+  const sheets = new ServerStyleSheets();
+  const htmlGenerator = (req, store, i18n) => {
+    return renderToString(
+      sheets.collect(
+        <MaterialUiAppContainer i18n={i18n} store={store} location={req.baseUrl + req.url} theme={theme}>
+          <RouteComponent />
+        </MaterialUiAppContainer>
+      )
     );
   };
 
   const cssGenerator = () => {
-    return sheetsRegistry.toString();
+    return sheets.toString();
   };
 
-  renderer.render(req, res, 'member', { title: 'Member - Goemon' }, component, cssGenerator);
+  renderer.render(req, res, 'member', { title: 'Member - Goemon' }, htmlGenerator, cssGenerator);
 });
 
 function isAuthenticated(req, res, next) {

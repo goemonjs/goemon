@@ -25,9 +25,10 @@ import { IStore } from '../stores/member-store';
 // Styles
 import { styles } from '../themes/material-ui-lightblue';
 
-import { sideMenus } from './parts/member/side-menu';
+import { SideMenu } from './parts/member/side-menu';
 
 interface IProps extends React.Props<{}>, RouteComponentProps<{}> {
+  match: any;
 }
 
 interface IDispProps {
@@ -66,7 +67,7 @@ class MemberTop extends React.Component<IProps & IDispProps & WithStyles<typeof 
           }}
         >
           <div className={classes.toolbar} />
-          {sideMenus}
+          <SideMenu />
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />

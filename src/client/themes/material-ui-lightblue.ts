@@ -1,6 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import { createStyles, Theme } from '@material-ui/core/styles';
-import { lightBlue, red  } from '@material-ui/core/colors';
+import { lightBlue, red } from '@material-ui/core/colors';
 
 const drawerWidth = 240;
 
@@ -9,13 +9,10 @@ export const theme = createMuiTheme({
     primary: lightBlue,
     grey: red,
     type: 'light'
-  },
-  typography: {
-    useNextVariants: true,
-  },
+  }
 });
 
-export const styles = (theme: Theme) => createStyles( {
+export const styles = (theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
     height: 1600,
@@ -44,7 +41,7 @@ export const styles = (theme: Theme) => createStyles( {
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     minWidth: 0, // So the Typography noWrap works
   },
   toolbar: theme.mixins.toolbar,
@@ -53,9 +50,9 @@ export const styles = (theme: Theme) => createStyles( {
     flexWrap: 'wrap',
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
+    marginLeft: theme.spacing(),
+    marginRight: theme.spacing(),
+    // width: 200,
   },
   menu: {
     width: 200,

@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import i18next, { InitOptions } from 'i18next';
 import moment from 'moment';
 import { initReactI18next } from 'react-i18next';
 import BrowserLanguageDetector from 'i18next-browser-languagedetector';
@@ -10,7 +10,7 @@ import { isClientSide } from '../base/utilities/utils';
 // import jaLocale from 'date-fns/locale/ja';
 // import enLocale from 'date-fns/locale/en';
 
-let options: i18next.InitOptions = {
+let options: InitOptions = {
   resources: {
     en: {
       translation: enGuestRes
@@ -21,11 +21,11 @@ let options: i18next.InitOptions = {
   },
   keySeparator: false, // we do not use keys in form messages.welcome
   interpolation: {
-    format: function(value, format, lng) {
+    format: function (value, format, lng) {
       if (format === 'uppercase') {
-       return value.toUpperCase();
+        return value.toUpperCase();
       }
-      if ( value instanceof Date) {
+      if (value instanceof Date) {
         return moment(value).format(format);
       }
       return value;
@@ -41,7 +41,7 @@ if (isClientSide()) { // Check whether this method is called on client or server
   //
   Object.assign(options, {
 
-    detection : {
+    detection: {
       order: ['querystring', 'cookie', 'navigator'],
       lookupQuerystring: 'lng',
       lookupCookie: 'lng',
@@ -50,16 +50,16 @@ if (isClientSide()) { // Check whether this method is called on client or server
   });
 
   i18next
-  .use(BrowserLanguageDetector)
-  .use(initReactI18next) // passes i18n down to react-i18next
-  .init(options);
+    .use(BrowserLanguageDetector)
+    .use(initReactI18next) // passes i18n down to react-i18next
+    .init(options);
 } else {
   //
   // Server side
   //
   Object.assign(options, {
     // whitelist: ['en', 'ja'],       // Comment out if you want to use fallbackLng
-    detection : {
+    detection: {
       order: [/*'path', 'session', */ 'querystring', 'cookie', 'header'],
       lookupQuerystring: 'lng',
       lookupCookie: 'lng',
@@ -71,9 +71,9 @@ if (isClientSide()) { // Check whether this method is called on client or server
   });
 
   i18next
-  .use(i18nextExpressMiddleware.LanguageDetector)
-  .use(initReactI18next) // passes i18n down to react-i18next
-  .init(options);
+    .use(i18nextExpressMiddleware.LanguageDetector)
+    .use(initReactI18next) // passes i18n down to react-i18next
+    .init(options);
 }
 
 // export const localeFormatMap = {
