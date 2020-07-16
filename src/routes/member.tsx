@@ -8,12 +8,17 @@ import { theme } from '../client/themes/material-ui-lightblue';
 import { ServerSideRenderer } from './utilities/ssr-renderer';
 import { renderToString } from 'react-dom/server';
 import { ServerStyleSheets } from '@material-ui/core/styles';
+import i18nMiddleware from 'i18next-express-middleware';
+import i18n from '../client/localization/i18n';
 
 const router = Router();
 
 let renderer = new ServerSideRenderer('member.js');
 
 module.exports = (app) => {
+  // To avoid react-router error on production mode, we need to set the middleware at here
+  app.use(i18nMiddleware.handle(i18n));
+
   app.use('/member', router);
 };
 

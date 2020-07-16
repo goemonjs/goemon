@@ -5,12 +5,17 @@ import { AppContainer } from '../client/base/react/app-container';
 import { RouteComponent, routes } from '../client/routes/guest-route';
 import { ServerSideRenderer } from './utilities/ssr-renderer';
 import { renderToString } from 'react-dom/server';
+import i18nMiddleware from 'i18next-express-middleware';
+import i18n from '../client/localization/i18n';
 
 const router = Router();
 
 const renderer = new ServerSideRenderer('guest.js');
 
 module.exports = function (app: Express) {
+  // To avoid react-router error on production mode, we need to set the middleware at here
+  app.use(i18nMiddleware.handle(i18n));
+
   app.use('/', router);
 };
 

@@ -11,8 +11,6 @@ import bodyParser from 'body-parser';
 // import expressValidator from 'express-validator';
 import glob from 'glob';
 import flash from 'express-flash';
-import i18nMiddleware from 'i18next-express-middleware';
-import i18n from './client/localization/i18n';
 import { logger } from './base/utilities/logger';
 
 import { envs } from './env';
@@ -53,9 +51,6 @@ export class AppServer {
 
     // cookieParser
     app.use(cookieParser());
-
-    // i18n localication
-    app.use(i18nMiddleware.handle(i18n));
 
     // session
     let sess: session.SessionOptions = {
