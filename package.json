@@ -96,7 +96,7 @@
     "mongodb-memory-server": "^6.6.1",
     "mongoose": "^5.9.22",
     "morgan": "^1.10.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "passport": "^0.4.1",
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0",
